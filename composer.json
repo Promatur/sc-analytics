@@ -1,0 +1,50 @@
+{
+  "name": "je4gle/complete-analytics",
+  "version": "1.0.0",
+  "type": "library",
+  "description": "A combination of clientside and serverside analytics for PHP-based websites.",
+  "keywords": [
+    "javascript",
+    "php",
+    "privacy",
+    "web",
+    "analytics",
+    "google-analytics",
+    "web-analytics",
+    "matomo"
+  ],
+  "homepage": "https://promatur.com/",
+  "readme": "README.md",
+  "license": "LGPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Jan-Nicklas Adler",
+      "email": "adler@promatur.com",
+      "homepage": "https://www.promatur.com/",
+      "role": "Developer"
+    }
+  ],
+  "funding": [
+    {
+      "type": "paypal",
+      "url": "https://paypal.me/adlerjan"
+    }
+  ],
+  "support": {
+    "email": "adler@promatur.com",
+    "issues": "https://github.com/JE4GLE/complete-analytics/issues",
+    "source": "https://github.com/JE4GLE/complete-analytics"
+  },
+  "autoload": {
+    "psr-4": {
+      "CompleteAnalytics\\": ""
+    }
+  },
+  "require": {
+    "php": "^7.2|^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9",
+    "roave/security-advisories": "dev-master"
+  }
+}
