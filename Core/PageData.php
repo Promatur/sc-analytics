@@ -27,7 +27,7 @@ class PageData
 
     /**
      * @param string $pageTitle Title of the current page
-     * @param string[]|null Names of the pages in the breadcrumb link path
+     * @param string[]|null $parents Names of the pages in the breadcrumb link path
      */
     public function __construct(string $pageTitle, ?array $parents = [])
     {
