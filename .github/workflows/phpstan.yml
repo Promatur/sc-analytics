@@ -3,7 +3,7 @@ name: PHPStan check
 on:
   pull_request:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 permissions:
   actions: read
