@@ -1,28 +1,28 @@
-CompleteAnalytics
+Server-Client-Analytics
 ==============
 
-[![Latest Stable Version](https://poser.pugx.org/je4gle/complete-analytics/v/stable)](https://packagist.org/packages/JE4GLE/complete-analytics)
-[![Latest Unstable Version](https://poser.pugx.org/je4gle/complete-analytics/v/unstable)](https://packagist.org/packages/JE4GLE/complete-analytics)
-[![Total Downloads](https://poser.pugx.org/je4gle/complete-analytics/downloads)](https://packagist.org/packages/JE4GLE/complete-analytics)
-[![License](https://poser.pugx.org/je4gle/complete-analytics/license)](https://packagist.org/packages/JE4GLE/complete-analytics)
+[![Latest Stable Version](https://poser.pugx.org/promatur/sc-analytics/v/stable)](https://packagist.org/packages/promatur/sc-analytics)
+[![Latest Unstable Version](https://poser.pugx.org/promatur/sc-analytics/v/unstable)](https://packagist.org/packages/promatur/sc-analytics)
+[![Total Downloads](https://poser.pugx.org/promatur/sc-analytics/downloads)](https://packagist.org/packages/promatur/sc-analytics)
+[![License](https://poser.pugx.org/promatur/sc-analytics/license)](https://packagist.org/packages/promatur/sc-analytics)
 
 ## Code Status
 
-![PHPUnit](https://github.com/je4gle/complete-analytics/workflows/PHPUnit/badge.svg?branch=master)
-![PHPStan](https://github.com/je4gle/complete-analytics/workflows/PHPStan%20check/badge.svg?branch=master)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/je4gle/complete-analytics.svg)](http://isitmaintained.com/project/JE4GLE/complete-analytics "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/je4gle/complete-analytics.svg)](http://isitmaintained.com/project/JE4GLE/complete-analytics "Percentage of issues still open")
+![PHPUnit](https://github.com/promatur/sc-analytics/workflows/PHPUnit/badge.svg?branch=master)
+![PHPStan](https://github.com/promatur/sc-analytics/workflows/PHPStan%20check/badge.svg?branch=master)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/promatur/sc-analytics.svg)](http://isitmaintained.com/project/promatur/sc-analytics "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/promatur/sc-analytics.svg)](http://isitmaintained.com/project/promatur/sc-analytics "Percentage of issues still open")
 
 ## Description
 
-A combination of clientside and serverside analytics for PHP-based websites.
+A combination of clientside and serverside analytics for PHP-based websites. This repository builds upon existing analytics solutions and offers integrations for [Matomo](https://matomo.org) and [Google Analytics](https://analytics.google.com).
 
 ## Usage
 
-It is recommended to use CompleteAnalytics with composer, which is the easiest way to use it. Just add `je4gle/complete-analytics` to your projects requirements.
+It is recommended to use SCAnalytics with composer, which is the easiest way to use it. Just add `promatur/sc-analytics` to your projects requirements.
 
 ```
-composer require je4gle/complete-analytics
+composer require promatur/sc-analytics
 ```
 
 And use some code like this one:

@@ -1,5 +1,5 @@
 {
-  "name": "je4gle/complete-analytics",
+  "name": "promatur/sc-analytics",
   "version": "1.0.0",
   "type": "library",
   "description": "A combination of clientside and serverside analytics for PHP-based websites.",
@@ -37,7 +37,7 @@
   },
   "autoload": {
     "psr-4": {
-      "CompleteAnalytics\\": ""
+      "ScAnalytics\\": ""
     },
     "exclude-from-classmap": ["Tests/"]
   },
