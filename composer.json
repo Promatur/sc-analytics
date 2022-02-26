@@ -42,12 +42,14 @@
     "exclude-from-classmap": ["Tests/"]
   },
   "require": {
-    "php": "^7.2|^8.0",
-    "frontpack/composer-assets-plugin": "^0.11.0"
+    "php": "^7.3|^8.0",
+    "frontpack/composer-assets-plugin": "^0.11.0",
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-master",
+    "phpstan/phpstan": "^1.4"
   },
   "extra": {
     "assets-files": "Assets",

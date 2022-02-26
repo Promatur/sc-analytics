@@ -1,0 +1,12 @@
+parameters:
+    level: max
+    bootstrapFiles:
+        - %rootDir%/../../autoload.php
+    paths:
+        - %rootDir%/../../../
+    excludePaths:
+        - %rootDir%/../../../vendor
+        - %rootDir%/../../../Assets
+        - %rootDir%/../../../Tests
+    reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: false

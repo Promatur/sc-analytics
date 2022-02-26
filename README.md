@@ -30,6 +30,8 @@ And use some code like this one:
 ```php
 require_once 'vendor/autoload.php';
 
+// Create a PageData object including the page title and the titles of parent pages
+$pageData = new PageData("Help Page", ["Support", "Help Page Overview"])
 ```
 
 ## Contributing
