@@ -25,7 +25,7 @@ abstract class ARequest
     /**
      * @var bool A boolean, if the request should be sent to the debug endpoint
      */
-    private $debug;
+    private $debug = false;
 
     /**
      * @param bool $debug A boolean, if the request should be sent to the debug endpoint
@@ -46,9 +46,20 @@ abstract class ARequest
     /**
      * Sets a custom user for the request.
      *
-     * @param int|null $userId ID of the user
+     * @param string|null $userId Unique ID of the user
      */
-    abstract public function setUser(?int $userId): void;
+    abstract public function setUserIdentifier(?string $userId): void;
+
+    /**
+     * Sets a custom user for the request.
+     *
+     * @param int|null $userId Unique ID of the user
+     * @see ARequest::setUserIdentifier()
+     */
+    public function setUser(?int $userId): void
+    {
+        $this->setUserIdentifier(is_null($userId) ? null : (string)$userId);
+    }
 
     /**
      * Updates the generation time to the current timestamp. For this to work, <code>$GLOBALS["start_time"] = microtime(true);</code> has to be set at the beginning of the execution. Has to be called before <code>send()</code>.
