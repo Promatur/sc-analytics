@@ -31,6 +31,14 @@ class AnalyticsConfig
     public static $matomoEndpoint = "";
 
     /**
+     * Optional, allows sending additional information like the IP address. Treat this token as confidential.
+     *
+     * @var string Matomo token to authenticate API requests
+     * @link https://matomo.org/faq/general/faq_114/ Documentation
+     */
+    public static $matomoToken = "";
+
+    /**
      * Support multiple Google Analytics IDs. The first id will be used to load the gtag.js script.
      *
      * @var string[] Google Analytics IDs
