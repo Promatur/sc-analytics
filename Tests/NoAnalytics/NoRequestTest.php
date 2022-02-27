@@ -1,6 +1,6 @@
 <?php
 
-namespace NoAnalytics;
+namespace ScAnalytics\Tests\NoAnalytics;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;

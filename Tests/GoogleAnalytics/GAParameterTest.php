@@ -1,6 +1,6 @@
 <?php
 
-namespace GoogleAnalytics;
+namespace ScAnalytics\Tests\GoogleAnalytics;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;

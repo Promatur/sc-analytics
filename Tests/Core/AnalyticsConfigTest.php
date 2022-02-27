@@ -1,0 +1,34 @@
+<?php
+
+namespace Core;
+
+use PHPUnit\Framework\TestCase;
+use ScAnalytics\Core\AnalyticsConfig;
+
+/**
+ * Tests the AnalyticsConfig class.
+ *
+ * @author Jan-Nicklas Adler
+ * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @copyright All Rights Reserved.
+ */
+class AnalyticsConfigTest extends TestCase
+{
+
+    /**
+     * Tests the default values.
+     */
+    public function testValues(): void
+    {
+        self::assertEquals("auto", AnalyticsConfig::$preferred);
+        self::assertEmpty(AnalyticsConfig::$matomoID);
+        self::assertIsNotArray(AnalyticsConfig::$matomoID);
+        self::assertEmpty(AnalyticsConfig::$matomoEndpoint);
+        self::assertIsNotArray(AnalyticsConfig::$matomoEndpoint);
+        self::assertEmpty(AnalyticsConfig::$googleAnalyticsIDs);
+        self::assertIsArray(AnalyticsConfig::$googleAnalyticsIDs);
+        self::assertEquals("libraries", AnalyticsConfig::$assets);
+    }
+
+}
