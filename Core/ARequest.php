@@ -65,6 +65,7 @@ abstract class ARequest
      * Updates the generation time to the current timestamp. For this to work, <code>$GLOBALS["start_time"] = microtime(true);</code> has to be set at the beginning of the execution. Has to be called before <code>send()</code>.
      *
      * @see GAParameter::$LOADTIME Google Analytics Load Time
+     * @see MParameter::$GENERATIONTIME Matomo Generation Time
      */
     abstract public function updateGenerationTime(): void;
 
