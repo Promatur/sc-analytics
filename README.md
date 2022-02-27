@@ -44,11 +44,17 @@ require_once 'vendor/autoload.php';
 // - Initialize the analytics system
 \ScAnalytics\Analytics::init();
 
-// - Create a PageData object including the page title and the titles of parent pages
+// - Get your Analytics Handler
+$analytics = Analytics::get();
+
+// - Sending a new page view
+// Create a PageData object including the page title and the titles of parent pages
 $pageData = new \ScAnalytics\Core\PageData("Help Page", ["Support", "Help Page Overview"])
 ```
 
-Due to SCAnalytics also providing JavaScript assets, configure the location of the assets in your `composer.json`:
+### Assets
+
+SCAnalytics also provides JavaScript assets. If you want the combination of server-side and client-side analytics, configure the location of the assets in your `composer.json`:
 
 ```json
 {
@@ -58,7 +64,9 @@ Due to SCAnalytics also providing JavaScript assets, configure the location of t
   }
 }
 ```
+
 If you want to use another folder for the assets, configure it in the config:
+
 ```php
 \ScAnalytics\Core\AnalyticsConfig::$assets = "my-directory";
 ```

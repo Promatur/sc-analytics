@@ -2,6 +2,11 @@
 
 namespace ScAnalytics;
 
+use ScAnalytics\Core\AnalyticsConfig;
+use ScAnalytics\Core\AnalyticsHandler;
+use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
+use ScAnalytics\Matomo\Matomo;
+use ScAnalytics\NoAnalytics\NoAnalytics;
 use ScAnalytics\Tests\AnalyticsTest;
 
 /**
@@ -15,5 +20,78 @@ use ScAnalytics\Tests\AnalyticsTest;
  */
 class Analytics
 {
+    /**
+     * @var AnalyticsHandler|null Current active analytics handler.
+     */
+    private static $analytics;
+
+    /**
+     * @var AnalyticsHandler[] List of available analytics handlers.
+     */
+    private static $analyticsList = array();
+
+    /**
+     * Creates a list of possible analytics handlers and activates the preferred one.
+     * @see Analytics::checkStatus()
+     */
+    public static function init(): void
+    {
+        self::$analyticsList = array(new Matomo(), new GoogleAnalytics());
+        self::checkStatus();
+    }
+
+    /**
+     * Activates the best analytics system by iterating over the list of possible analytics handlers and assigning the first one available.
+     * @see Analytics::$analytics List of possible handlers
+     */
+    public static function auto(): void
+    {
+        foreach (self::$analyticsList as $analytics) {
+            if ($analytics->isAvailable()) {
+                self::$analytics = $analytics;
+                break;
+            }
+        }
+    }
+
+    /**
+     * It will automatically assign the correct analytics handler or use the configured one.
+     *
+     * @see Analytics::init() Call init() before this method
+     */
+    public static function checkStatus(): void
+    {
+        if (is_null(self::$analytics) || self::$analytics instanceof NoAnalytics) {
+            if (strcasecmp(AnalyticsConfig::$preferred, "auto") === 0) {
+                self::auto();
+            } else {
+                foreach (self::$analyticsList as $handler) {
+                    if ($handler->isAvailable() && strcasecmp($handler->getName(), AnalyticsConfig::$preferred) === 0) {
+                        self::$analytics = $handler;
+                        break;
+                    }
+                }
+            }
+        }
+        if (is_null(self::$analytics)) {
+            self::$analytics = new NoAnalytics();
+        }
+    }
+
+    /**
+     * Will automatically assign the correct Analytics Handler, if none is set.
+     *
+     * @return AnalyticsHandler Current active analytics handler.
+     * @see Analytics::init() Initialize before calling this function
+     * @see Analytics::checkStatus() Called before returning the active analytics handler
+     */
+    public static function get(): AnalyticsHandler
+    {
+        self::checkStatus();
+        if (is_null(self::$analytics)) {
+            self::$analytics = new NoAnalytics();
+        }
+        return self::$analytics;
+    }
 
 }
