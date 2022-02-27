@@ -8,6 +8,14 @@ use ReflectionException;
 use ScAnalytics\Core\AParameter;
 use ScAnalytics\Matomo\MParameter;
 
+/**
+ * Tests the MParameter class.
+ *
+ * @author Jan-Nicklas Adler
+ * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @copyright All Rights Reserved.
+ */
 class MParameterTest extends TestCase
 {
 
