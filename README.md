@@ -71,6 +71,8 @@ If you want to use another folder for the assets, configure it in the config:
 \ScAnalytics\Core\AnalyticsConfig::$assets = "my-directory";
 ```
 
+Learn more about the [Composer Assets Plugin](https://github.com/frontpack/composer-assets-plugin).
+
 ## Contributing
 
 ### Using the library
