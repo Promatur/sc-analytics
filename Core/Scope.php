@@ -133,11 +133,29 @@ class Scope
     }
 
     /**
+     * If no manual client id is set using <code>Scope::setClientId()</code>, this function will automatically create and manage a session variable. If analytics consent is given, the client id will be stored in a cookie.
+     *
      * @return string|null A unique ID for the client visiting the website (logged in or not)
      */
     public function getClientId(): ?string
     {
-        return $this->clientId;
+        if (!empty($this->clientId)) {
+            return $this->clientId;
+        }
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            if (empty($_SESSION['sc_uuid'])) {
+                if (empty($_COOKIE['sc_client'])) {
+                    $_SESSION['sc_uuid'] = HelperFunctions::generateUUID();
+                } else {
+                    $_SESSION['sc_uuid'] = $_COOKIE['sc_client'];
+                }
+            }
+            if ($this->analyticsConsent && empty($_COOKIE['sc_session']) && !headers_sent()) {
+                setcookie('sc_client', $_SESSION['sc_uuid'], time() + 2628000, '/', '', HelperFunctions::isHTTPS(), true);
+            }
+            return $_SESSION['sc_uuid'];
+        }
+        return HelperFunctions::generateUUID();
     }
 
     /**

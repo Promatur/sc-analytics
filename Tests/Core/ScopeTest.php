@@ -144,6 +144,12 @@ class ScopeTest extends TestCase
         $scope = new Scope();
         self::set($scope, "clientId", "569aff1e-9f18-11ec-b909-0242ac120002");
         self::assertEquals("569aff1e-9f18-11ec-b909-0242ac120002", $scope->getClientId());
+
+        self::set($scope, "clientId", null);
+        $clientId = $scope->getClientId();
+        self::assertNotEmpty($clientId);
+        self::assertNotNull($clientId);
+        self::assertMatchesRegularExpression("/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/", $clientId ?? "");
     }
 
     /**
