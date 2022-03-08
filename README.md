@@ -56,6 +56,8 @@ $pageData = new \ScAnalytics\Core\PageData("Help Page", ["Support", "Help Page O
 echo $analytics->loadJS($pageData);
 ```
 
+Learn more in the [Wiki](https://github.com/Promatur/sc-analytics/wiki).
+
 ### Assets
 
 SCAnalytics also provides JavaScript assets. If you want the combination of server-side and client-side analytics, configure the location of the assets in your `composer.json`:
