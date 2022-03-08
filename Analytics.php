@@ -4,6 +4,7 @@ namespace ScAnalytics;
 
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
+use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
 use ScAnalytics\Matomo\Matomo;
 use ScAnalytics\NoAnalytics\NoAnalytics;
@@ -31,11 +32,18 @@ class Analytics
     private static $analyticsList = array();
 
     /**
+     * @var Scope User-specific settings to the analytics APIs, which are used to enrich requests
+     */
+    private static $scope;
+
+    /**
      * Creates a list of possible analytics handlers and activates the preferred one.
+     * @param Scope|null $scope An optional Scope with user-specific settings to the analytics APIs, which are used to enrich requests
      * @see Analytics::checkStatus()
      */
-    public static function init(): void
+    public static function init(?Scope $scope = null): void
     {
+        self::$scope = $scope ?? new Scope();
         self::$analyticsList = array(new Matomo(), new GoogleAnalytics());
         self::checkStatus();
     }
@@ -92,6 +100,14 @@ class Analytics
             self::$analytics = new NoAnalytics();
         }
         return self::$analytics;
+    }
+
+    /**
+     * @return Scope User-specific settings to the analytics APIs, which are used to enrich requests
+     */
+    public static function getScope(): Scope
+    {
+        return self::$scope;
     }
 
 }

@@ -10,6 +10,7 @@ use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\Core\Scope;
 use ScAnalytics\NoAnalytics\NoAnalytics;
 
 /**
@@ -110,6 +111,7 @@ class AnalyticsTest extends TestCase
     {
         self::set("analytics", null);
         self::set("analyticsList", []);
+        self::set("scope", new Scope());
         AnalyticsConfig::$preferred = "auto";
     }
 
@@ -166,6 +168,11 @@ class AnalyticsTest extends TestCase
         Analytics::init();
         self::assertNotEmpty(self::get("analyticsList"));
         self::assertInstanceOf(NoAnalytics::class, self::get("analytics"));
+        self::assertInstanceOf(Scope::class, self::get("scope"));
+
+        $scope = new Scope("de-de");
+        Analytics::init($scope);
+        self::assertEquals($scope, self::get("scope"));
     }
 
     /**
@@ -198,5 +205,14 @@ class AnalyticsTest extends TestCase
         /** @var AnalyticsHandler $active */
         $active = self::get("analytics");
         self::assertEquals("Available", $active->getName());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetScope(): void {
+        $scope = new Scope();
+        self::set("scope", $scope);
+        self::assertEquals($scope, Analytics::getScope());
     }
 }
