@@ -52,8 +52,8 @@ class HelperFunctions
             return $root . "/Assets";
         }
 
-        if (file_exists($root . "/libraries/promatur/sc-analytics")) {
-            return $root . "/libraries/promatur/sc-analytics";
+        if (file_exists($root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics")) {
+            return $root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics";
         }
 
         throw new RuntimeException("Could not get asset directory");
@@ -85,7 +85,7 @@ class HelperFunctions
     {
         $s = self::isHTTPS() ? "s" : "";
         $sp = strtolower($_SERVER["SERVER_PROTOCOL"] ?? "HTTP/1.1");
-        $protocol = explode('/', $sp)[0]. $s;
+        $protocol = explode('/', $sp)[0] . $s;
         return $protocol . "://" . ($_SERVER['SERVER_NAME'] ?? "UNKNOWN");
     }
 
