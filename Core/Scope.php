@@ -34,17 +34,24 @@ class Scope
     private $clientId;
 
     /**
+     * @var string|null A unique ID for a logged-in user. Can be an auto-incremented id
+     */
+    private $userId;
+
+    /**
      * @param string|null $language The language the user is using to visit the website
      * @param string[] $customDimensions Some custom dimensions, configured by the analytics provider
-     * @param bool $analyticsConsent  A boolean if the user has given consent to analyze personal data
+     * @param bool $analyticsConsent A boolean if the user has given consent to analyze personal data
      * @param string|null $clientId A unique ID for the client visiting the website (logged in or not)
+     * @param string|null $userId A unique ID for a logged-in user. Can be an auto-incremented id
      */
-    public function __construct(?string $language = null, array $customDimensions = [], bool $analyticsConsent = false, ?string $clientId = null)
+    public function __construct(?string $language = null, array $customDimensions = [], bool $analyticsConsent = false, ?string $clientId = null, ?string $userId = null)
     {
         $this->language = $language;
         $this->customDimensions = $customDimensions;
         $this->analyticsConsent = $analyticsConsent;
         $this->clientId = $clientId;
+        $this->userId = $userId;
     }
 
 
@@ -94,6 +101,14 @@ class Scope
     }
 
     /**
+     * @param string|null $userId A unique ID for a logged-in user. Can be an auto-incremented id
+     */
+    public function setUserId(?string $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
      * @return string|null The language the user is using to visit the website
      */
     public function getLanguage(): ?string
@@ -125,5 +140,12 @@ class Scope
         return $this->clientId;
     }
 
+    /**
+     * @return string|null A unique ID for a logged-in user. Can be an auto-incremented id
+     */
+    public function getUserId(): ?string
+    {
+        return $this->userId;
+    }
 
 }

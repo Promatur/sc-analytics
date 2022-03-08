@@ -61,6 +61,7 @@ class ScopeTest extends TestCase
         self::assertEmpty(self::get($scope, "customDimensions"));
         self::assertFalse(self::get($scope, "analyticsConsent"));
         self::assertNull(self::get($scope, "clientId"));
+        self::assertNull(self::get($scope, "userId"));
     }
 
     /**
@@ -90,6 +91,16 @@ class ScopeTest extends TestCase
         $scope = new Scope();
         $scope->setClientId("04cc6376-9f18-11ec-b909-0242ac120002");
         self::assertEquals("04cc6376-9f18-11ec-b909-0242ac120002", self::get($scope, "clientId"));
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testSetUserId(): void
+    {
+        $scope = new Scope();
+        $scope->setUserId("482");
+        self::assertEquals("482", self::get($scope, "userId"));
     }
 
     /**
@@ -133,6 +144,16 @@ class ScopeTest extends TestCase
         $scope = new Scope();
         self::set($scope, "clientId", "569aff1e-9f18-11ec-b909-0242ac120002");
         self::assertEquals("569aff1e-9f18-11ec-b909-0242ac120002", $scope->getClientId());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetUserID(): void
+    {
+        $scope = new Scope();
+        self::set($scope, "userId", "482");
+        self::assertEquals("482", $scope->getUserId());
     }
 
     /**
