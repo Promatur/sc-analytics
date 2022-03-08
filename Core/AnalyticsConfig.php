@@ -14,6 +14,13 @@ class AnalyticsConfig
 {
 
     /**
+     * Enable debug to send all requests to the debug endpoints of the analytics endpoints.
+     *
+     * @var bool True or false
+     */
+    public static $debug = false;
+
+    /**
      * Possible options: 'auto', 'matomo', 'google analytics'.
      *
      * @var string Preferred analytics handler
