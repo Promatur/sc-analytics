@@ -109,4 +109,15 @@ class HelperFunctionsTest extends TestCase
         self::assertTrue(HelperFunctions::endsWith("abcdefg", "g"));
         self::assertTrue(HelperFunctions::endsWith("abcdefg", "abcdefg"));
     }
+
+    public function testGenerateUUID(): void
+    {
+        $list = array();
+        for ($i = 0; $i < 100; $i++) {
+            $uuid = HelperFunctions::generateUUID();
+            self::assertNotContains($uuid, $list);
+            $list[] = $uuid;
+            self::assertMatchesRegularExpression("/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/", $uuid);
+        }
+    }
 }

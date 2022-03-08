@@ -4,6 +4,7 @@
 namespace ScAnalytics\Core;
 
 
+use Exception;
 use RuntimeException;
 
 /**
@@ -137,6 +138,30 @@ class HelperFunctions
             return true;
         }
         return substr($haystack, -$length) === $needle;
+    }
+
+    /**
+     * Generates a unique universal id.
+     *
+     * @return string|null UUID or null in case of an error
+     */
+    public static function generateUUID(): ?string
+    {
+        try {
+            return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                random_int(0, 0xffff), random_int(0, 0xffff),
+                random_int(0, 0xffff),
+                random_int(0, 0x0fff) | 0x4000,
+                random_int(0, 0x3fff) | 0x8000,
+                random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff)
+            );
+        } catch (Exception $e) {
+            if (function_exists('\Sentry\captureException')) {
+                /** @noinspection PhpFullyQualifiedNameUsageInspection */
+                \Sentry\captureException($e);
+            }
+            return null;
+        }
     }
 
 }
