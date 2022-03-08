@@ -77,6 +77,10 @@ If you want to use another folder for the assets, configure it in the config:
 
 Learn more about the [Composer Assets Plugin](https://github.com/frontpack/composer-assets-plugin).
 
+### Error handling
+
+This package has an integration of [Sentry](https://github.com/getsentry/sentry-php), which is optional to use. Errors are automatically handled by Sentry and additional information is added.
+
 ## Contributing
 
 ### Using the library

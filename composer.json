@@ -44,12 +44,17 @@
   "require": {
     "php": "^7.3|^8.0",
     "frontpack/composer-assets-plugin": "^0.11.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-curl": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
     "roave/security-advisories": "dev-master",
-    "phpstan/phpstan": "^1.4"
+    "phpstan/phpstan": "^1.4",
+    "sentry/sdk": "^3.1"
+  },
+  "suggest": {
+    "sentry/sdk": "Error handling"
   },
   "extra": {
     "assets-files": "Assets",
