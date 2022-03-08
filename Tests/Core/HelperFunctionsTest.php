@@ -86,7 +86,8 @@ class HelperFunctionsTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testGetIpAddress(): void {
+    public function testGetIpAddress(): void
+    {
         self::assertNull(HelperFunctions::getIpAddress());
         $parameters = ['HTTP_CLIENT_IP', 'HTTP_CF_CONNECTING_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR'];
         foreach ($parameters as $key) {
@@ -97,5 +98,15 @@ class HelperFunctionsTest extends TestCase
             self::assertNull(HelperFunctions::getIpAddress());
             unset($_SERVER[$key]);
         }
+    }
+
+    public function testEndsWith(): void
+    {
+        self::assertFalse(HelperFunctions::endsWith("abcdefg", "fös"));
+        self::assertFalse(HelperFunctions::endsWith("abcdefg", "eFg"));
+        self::assertFalse(HelperFunctions::endsWith("abcdefg", "abcdefG"));
+        self::assertTrue(HelperFunctions::endsWith("abcdefg", "efg"));
+        self::assertTrue(HelperFunctions::endsWith("abcdefg", "g"));
+        self::assertTrue(HelperFunctions::endsWith("abcdefg", "abcdefg"));
     }
 }

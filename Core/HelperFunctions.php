@@ -123,4 +123,20 @@ class HelperFunctions
         return null;
     }
 
+    /**
+     * Checks if a string ends with another string.
+     *
+     * @param string $haystack Full string
+     * @param string $needle Chars which should be at the end
+     * @return bool True if the haystack ends with the needle
+     */
+    public static function endsWith(string $haystack, string $needle): bool
+    {
+        $length = strlen($needle);
+        if (!$length) {
+            return true;
+        }
+        return substr($haystack, -$length) === $needle;
+    }
+
 }
