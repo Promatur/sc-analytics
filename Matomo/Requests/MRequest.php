@@ -45,8 +45,8 @@ class MRequest extends ARequest
      */
     public function __construct()
     {
+        parent::__construct();
         $scope = Analytics::getScope();
-        $this->setDebug(AnalyticsConfig::$debug);
         try {
             $this->setParameter(MParameter::$SITEID, AnalyticsConfig::$matomoID);
             $this->setParameter(MParameter::$REC, true);
@@ -94,6 +94,8 @@ class MRequest extends ARequest
     }
 
     /**
+     * Static, because there is only one global page view id.
+     *
      * @return string|null Six character unique ID, which is different for each page view. Gets generated on a MPageViewRequest
      */
     public static function getPageViewID(): ?string
@@ -184,7 +186,7 @@ class MRequest extends ARequest
      * Sets a custom variable for a visit scope.
      *
      * @param string $key The key of the variable
-     * @param mixed $value The value of the variable
+     * @param array|string|integer|float|bool|null $value The value of the variable
      * @throws JsonException
      */
     public function addCustomVariable(string $key, $value): void
