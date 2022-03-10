@@ -131,9 +131,6 @@ class ARequestTest extends TestCase
         $stub->setParameter($param, null);
         self::assertEmpty(self::get($stub, "parameters"));
 
-        $this->expectException(Error::class);
-        $stub->setParameter($param, $stub);
-
         $this->expectException(JsonException::class);
         $stub->setParameter($param, [$stub]);
     }
