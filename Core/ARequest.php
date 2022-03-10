@@ -25,7 +25,15 @@ abstract class ARequest
     /**
      * @var bool A boolean, if the request should be sent to the debug endpoint
      */
-    private $debug = false;
+    private $debug;
+
+    /**
+     * Initializes the ARequest.
+     */
+    public function __construct()
+    {
+        $this->debug = AnalyticsConfig::$debug;
+    }
 
     /**
      * @param bool $debug A boolean, if the request should be sent to the debug endpoint
@@ -85,7 +93,7 @@ abstract class ARequest
      */
     public function setParameter(AParameter $key, $value): void
     {
-        if ((!empty($value) || !is_array($value)) && !is_null($value)) {
+        if (((!empty($value)) || !is_array($value)) && !is_null($value)) {
             if (is_bool($value)) {
                 $value = $value ? "1" : "0";
             } else if (is_array($value)) {
