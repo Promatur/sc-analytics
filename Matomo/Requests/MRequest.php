@@ -31,7 +31,7 @@ class MRequest extends ARequest
     private const VERSION = "1";
 
     /**
-     * @var ?string Six character unique ID, which is different for each page view
+     * @var string|null Six character unique ID, which is different for each page view
      */
     private static $pageViewID;
 
