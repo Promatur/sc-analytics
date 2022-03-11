@@ -2,13 +2,13 @@
 
 namespace Matomo\Requests;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\MPageViewRequest;
-use PHPUnit\Framework\TestCase;
 use ScAnalytics\Matomo\Requests\MRequest;
 
 /**
@@ -74,6 +74,6 @@ class MPageViewRequestTest extends TestCase
         $pageView = new MPageViewRequest();
         self::assertNotEmpty(self::get($pageView, "pageViewID"));
         self::assertNotEmpty($pageView->getParameters()[MParameter::$ACTION->getName()]);
-        self::assertNotEmpty($pageView->getParameters()[MParameter::$GENERATIONTIME->getName()]);
+        self::assertArrayHasKey(MParameter::$GENERATIONTIME->getName(), $pageView->getParameters());
     }
 }
