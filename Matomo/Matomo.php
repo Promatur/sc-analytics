@@ -62,7 +62,7 @@ class Matomo implements AnalyticsHandler
     public static function setVariable(string $key, $value): void
     {
         if (!isset($_SESSION['matomo'])) {
-            $_SESSION['matomo'] = array();
+            $_SESSION['matomo'] = [];
         }
         $arr = $_SESSION['matomo'];
         $arr[$key] = $value;
