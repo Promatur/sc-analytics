@@ -1,6 +1,6 @@
 <?php
 
-namespace Matomo;
+namespace ScAnalytics\Tests\Matomo;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -28,6 +28,11 @@ class MatomoTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
+    }
+
+    protected function setUp(): void
+    {
+        $_SESSION = [];
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Matomo\Requests;
+namespace ScAnalytics\Tests\Matomo\Requests;
 
 use JsonException;
 use PHPUnit\Framework\TestCase;

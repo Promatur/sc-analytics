@@ -1,10 +1,8 @@
 <?php
 
 
-namespace PromaturAPI\Analytics\Matomo\API\Requests;
+namespace ScAnalytics\Matomo\Requests;
 
-
-use ScAnalytics\Matomo\Requests\MEventRequest;
 
 /**
  * Class MSocialRequest. You can use social interaction analytics to measure the number of times users click on social buttons embedded in webpages. For example, you might measure a Facebook "Like" or a Twitter "Tweet".

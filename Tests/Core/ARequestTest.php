@@ -1,8 +1,7 @@
 <?php
 
-namespace Core;
+namespace ScAnalytics\Tests\Core;
 
-use Error;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;

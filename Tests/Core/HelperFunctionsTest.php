@@ -114,6 +114,7 @@ class HelperFunctionsTest extends TestCase
     {
         $list = array();
         for ($i = 0; $i < 100; $i++) {
+            /** @var string $uuid */
             $uuid = HelperFunctions::generateUUID();
             self::assertNotContains($uuid, $list);
             $list[] = $uuid;

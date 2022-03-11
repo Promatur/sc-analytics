@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace ScAnalytics\Tests\Core;
 
 use ReflectionClass;
 use ReflectionException;

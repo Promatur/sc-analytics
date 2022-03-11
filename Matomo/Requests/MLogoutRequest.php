@@ -24,7 +24,7 @@ class MLogoutRequest extends MEventRequest
      */
     public function __construct()
     {
-        parent::__construct("account", "logout");
+        parent::__construct("Account", "logout");
         try {
             $this->setParameter(MParameter::$NEWVISIT, true);
             $this->setParameter(MParameter::$USERID, "");

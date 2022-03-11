@@ -1,6 +1,6 @@
 <?php
 
-namespace Matomo;
+namespace ScAnalytics\Tests\Matomo;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
