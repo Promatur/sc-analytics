@@ -1,6 +1,5 @@
 let sc_matomoAllow = false;
 let sc_matomoInfo = document.getElementById("_matomo");
-let sc_matomoUser = document.getElementById("_user");
 let sc_matomoURL = sc_matomoInfo.dataset.url;
 let sc_matomoPageViewId = sc_matomoInfo.dataset.pv;
 let sc_matomoSiteId = sc_matomoInfo.dataset.siteid;
@@ -11,8 +10,6 @@ if (!sc_matomoAllow)
     _paq.push(['requireCookieConsent']);
 _paq.push(['setVisitorId', sc_matomoVisitorId]);
 _paq.push(['setPageViewId', sc_matomoPageViewId]);
-if (sc_matomoUser && sc_matomoUser.dataset.id)
-    _paq.push(['setUserId', sc_matomoUser.dataset.id]);
 
 _paq.push(['enableLinkTracking']);
 _paq.push(['enableHeartBeatTimer']);

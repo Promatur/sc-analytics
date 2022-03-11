@@ -119,8 +119,8 @@ class Matomo implements AnalyticsHandler
             $url .= "/";
         }
         $assets = HelperFunctions::getAssetsDir();
-        if (file_exists($assets . '/matomo.js')) {
-            return '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/matomo.js" id="_matomo" data-pv="' . $pageViewRequest->getPageViewId() . '" data-url="' . $url . '" data-siteid="' . AnalyticsConfig::$matomoID . '" data-visitorid="' . self::getVisitorId() . '" defer></script>';
+        if (file_exists($assets . '/matomo.min.js')) {
+            return '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/matomo.min.js" id="_matomo" data-pv="' . $pageViewRequest->getPageViewId() . '" data-url="' . $url . '" data-siteid="' . AnalyticsConfig::$matomoID . '" data-visitorid="' . self::getVisitorId() . '" defer></script>';
         }
         return "";
     }
