@@ -21,14 +21,21 @@ class AnalyticsConfig
     public static $debug = false;
 
     /**
-     * Specify the version of your own app here.
+     * Optional. Specify the version of your own app here.
      *
      * @var string|null A version string
      */
     public static $version;
 
     /**
-     * Possible options: 'auto', 'matomo', 'google analytics'.
+     * Has to be same as <code>extra.assets-dir</code> in the <i>composer.json</i>.
+     *
+     * @var string Location of the JavaScript assets
+     */
+    public static $assets = "libraries";
+
+    /**
+     * Your preferred analytics handler. Possible options: 'auto', 'matomo', 'google analytics'.
      *
      * @var string Preferred analytics handler
      */
@@ -45,7 +52,7 @@ class AnalyticsConfig
     public static $matomoEndpoint = "";
 
     /**
-     * Optional, allows sending additional information like the IP address. Treat this token as confidential.
+     * Optional. Allows sending additional information like the IP address. Treat this token as confidential.
      *
      * @var string Matomo token to authenticate API requests
      * @link https://matomo.org/faq/general/faq_114/ Documentation
@@ -53,17 +60,10 @@ class AnalyticsConfig
     public static $matomoToken = "";
 
     /**
-     * Support multiple Google Analytics IDs. The first id will be used to load the gtag.js script.
+     *
      *
      * @var string[] Google Analytics IDs
      */
     public static $googleAnalyticsIDs = [];
-
-    /**
-     * Has to be same as <code>extra.assets-dir</code> in the <i>composer.json</i>.
-     *
-     * @var string Location of the JavaScript assets
-     */
-    public static $assets = "libraries";
 
 }
