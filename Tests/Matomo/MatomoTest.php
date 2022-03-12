@@ -42,7 +42,6 @@ class MatomoTest extends TestCase
     {
         AnalyticsConfig::$matomoID = "";
         AnalyticsConfig::$matomoEndpoint = "";
-        AnalyticsConfig::$matomoToken = "";
         self::setAnalytics("analytics", null);
         self::setAnalytics("analyticsList", []);
         self::setAnalytics("scope", new Scope());
@@ -104,7 +103,7 @@ class MatomoTest extends TestCase
         $pageViewId = MRequest::getPageViewID() ?? "";
         self::assertStringContainsString('<script', $code);
         self::assertStringContainsString('data-pv="' . $pageViewId . '"', $code);
-        self::assertStringContainsString("/matomo.js", $code);
+        self::assertStringContainsString("/matomo.min.js", $code);
         self::assertStringContainsString('data-url="https://example.com/"', $code);
         self::assertStringContainsString('data-siteid="2"', $code);
         self::assertStringContainsString('data-visitorid="' . Matomo::getVisitorId() . '"', $code);

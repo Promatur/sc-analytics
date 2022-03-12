@@ -8,8 +8,6 @@ use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
-use ScAnalytics\Core\ARequest;
-use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\NoAnalytics\NoAnalytics;
 
@@ -67,41 +65,23 @@ class AnalyticsTest extends TestCase
 
     protected function setUp(): void
     {
-        self::$available = new class implements AnalyticsHandler {
+        $mock = $this->getMockBuilder(AnalyticsHandler::class)->getMock();
+        $mock->method("getName")
+            ->willReturn("Available");
+        $mock->method("isAvailable")
+            ->willReturn(true);
+        $mock->method("loadJS")
+            ->willReturn("");
+        self::$available = $mock;
 
-            public function getName(): string
-            {
-                return "Available";
-            }
-
-            public function isAvailable(): bool
-            {
-                return true;
-            }
-
-            public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
-            {
-                return "";
-            }
-        };
-
-        self::$unavailable = new class implements AnalyticsHandler {
-
-            public function getName(): string
-            {
-                return "Available";
-            }
-
-            public function isAvailable(): bool
-            {
-                return false;
-            }
-
-            public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
-            {
-                return "";
-            }
-        };
+        $mock = $this->getMockBuilder(AnalyticsHandler::class)->getMock();
+        $mock->method("getName")
+            ->willReturn("Unavailable");
+        $mock->method("isAvailable")
+            ->willReturn(false);
+        $mock->method("loadJS")
+            ->willReturn("");
+        self::$unavailable = $mock;
     }
 
     /**
@@ -210,7 +190,8 @@ class AnalyticsTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testGetScope(): void {
+    public function testGetScope(): void
+    {
         $scope = new Scope();
         self::set("scope", $scope);
         self::assertEquals($scope, Analytics::getScope());
