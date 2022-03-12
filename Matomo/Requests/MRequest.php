@@ -137,7 +137,11 @@ class MRequest extends ARequest
         ksort($parameters);
         $content = http_build_query($parameters);
         $content = utf8_encode($content);
-        $user_agent = "SC-Analytics by Promatur (" . HelperFunctions::getDomain() . "/)";
+        $user_agent = "SC-Analytics by Promatur (" . HelperFunctions::getDomain() . "/";
+        if (!empty(AnalyticsConfig::$version)) {
+            $user_agent .= " v" . AnalyticsConfig::$version;
+        }
+        $user_agent .= ")";
 
         $url = AnalyticsConfig::$matomoEndpoint;
         if (!HelperFunctions::endsWith($url, "/")) {
@@ -160,7 +164,7 @@ class MRequest extends ARequest
         $response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        $success = $this->requestSuccessful($result, $errors, $response);
+        $success = $this->requestSuccessful($errors, $response);
         if (!$success) {
             $debug = $this->isDebug();
             $query = $url . "?" . $content;
@@ -206,14 +210,13 @@ class MRequest extends ARequest
     /**
      * Evaluates the results by the curl request to determine, if it was successful.
      *
-     * @param string $result The result received by the Matomo API
      * @param string $errors Errors returned by the request
-     * @param int $responseCode The HTTP response code
+     * @param mixed $responseCode The HTTP response code
      * @return bool True, if the request has been evaluated as successful
      */
-    private function requestSuccessful(string $result, string $errors, int $responseCode): bool
+    private function requestSuccessful(string $errors, $responseCode): bool
     {
-        if ($responseCode !== 204) {
+        if (is_numeric($responseCode) && $responseCode !== 204) {
             return false;
         }
         if (!empty($errors)) {
