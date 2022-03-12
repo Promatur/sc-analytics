@@ -2,8 +2,10 @@
 
 namespace ScAnalytics\GoogleAnalytics;
 
+use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
 
 /**
@@ -31,7 +33,7 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function isAvailable(): bool
     {
-        return false;// TODO: Implement isAvailable() method.
+        return !empty(AnalyticsConfig::$googleAnalyticsIDs);
     }
 
     /**
@@ -40,5 +42,24 @@ class GoogleAnalytics implements AnalyticsHandler
     public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
     {
         return "";// TODO: Implement loadJS() method.
+    }
+
+    /**
+     * Checks different cookies for the GA client id or generates a new one, which is saved in <code>$_SESSION['ga_tempid']</code>.
+     *
+     * @return string Google Analytics client ID
+     */
+    public static function getClientID(): string
+    {
+        if (isset($_COOKIE['_ga'])) {
+            return preg_replace('/GA\d\.\d+\./', '', $_COOKIE['_ga']);
+        }
+        if (isset($_COOKIE['_gid'])) {
+            return $_COOKIE['_gid'];
+        }
+        if (!isset($_SESSION['ga_tempid'])) {
+            $_SESSION['ga_tempid'] = HelperFunctions::generateUUID();
+        }
+        return $_SESSION['ga_tempid'];
     }
 }
