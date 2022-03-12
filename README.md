@@ -31,17 +31,9 @@ Use some code like this one:
 require_once 'vendor/autoload.php';
 
 
-// - Configure your preferred analytics
-// Select between 'matomo', 'google analytics' or 'auto' (recommended)
-\ScAnalytics\Core\AnalyticsConfig::$preferred = "matomo";
-// Configure your matomo endpoint
+// - Configure your preferred analytics endpoint
 \ScAnalytics\Core\AnalyticsConfig::$matomoID = "1";
 \ScAnalytics\Core\AnalyticsConfig::$matomoEndpoint = "https://analytics.example.com/";
-\ScAnalytics\Core\AnalyticsConfig::$matomoToken = "RCmmQo3mOBfuEwF5OI9l23DcbHymRa6I"; // Optional
-// Configure one or multiple Google Analytics tracking IDs
-\ScAnalytics\Core\AnalyticsConfig::$googleAnalyticsIDs = ["UA-000000-2", "UA-XXXXXX-X"];
-// Enable debug for testing
-\ScAnalytics\Core\AnalyticsConfig::$debug = true;
 
 // - Initialize the analytics system
 \ScAnalytics\Analytics::init();
@@ -50,7 +42,6 @@ require_once 'vendor/autoload.php';
 $analytics = Analytics::get();
 
 // - Load the Client-Side JavaScript code and initialize the page view
-// Create a PageData object including the page title and the titles of parent pages
 $pageData = new \ScAnalytics\Core\PageData("Help Page", ["Support", "Help Page Overview"])
 // Put this anywhere you want to load the JavaScript code
 echo $analytics->loadJS($pageData);
