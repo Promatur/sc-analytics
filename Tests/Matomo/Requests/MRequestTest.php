@@ -12,6 +12,14 @@ use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\MRequest;
 
+/**
+ * Tests the MRequest class.
+ *
+ * @author Jan-Nicklas Adler
+ * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @copyright All Rights Reserved.
+ */
 class MRequestTest extends TestCase
 {
 
@@ -166,7 +174,7 @@ class MRequestTest extends TestCase
         for ($i = 0; $i < 50; $i++) {
             MRequest::generatePageViewID();
             /** @var string $pageViewId */
-            $pageViewId =  self::get(null, "pageViewID");
+            $pageViewId = self::get(null, "pageViewID");
             self::assertIsString($pageViewId);
             self::assertEquals(6, strlen($pageViewId));
         }
@@ -179,6 +187,18 @@ class MRequestTest extends TestCase
 
         $req->setUserIdentifier("a1");
         self::assertEquals("a1", $req->getParameters()[MParameter::$USERID->getName()]);
+
+        $req->setUserIdentifier(null);
+        self::assertArrayNotHasKey(MParameter::$USERID->getName(), $req->getParameters());
+    }
+
+    public function testSetUser(): void
+    {
+        Analytics::init();
+        $req = new MRequest();
+
+        $req->setUser(3);
+        self::assertEquals(3, $req->getParameters()[MParameter::$USERID->getName()]);
 
         $req->setUserIdentifier(null);
         self::assertArrayNotHasKey(MParameter::$USERID->getName(), $req->getParameters());
