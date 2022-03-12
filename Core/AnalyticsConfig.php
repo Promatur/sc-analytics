@@ -21,6 +21,13 @@ class AnalyticsConfig
     public static $debug = false;
 
     /**
+     * Specify the version of your own app here.
+     *
+     * @var string|null A version string
+     */
+    public static $version;
+
+    /**
      * Possible options: 'auto', 'matomo', 'google analytics'.
      *
      * @var string Preferred analytics handler

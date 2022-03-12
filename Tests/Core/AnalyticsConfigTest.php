@@ -21,6 +21,8 @@ class AnalyticsConfigTest extends TestCase
      */
     public function testValues(): void
     {
+        self::assertFalse(AnalyticsConfig::$debug);
+        self::assertNull(AnalyticsConfig::$version);
         self::assertEquals("auto", AnalyticsConfig::$preferred);
         self::assertEmpty(AnalyticsConfig::$matomoID);
         self::assertIsNotArray(AnalyticsConfig::$matomoID);
