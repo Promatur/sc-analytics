@@ -35,6 +35,13 @@ class AnalyticsConfig
     public static $assets = "assets";
 
     /**
+     * The default currency for all ECommerce events.
+     *
+     * @var string EUR, USD, GBP, ...
+     */
+    public static $currency = "USD";
+
+    /**
      * Your preferred analytics handler. Possible options: 'auto', 'matomo', 'google analytics'.
      *
      * @var string Preferred analytics handler
