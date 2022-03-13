@@ -32,7 +32,7 @@ class AnalyticsConfigTest extends TestCase
         self::assertIsNotArray(AnalyticsConfig::$matomoToken);
         self::assertEmpty(AnalyticsConfig::$googleAnalyticsIDs);
         self::assertIsArray(AnalyticsConfig::$googleAnalyticsIDs);
-        self::assertEquals("libraries", AnalyticsConfig::$assets);
+        self::assertEquals("assets", AnalyticsConfig::$assets);
     }
 
 }

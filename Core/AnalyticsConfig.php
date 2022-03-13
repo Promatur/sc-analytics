@@ -32,7 +32,7 @@ class AnalyticsConfig
      *
      * @var string Location of the JavaScript assets
      */
-    public static $assets = "libraries";
+    public static $assets = "assets";
 
     /**
      * Your preferred analytics handler. Possible options: 'auto', 'matomo', 'google analytics'.

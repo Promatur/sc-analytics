@@ -60,7 +60,7 @@ configure the location of the assets in your `composer.json`:
 ```json
 {
   "extra": {
-    "assets-dir": "libraries",
+    "assets-dir": "assets",
     "assets-strategy": "copy"
   }
 }
