@@ -4,7 +4,7 @@ function gtag() {
     dataLayer.push(arguments)
 }
 
-let sc_gaInfo = document.getElementById("_analytics");
+let sc_gaInfo = document.getElementById("_ga");
 let t = sc_gaInfo.dataset.keys.split(";"),
     u = sc_gaInfo.dataset.clientid;
 window.dataLayer = window.dataLayer || [], t.forEach(t => window["ga-disable-" + t] = !sc_allowGA), (gtag("js", new Date), t.forEach(e => gtag("config", e, {
