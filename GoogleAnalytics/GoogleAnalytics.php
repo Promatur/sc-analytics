@@ -7,6 +7,7 @@ use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 
 /**
  * Class GoogleAnalytics. Responsible for managing Google Analytics.
@@ -41,7 +42,24 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
     {
-        return "";// TODO: Implement loadJS() method.
+        if (!$this->isAvailable()) {
+            return "";
+        }
+        if (is_null($pageViewRequest)) {
+            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof ARequest) {
+                /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+                $pageViewRequest = $GLOBALS['sc_pageView'];
+            } else {
+                $pageViewRequest = new GAPageViewRequest($pageData);
+            }
+        }
+        $pageViewRequest->send();
+        $assets = HelperFunctions::getAssetsDir();
+        $result = '<script async src="https://www.googletagmanager.com/gtag/js?id=' . AnalyticsConfig::$googleAnalyticsIDs[0] . '"></script>';
+        if (file_exists($assets . '/ga.min.js')) {
+            $result .= '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/ga.min.js" id="_ga" data-keys="' . implode(";", AnalyticsConfig::$googleAnalyticsIDs) . '" data-clientid="' . self::getClientID() . '" defer></script>';
+        }
+        return $result;
     }
 
     /**
