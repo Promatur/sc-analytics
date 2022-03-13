@@ -101,7 +101,7 @@ class GoogleAnalytics implements AnalyticsHandler
     /**
      * @inheritDoc
      */
-    public function exception(?string $description = null, ?bool $fatal = null): ARequest
+    public function exception(?string $description = null, bool $fatal = false): ARequest
     {
         return new GAExceptionRequest($description, $fatal);
     }

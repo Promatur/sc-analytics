@@ -24,9 +24,9 @@ class GAExceptionRequest extends GARequest
     /**
      * GAExceptionRequest constructor.
      * @param string|null $description A description of the exception
-     * @param bool|null $fatal true if the exception was fatal
+     * @param bool $fatal true if the exception was fatal
      */
-    public function __construct(?string $description = null, ?bool $fatal = null)
+    public function __construct(?string $description = null, bool $fatal = false)
     {
         parent::__construct();
         $this->setType("exception");

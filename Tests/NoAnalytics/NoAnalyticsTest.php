@@ -38,4 +38,52 @@ class NoAnalyticsTest extends TestCase
         $analytics = new NoAnalytics();
         self::assertEquals("No", $analytics->getName());
     }
+
+    public function testEvent(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->event(false, "category", "action"));
+    }
+
+    public function testException(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->exception());
+    }
+
+    public function testPageView(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->pageView(null));
+    }
+
+    public function testSocial(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->social("Twitter", "tweet", "https://promatur.com"));
+    }
+
+    public function testTiming(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->timing("Assets", "script.js", 13));
+    }
+
+    public function testSearch(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->search(null, "promatur", 27));
+    }
+
+    public function testLogout(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->logout());
+    }
+
+    public function testDownload(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->download("image.jpg"));
+    }
 }

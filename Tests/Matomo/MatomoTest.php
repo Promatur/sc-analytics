@@ -10,8 +10,24 @@ use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\Matomo;
+use ScAnalytics\Matomo\Requests\MDownloadRequest;
+use ScAnalytics\Matomo\Requests\MEventRequest;
+use ScAnalytics\Matomo\Requests\MExceptionRequest;
+use ScAnalytics\Matomo\Requests\MLogoutRequest;
+use ScAnalytics\Matomo\Requests\MPageViewRequest;
 use ScAnalytics\Matomo\Requests\MRequest;
+use ScAnalytics\Matomo\Requests\MSearchRequest;
+use ScAnalytics\Matomo\Requests\MSocialRequest;
+use ScAnalytics\Matomo\Requests\MTimingRequest;
 
+/**
+ * Tests the Matomo class.
+ *
+ * @author Jan-Nicklas Adler
+ * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @copyright All Rights Reserved.
+ */
 class MatomoTest extends TestCase
 {
 
@@ -103,6 +119,7 @@ class MatomoTest extends TestCase
         $pageViewId = MRequest::getPageViewID() ?? "";
         self::assertStringContainsString('<script', $code);
         self::assertStringContainsString('data-pv="' . $pageViewId . '"', $code);
+        self::assertStringContainsString('id="_matomo"', $code);
         self::assertStringContainsString("/matomo.min.js", $code);
         self::assertStringContainsString('data-url="https://example.com/"', $code);
         self::assertStringContainsString('data-siteid="2"', $code);
@@ -121,5 +138,53 @@ class MatomoTest extends TestCase
 
         $_SESSION['matomo'] = ["visitorId" => "abc"];
         self::assertEquals("abc", Matomo::getVisitorId());
+    }
+
+    public function testEvent(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MEventRequest::class, $ga->event(false, "category", "action"));
+    }
+
+    public function testException(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MExceptionRequest::class, $ga->exception());
+    }
+
+    public function testPageView(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MPageViewRequest::class, $ga->pageView(null));
+    }
+
+    public function testSocial(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MSocialRequest::class, $ga->social("Twitter", "tweet", "https://promatur.com"));
+    }
+
+    public function testTiming(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MTimingRequest::class, $ga->timing("Assets", "script.js", 13));
+    }
+
+    public function testSearch(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MSearchRequest::class, $ga->search(null, "promatur", 27));
+    }
+
+    public function testLogout(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MLogoutRequest::class, $ga->logout());
+    }
+
+    public function testDownload(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MDownloadRequest::class, $ga->download("image.jpg"));
     }
 }
