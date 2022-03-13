@@ -7,7 +7,14 @@ use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GALogoutRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GASearchRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GASocialRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
 
 /**
  * Class GoogleAnalytics. Responsible for managing Google Analytics.
@@ -79,5 +86,71 @@ class GoogleAnalytics implements AnalyticsHandler
             $_SESSION['ga_tempid'] = HelperFunctions::generateUUID();
         }
         return $_SESSION['ga_tempid'];
+    }
+
+    // - Requests
+
+    /**
+     * @inheritDoc
+     */
+    public function event(bool $interactive, string $category, string $action, ?string $label = null, ?int $value = null): ARequest
+    {
+        return new GAEventRequest($interactive, $category, $action, $label, $value);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function exception(?string $description = null, ?bool $fatal = null): ARequest
+    {
+        return new GAExceptionRequest($description, $fatal);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function pageView(?PageData $pageData): ARequest
+    {
+        return new GAPageViewRequest($pageData);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function social(string $network, string $action, string $target): ARequest
+    {
+        return new GASocialRequest($network, $action, $target);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function timing(string $group, string $name, int $milliseconds, ?string $label = null): ARequest
+    {
+        return new GATimingRequest($group, $name, $milliseconds, $label);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function search(?PageData $pageData, string $keyword, int $results, string $category = "all"): ARequest
+    {
+        return new GASearchRequest($pageData, $keyword, $results, $category);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function logout(): ARequest
+    {
+        return new GALogoutRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function download(string $fileName, ?int $size = null): ARequest
+    {
+        return new GADownloadRequest($fileName, $size);
     }
 }

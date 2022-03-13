@@ -9,7 +9,14 @@ use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\Matomo\Requests\MDownloadRequest;
+use ScAnalytics\Matomo\Requests\MEventRequest;
+use ScAnalytics\Matomo\Requests\MExceptionRequest;
+use ScAnalytics\Matomo\Requests\MLogoutRequest;
 use ScAnalytics\Matomo\Requests\MPageViewRequest;
+use ScAnalytics\Matomo\Requests\MSearchRequest;
+use ScAnalytics\Matomo\Requests\MSocialRequest;
+use ScAnalytics\Matomo\Requests\MTimingRequest;
 
 /**
  * Class Matomo. The matomo analytics handler handles the integration of the Matomo analytics platform.
@@ -318,5 +325,71 @@ class Matomo implements AnalyticsHandler
     protected static function getCurrentHost(): string
     {
         return $_SERVER['HTTP_HOST'] ?? 'unknown';
+    }
+
+    // - Requests
+
+    /**
+     * @inheritDoc
+     */
+    public function event(bool $interactive, string $category, string $action, ?string $label = null, ?int $value = null): ARequest
+    {
+        return new MEventRequest($category, $action, $label, $value);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function exception(?string $description = null, bool $fatal = false): ARequest
+    {
+        return new MExceptionRequest($description, $fatal);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function pageView(?PageData $pageData): ARequest
+    {
+        return new MPageViewRequest($pageData);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function social(string $network, string $action, string $target): ARequest
+    {
+        return new MSocialRequest($network, $action, $target);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function timing(string $group, string $name, int $milliseconds, ?string $label = null): ARequest
+    {
+        return new MTimingRequest($group, $name, $milliseconds, $label);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function search(?PageData $pageData, string $keyword, int $results, string $category = "all"): ARequest
+    {
+        return new MSearchRequest($pageData, $keyword, $results, $category);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function logout(): ARequest
+    {
+        return new MLogoutRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function download(string $fileName, ?int $size = null): ARequest
+    {
+        return new MDownloadRequest($fileName, $size);
     }
 }

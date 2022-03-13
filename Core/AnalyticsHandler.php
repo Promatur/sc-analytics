@@ -33,4 +33,84 @@ interface AnalyticsHandler
      * @return string HTML code
      */
     public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string;
+
+    // - Requests
+
+    /**
+     * Events are user interactions with content that can be measured independently of a web page or a screen load.
+     *
+     * @param bool $interactive A boolean, if the event is a result of user interaction
+     * @param string $category Typically the object that was interacted with
+     * @param string $action The type of interaction
+     * @param string|null $label Useful for categorizing events
+     * @param int|null $value A numeric value associated with the event
+     * @return ARequest The analytics request
+     */
+    public function event(bool $interactive, string $category, string $action, ?string $label = null, ?int $value = null): ARequest;
+
+    /**
+     * Exception tracking allows you to measure the number and type of crashes or errors that occur on your property.
+     *
+     * @param string|null $description A description of the exception
+     * @param bool $fatal true if the exception was fatal
+     * @return ARequest The analytics request
+     */
+    public function exception(?string $description = null, bool $fatal = false): ARequest;
+
+    /**
+     * Page view measurement allows you to measure the number of views you had for a particular page on your website.
+     *
+     * @param PageData|null $pageData Data of the current page
+     * @return ARequest The analytics request
+     */
+    public function pageView(?PageData $pageData): ARequest;
+
+    /**
+     * You can use social interaction analytics to measure the number of times users click on social buttons embedded in webpages. For example, you might measure a Facebook "Like" or a Twitter "Tweet".
+     *
+     * @param string $network The network on which the action occurs (e.g. Facebook, Twitter)
+     * @param string $action The type of action that happens (e.g. Like, Send, Tweet)
+     * @param string $target Specifies the target of a social interaction. This value is typically a URL but can be any text (e.g. https://promatur.com)
+     * @return ARequest The analytics request
+     */
+    public function social(string $network, string $action, string $target): ARequest;
+
+    /**
+     * Reducing page load time can improve the overall user experience of a site.
+     *
+     * @param string $group A string for categorizing all user timing variables into logical groups (e.g. 'JS Dependencies')
+     * @param string $name A string to identify the variable being recorded (e.g. 'load')
+     * @param int $milliseconds The number of milliseconds in elapsed time to report to Analytics (e.g. 20)
+     * @param string|null $label A string that can be used to add flexibility in visualizing user timings in the reports (e.g. 'Google CDN')
+     * @return ARequest The analytics request
+     */
+    public function timing(string $group, string $name, int $milliseconds, ?string $label = null): ARequest;
+
+    /**
+     * Site Search tracking allows tracking how people use the website’s internal search engine.
+     *
+     * @param PageData|null $pageData The data of the viewed page
+     * @param string $keyword The keyword of the search request
+     * @param int $results The amount of results of the search request
+     * @param string $category The category of the search request (for example: products, help articles, ...)
+     * @return ARequest The analytics request
+     */
+    public function search(?PageData $pageData, string $keyword, int $results, string $category = "all"): ARequest;
+
+    /**
+     * Tracks the event of a user logging out of his/her account.
+     *
+     * @return ARequest The analytics request
+     */
+    public function logout(): ARequest;
+
+    /**
+     * Used for tracking downloads.
+     *
+     * @param string $fileName The name of the file including the type (for example: <i>file.zip</i>)
+     * @param int|null $size The size of the file in bytes
+     * @return ARequest The analytics request
+     */
+    public function download(string $fileName, ?int $size = null): ARequest;
+
 }
