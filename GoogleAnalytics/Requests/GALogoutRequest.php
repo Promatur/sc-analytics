@@ -20,7 +20,7 @@ class GALogoutRequest extends GAEventRequest
      */
     public function __construct()
     {
-        parent::__construct(true, "account", "logout");
+        parent::__construct(true, "Account", "logout");
         $this->setUserIdentifier(null);
     }
 

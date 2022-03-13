@@ -31,7 +31,7 @@ class GAPageViewRequest extends GARequest
         parent::__construct();
         $this->setType("pageview");
         try {
-            $this->setParameter(GAParameter::$DOCUMENTTITLE, is_null($pageData) ? ($_GET['page'] ?? "-") : $pageData->getPageTitle());
+            $this->setParameter(GAParameter::$DOCUMENTTITLE, is_null($pageData) ? ($_GET['page'] ?? null) : $pageData->getPageTitle());
         } catch (JsonException $ignored) {
         }
         $this->updateGenerationTime();

@@ -59,5 +59,10 @@ class MExceptionRequestTest extends TestCase
         self::assertEquals("Exception", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
         self::assertEquals("Non-Fatal", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
         self::assertEquals("Error 5014", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+
+        $req = new MExceptionRequest("Error 5015");
+        self::assertEquals("Exception", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("Non-Fatal", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
+        self::assertEquals("Error 5015", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
     }
 }

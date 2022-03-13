@@ -62,6 +62,7 @@ class MPageViewRequestTest extends TestCase
         self::set("analytics", null);
         self::set("analyticsList", []);
         self::set("scope", new Scope());
+        unset($GLOBALS['start_time']);
     }
 
     /**
