@@ -22,32 +22,6 @@ use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 class GAPageViewRequestTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-        unset($GLOBALS['start_time']);
-    }
-
     public function test__construct(): void
     {
         Analytics::init();
@@ -63,6 +37,32 @@ class GAPageViewRequestTest extends TestCase
 
         $req = new GAPageViewRequest(new PageData("Title"));
         self::assertEquals("Title", $req->getParameters()[GAParameter::$DOCUMENTTITLE->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+        unset($GLOBALS['start_time']);
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 
 }

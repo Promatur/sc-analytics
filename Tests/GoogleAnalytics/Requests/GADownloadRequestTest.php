@@ -2,13 +2,13 @@
 
 namespace ScAnalytics\Tests\GoogleAnalytics\Requests;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the GADownloadRequest class.
@@ -20,6 +20,27 @@ use PHPUnit\Framework\TestCase;
  */
 class GADownloadRequestTest extends TestCase
 {
+
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new GADownloadRequest("file.txt", 20);
+        self::assertEquals("Download", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("download", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
+        self::assertEquals("file.txt", $req->getParameters()[GAParameter::$EVENTLABEL->getName()]);
+        self::assertEquals(20, $req->getParameters()[GAParameter::$EVENTVALUE->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
 
     /**
      * Helper function setting properties using reflection.
@@ -34,26 +55,5 @@ class GADownloadRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new GADownloadRequest("file.txt", 20);
-        self::assertEquals("Download", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("download", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
-        self::assertEquals("file.txt", $req->getParameters()[GAParameter::$EVENTLABEL->getName()]);
-        self::assertEquals(20, $req->getParameters()[GAParameter::$EVENTVALUE->getName()]);
     }
 }

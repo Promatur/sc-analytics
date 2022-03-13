@@ -6,10 +6,8 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
-use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
-use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAScreenViewRequest;
 
 /**
@@ -22,31 +20,6 @@ use ScAnalytics\GoogleAnalytics\Requests\GAScreenViewRequest;
  */
 class GAScreenViewRequestTest extends TestCase
 {
-
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
 
     public function test__construct(): void
     {
@@ -63,5 +36,30 @@ class GAScreenViewRequestTest extends TestCase
         self::assertEquals("App-2", $req->getParameters()[GAParameter::$APPID->getName()]);
         self::assertEquals("4cs2", $req->getParameters()[GAParameter::$APPINSTALLERID->getName()]);
 
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 }

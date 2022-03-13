@@ -21,6 +21,27 @@ use ScAnalytics\Matomo\Requests\MTimingRequest;
 class MTimingRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new MTimingRequest("cURL", "loadImage", 24, "Google CDN");
+        self::assertEquals("Timing - cURL", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("loadImage", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
+        self::assertEquals("Google CDN", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertEquals("24", $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,26 +55,5 @@ class MTimingRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new MTimingRequest("cURL", "loadImage", 24, "Google CDN");
-        self::assertEquals("Timing - cURL", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("loadImage", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("Google CDN", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
-        self::assertEquals("24", $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
     }
 }

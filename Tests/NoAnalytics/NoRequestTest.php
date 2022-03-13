@@ -21,38 +21,6 @@ use ScAnalytics\NoAnalytics\NoRequest;
 class NoRequestTest extends TestCase
 {
 
-    /**
-     * Helper function accessing properties using reflection.
-     *
-     * @param NoRequest $instance The instance to get the value from
-     * @param string $field Name of the field
-     * @return mixed The contents of the field
-     * @throws ReflectionException
-     */
-    private static function get(NoRequest $instance, string $field)
-    {
-        $apiDataClass = new ReflectionClass(ARequest::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        return $prop->getValue($instance);
-    }
-
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param NoRequest $instance The instance to set the value for
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(NoRequest $instance, string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(ARequest::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($instance, $value);
-    }
-
     public function testSend(): void
     {
         $req = new NoRequest();
@@ -104,6 +72,22 @@ class NoRequestTest extends TestCase
     }
 
     /**
+     * Helper function accessing properties using reflection.
+     *
+     * @param NoRequest $instance The instance to get the value from
+     * @param string $field Name of the field
+     * @return mixed The contents of the field
+     * @throws ReflectionException
+     */
+    private static function get(NoRequest $instance, string $field)
+    {
+        $apiDataClass = new ReflectionClass(ARequest::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        return $prop->getValue($instance);
+    }
+
+    /**
      * @throws ReflectionException
      */
     public function testSetDebug(): void
@@ -124,6 +108,22 @@ class NoRequestTest extends TestCase
         $req->setDebug(true);
         self::set($req, "debug", true);
         self::assertTrue($req->isDebug());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param NoRequest $instance The instance to set the value for
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(NoRequest $instance, string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(ARequest::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($instance, $value);
     }
 
     /**

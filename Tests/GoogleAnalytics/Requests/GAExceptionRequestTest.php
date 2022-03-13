@@ -21,31 +21,6 @@ use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
 class GAExceptionRequestTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
     public function test__construct(): void
     {
         Analytics::init();
@@ -61,6 +36,31 @@ class GAExceptionRequestTest extends TestCase
         $req = new GAExceptionRequest("Error 5011");
         self::assertEquals("Error 5011", $req->getParameters()[GAParameter::$EXCEPTIONDESCRIPTION->getName()]);
         self::assertEquals("0", $req->getParameters()[GAParameter::$EXCEPTIONFATAL->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 
 }

@@ -15,11 +15,14 @@ Server-Client-Analytics
 
 ## Description
 
-A combination of clientside and serverside analytics for PHP-based websites. This repository builds upon existing analytics solutions and offers integrations for [Matomo](https://matomo.org) and [Google Analytics](https://analytics.google.com).
+A combination of clientside and serverside analytics for PHP-based websites. This repository builds upon existing
+analytics solutions and offers integrations for [Matomo](https://matomo.org)
+and [Google Analytics](https://analytics.google.com).
 
 ## Usage
 
-It is recommended to use SCAnalytics with composer, which is the easiest way to use it. Just add `promatur/sc-analytics` to your projects requirements.
+It is recommended to use SCAnalytics with composer, which is the easiest way to use it. Just add `promatur/sc-analytics`
+to your projects requirements.
 
 ```shell
 composer require promatur/sc-analytics
@@ -51,7 +54,8 @@ Learn more in the [Wiki](https://github.com/Promatur/sc-analytics/wiki).
 
 ### Assets
 
-SCAnalytics also provides JavaScript assets. If you want the combination of server-side and client-side analytics, configure the location of the assets in your `composer.json`:
+SCAnalytics also provides JavaScript assets. If you want the combination of server-side and client-side analytics,
+configure the location of the assets in your `composer.json`:
 
 ```json
 {
@@ -72,7 +76,8 @@ Learn more about the [Composer Assets Plugin](https://github.com/frontpack/compo
 
 ### Error handling
 
-This package has an integration of [Sentry](https://github.com/getsentry/sentry-php), which is optional to use. Errors are automatically handled by Sentry and additional information is added.
+This package has an integration of [Sentry](https://github.com/getsentry/sentry-php), which is optional to use. Errors
+are automatically handled by Sentry and additional information is added.
 
 ## Contributing
 
@@ -83,6 +88,7 @@ This is a free/libre library under license LGPL v3 or later.
 Your pull requests and/or feedback is very welcome!
 
 ### Contributors
+
 Created by Jan-Nicklas Adler.
 
 I am looking forward to your contributions and pull requests!

@@ -19,6 +19,25 @@ class HelperFunctions
 {
 
     /**
+     * Locates the directory storing the assets. Also works with unit tests.
+     *
+     * @return string Directory path of the asset directory
+     */
+    public static function getAssetsDir(): string
+    {
+        $root = self::getRoot();
+        if (file_exists($root . "/Assets")) {
+            return $root . "/Assets";
+        }
+
+        if (file_exists($root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics")) {
+            return $root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics";
+        }
+
+        throw new RuntimeException("Could not get asset directory");
+    }
+
+    /**
      * Returns the path to the project root folder, where the composer.json and the vendor directory are located. Does <b>not</b> include a trailing slash. Also works with unit tests.
      *
      * @return string Directory path of the project root
@@ -41,22 +60,27 @@ class HelperFunctions
     }
 
     /**
-     * Locates the directory storing the assets. Also works with unit tests.
+     * Gets the full URL, to user is currently on.
      *
-     * @return string Directory path of the asset directory
+     * @return string Full URL
      */
-    public static function getAssetsDir(): string
+    public static function getURL(): string
     {
-        $root = self::getRoot();
-        if (file_exists($root . "/Assets")) {
-            return $root . "/Assets";
-        }
+        $requestURI = $_SERVER['REQUEST_URI'] ?? "";
+        return self::getDomain() . $requestURI;
+    }
 
-        if (file_exists($root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics")) {
-            return $root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics";
-        }
-
-        throw new RuntimeException("Could not get asset directory");
+    /**
+     * Gets the domain, to user is currently on.
+     *
+     * @return string Domain of the user
+     */
+    public static function getDomain(): string
+    {
+        $s = self::isHTTPS() ? "s" : "";
+        $sp = strtolower($_SERVER["SERVER_PROTOCOL"] ?? "HTTP/1.1");
+        $protocol = explode('/', $sp)[0] . $s;
+        return $protocol . "://" . ($_SERVER['SERVER_NAME'] ?? "UNKNOWN");
     }
 
     /**
@@ -74,30 +98,6 @@ class HelperFunctions
             $isSecure = true;
         }
         return $isSecure;
-    }
-
-    /**
-     * Gets the domain, to user is currently on.
-     *
-     * @return string Domain of the user
-     */
-    public static function getDomain(): string
-    {
-        $s = self::isHTTPS() ? "s" : "";
-        $sp = strtolower($_SERVER["SERVER_PROTOCOL"] ?? "HTTP/1.1");
-        $protocol = explode('/', $sp)[0] . $s;
-        return $protocol . "://" . ($_SERVER['SERVER_NAME'] ?? "UNKNOWN");
-    }
-
-    /**
-     * Gets the full URL, to user is currently on.
-     *
-     * @return string Full URL
-     */
-    public static function getURL(): string
-    {
-        $requestURI = $_SERVER['REQUEST_URI'] ?? "";
-        return self::getDomain() . $requestURI;
     }
 
     /**

@@ -17,11 +17,6 @@ use ScAnalytics\Core\HelperFunctions;
 class HelperFunctionsTest extends TestCase
 {
 
-    protected function tearDown(): void
-    {
-        unset($_SERVER['HTTPS'], $_SERVER['SERVER_PORT'], $_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['HTTP_X_FORWARDED_SSL'], $_SERVER['SERVER_NAME'], $_SERVER['REQUEST_URI']);
-    }
-
     public function testGetRoot(): void
     {
         self::assertNotEmpty(HelperFunctions::getRoot());
@@ -58,7 +53,6 @@ class HelperFunctionsTest extends TestCase
         }
     }
 
-    /** @noinspection HttpUrlsUsage */
     public function testGetDomain(): void
     {
         self::assertEquals("http://UNKNOWN", HelperFunctions::getDomain());
@@ -72,6 +66,8 @@ class HelperFunctionsTest extends TestCase
         $_SERVER['HTTPS'] = "off";
         self::assertEquals("http://promatur.com", HelperFunctions::getDomain());
     }
+
+    /** @noinspection HttpUrlsUsage */
 
     public function testGetURL(): void
     {
@@ -120,5 +116,10 @@ class HelperFunctionsTest extends TestCase
             $list[] = $uuid;
             self::assertMatchesRegularExpression("/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/", $uuid);
         }
+    }
+
+    protected function tearDown(): void
+    {
+        unset($_SERVER['HTTPS'], $_SERVER['SERVER_PORT'], $_SERVER['HTTP_X_FORWARDED_PROTO'], $_SERVER['HTTP_X_FORWARDED_SSL'], $_SERVER['SERVER_NAME'], $_SERVER['REQUEST_URI']);
     }
 }

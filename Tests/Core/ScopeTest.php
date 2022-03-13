@@ -19,6 +19,20 @@ class ScopeTest extends TestCase
 {
 
     /**
+     * @throws ReflectionException
+     */
+    public function test__construct(): void
+    {
+        $scope = new Scope();
+        self::assertNull(self::get($scope, "language"));
+        self::assertIsArray(self::get($scope, "customDimensions"));
+        self::assertEmpty(self::get($scope, "customDimensions"));
+        self::assertFalse(self::get($scope, "analyticsConsent"));
+        self::assertNull(self::get($scope, "clientId"));
+        self::assertNull(self::get($scope, "userId"));
+    }
+
+    /**
      * Helper function accessing properties using reflection.
      *
      * @param Scope $instance The instance to get the value from
@@ -32,36 +46,6 @@ class ScopeTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         return $prop->getValue($instance);
-    }
-
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param Scope $instance The instance to set the value for
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(Scope $instance, string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Scope::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($instance, $value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    public function test__construct(): void
-    {
-        $scope = new Scope();
-        self::assertNull(self::get($scope, "language"));
-        self::assertIsArray(self::get($scope, "customDimensions"));
-        self::assertEmpty(self::get($scope, "customDimensions"));
-        self::assertFalse(self::get($scope, "analyticsConsent"));
-        self::assertNull(self::get($scope, "clientId"));
-        self::assertNull(self::get($scope, "userId"));
     }
 
     /**
@@ -114,6 +98,22 @@ class ScopeTest extends TestCase
 
         self::set($scope, "analyticsConsent", false);
         self::assertFalse($scope->hasAnalyticsConsent());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param Scope $instance The instance to set the value for
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(Scope $instance, string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Scope::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($instance, $value);
     }
 
     /**

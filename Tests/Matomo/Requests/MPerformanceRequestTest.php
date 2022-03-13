@@ -2,13 +2,13 @@
 
 namespace ScAnalytics\Tests\Matomo\Requests;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\MPerformanceRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the MPerformanceRequest class.
@@ -20,6 +20,30 @@ use PHPUnit\Framework\TestCase;
  */
 class MPerformanceRequestTest extends TestCase
 {
+
+    public function test__construct(): void
+    {
+        Analytics::init();
+        $req = new MPerformanceRequest(null, 1, 2, 3, 4, 5, 6);
+
+        self::assertNotEmpty($req->getParameters()[MParameter::$PAGEVIEWID->getName()]);
+        self::assertEquals("1", $req->getParameters()[MParameter::$NETWORKTIME->getName()]);
+        self::assertEquals("2", $req->getParameters()[MParameter::$SERVERTIME->getName()]);
+        self::assertEquals("3", $req->getParameters()[MParameter::$TRANSFERTIME->getName()]);
+        self::assertEquals("4", $req->getParameters()[MParameter::$DOMPROCESSINGTIME->getName()]);
+        self::assertEquals("5", $req->getParameters()[MParameter::$DOMCOMPLETIONTIME->getName()]);
+        self::assertEquals("6", $req->getParameters()[MParameter::$ONLOADTIME->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
 
     /**
      * Helper function setting properties using reflection.
@@ -34,29 +58,5 @@ class MPerformanceRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-        $req = new MPerformanceRequest(null, 1, 2, 3, 4, 5, 6);
-
-        self::assertNotEmpty($req->getParameters()[MParameter::$PAGEVIEWID->getName()]);
-        self::assertEquals("1", $req->getParameters()[MParameter::$NETWORKTIME->getName()]);
-        self::assertEquals("2", $req->getParameters()[MParameter::$SERVERTIME->getName()]);
-        self::assertEquals("3", $req->getParameters()[MParameter::$TRANSFERTIME->getName()]);
-        self::assertEquals("4", $req->getParameters()[MParameter::$DOMPROCESSINGTIME->getName()]);
-        self::assertEquals("5", $req->getParameters()[MParameter::$DOMCOMPLETIONTIME->getName()]);
-        self::assertEquals("6", $req->getParameters()[MParameter::$ONLOADTIME->getName()]);
     }
 }

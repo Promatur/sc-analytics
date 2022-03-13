@@ -4,7 +4,6 @@
 namespace ScAnalytics\GoogleAnalytics\Requests;
 
 
-
 use JsonException;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 

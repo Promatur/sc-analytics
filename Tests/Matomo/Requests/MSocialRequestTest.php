@@ -21,6 +21,26 @@ use ScAnalytics\Matomo\Requests\MSocialRequest;
 class MSocialRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new MSocialRequest("Twitter", "tweet", "https://promatur.com");
+        self::assertEquals("Social Media", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("Twitter (tweet)", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
+        self::assertEquals("https://promatur.com", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,25 +54,5 @@ class MSocialRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new MSocialRequest("Twitter", "tweet", "https://promatur.com");
-        self::assertEquals("Social Media", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("Twitter (tweet)", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("https://promatur.com", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
     }
 }

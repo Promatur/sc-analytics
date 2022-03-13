@@ -2,13 +2,26 @@
 
 namespace ScAnalytics\Tests\Core;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Core\AParameter;
-use PHPUnit\Framework\TestCase;
 
 class AParameterTest extends TestCase
 {
+
+    /**
+     * Null values are excluded by type definition.
+     *
+     * @throws ReflectionException
+     */
+    public function test__construct(): void
+    {
+        self::assertEquals("test", self::get($this->getMockForAbstractClass(AParameter::class, ["test"]), "name"));
+        self::assertEquals("abC", self::get($this->getMockForAbstractClass(AParameter::class, ["abC"]), "name"));
+        self::assertEquals("", self::get($this->getMockForAbstractClass(AParameter::class, [""]), "name"));
+        self::assertEquals(1, self::get($this->getMockForAbstractClass(AParameter::class, [""]), "index"));
+    }
 
     /**
      * Helper function accessing properties using reflection.
@@ -27,6 +40,18 @@ class AParameterTest extends TestCase
     }
 
     /**
+     * Null values are excluded by type definition.
+     * @throws ReflectionException
+     */
+    public function testGetName(): void
+    {
+        $obj = $this->getMockForAbstractClass(AParameter::class, ["DeF"]);
+        self::assertEquals("DeF", $obj->getName());
+        self::set($obj, "name", "gHi");
+        self::assertEquals("gHi", $obj->getName());
+    }
+
+    /**
      * Helper function setting properties using reflection.
      *
      * @param AParameter $instance The instance to set the value for
@@ -41,31 +66,6 @@ class AParameterTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($instance, $value);
-    }
-
-    /**
-     * Null values are excluded by type definition.
-     *
-     * @throws ReflectionException
-     */
-    public function test__construct(): void
-    {
-        self::assertEquals("test", self::get($this->getMockForAbstractClass(AParameter::class, ["test"]), "name"));
-        self::assertEquals("abC", self::get($this->getMockForAbstractClass(AParameter::class, ["abC"]), "name"));
-        self::assertEquals("", self::get($this->getMockForAbstractClass(AParameter::class, [""]), "name"));
-        self::assertEquals(1, self::get($this->getMockForAbstractClass(AParameter::class, [""]), "index"));
-    }
-
-    /**
-     * Null values are excluded by type definition.
-     * @throws ReflectionException
-     */
-    public function testGetName(): void
-    {
-        $obj = $this->getMockForAbstractClass(AParameter::class, ["DeF"]);
-        self::assertEquals("DeF", $obj->getName());
-        self::set($obj, "name", "gHi");
-        self::assertEquals("gHi", $obj->getName());
     }
 
     /**

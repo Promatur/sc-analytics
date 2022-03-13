@@ -21,31 +21,6 @@ use ScAnalytics\Matomo\Requests\MExceptionRequest;
 class MExceptionRequestTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
     public function test__construct(): void
     {
         Analytics::init();
@@ -64,5 +39,30 @@ class MExceptionRequestTest extends TestCase
         self::assertEquals("Exception", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
         self::assertEquals("Non-Fatal", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
         self::assertEquals("Error 5015", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 }

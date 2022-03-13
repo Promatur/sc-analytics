@@ -34,68 +34,6 @@ class AnalyticsTest extends TestCase
     private static $unavailable;
 
     /**
-     * Helper function accessing properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @return mixed The contents of the field
-     * @throws ReflectionException
-     */
-    private static function get(string $field)
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        return $prop->getValue();
-    }
-
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    protected function setUp(): void
-    {
-        $mock = $this->getMockBuilder(AnalyticsHandler::class)->getMock();
-        $mock->method("getName")
-            ->willReturn("Available");
-        $mock->method("isAvailable")
-            ->willReturn(true);
-        $mock->method("loadJS")
-            ->willReturn("");
-        self::$available = $mock;
-
-        $mock = $this->getMockBuilder(AnalyticsHandler::class)->getMock();
-        $mock->method("getName")
-            ->willReturn("Unavailable");
-        $mock->method("isAvailable")
-            ->willReturn(false);
-        $mock->method("loadJS")
-            ->willReturn("");
-        self::$unavailable = $mock;
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-        AnalyticsConfig::$preferred = "auto";
-    }
-
-    /**
      * @throws ReflectionException
      */
     public function testAuto(): void
@@ -119,6 +57,21 @@ class AnalyticsTest extends TestCase
         self::set("analyticsList", [self::$unavailable]);
         Analytics::auto();
         self::assertNull(self::get("analytics"));
+    }
+
+    /**
+     * Helper function accessing properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @return mixed The contents of the field
+     * @throws ReflectionException
+     */
+    private static function get(string $field)
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        return $prop->getValue();
     }
 
     /**
@@ -195,5 +148,52 @@ class AnalyticsTest extends TestCase
         $scope = new Scope();
         self::set("scope", $scope);
         self::assertEquals($scope, Analytics::getScope());
+    }
+
+    protected function setUp(): void
+    {
+        $mock = $this->getMockBuilder(AnalyticsHandler::class)->getMock();
+        $mock->method("getName")
+            ->willReturn("Available");
+        $mock->method("isAvailable")
+            ->willReturn(true);
+        $mock->method("loadJS")
+            ->willReturn("");
+        self::$available = $mock;
+
+        $mock = $this->getMockBuilder(AnalyticsHandler::class)->getMock();
+        $mock->method("getName")
+            ->willReturn("Unavailable");
+        $mock->method("isAvailable")
+            ->willReturn(false);
+        $mock->method("loadJS")
+            ->willReturn("");
+        self::$unavailable = $mock;
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+        AnalyticsConfig::$preferred = "auto";
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 }

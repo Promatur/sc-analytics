@@ -31,39 +31,6 @@ use ScAnalytics\Matomo\Requests\MTimingRequest;
 class MatomoTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function setAnalytics(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    protected function setUp(): void
-    {
-        $_SESSION = [];
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        AnalyticsConfig::$matomoID = "";
-        AnalyticsConfig::$matomoEndpoint = "";
-        self::setAnalytics("analytics", null);
-        self::setAnalytics("analyticsList", []);
-        self::setAnalytics("scope", new Scope());
-        unset($_SESSION['matomo']);
-    }
-
     public function test__construct(): void
     {
         new Matomo();
@@ -186,5 +153,38 @@ class MatomoTest extends TestCase
     {
         $ga = new Matomo();
         self::assertInstanceOf(MDownloadRequest::class, $ga->download("image.jpg"));
+    }
+
+    protected function setUp(): void
+    {
+        $_SESSION = [];
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        AnalyticsConfig::$matomoID = "";
+        AnalyticsConfig::$matomoEndpoint = "";
+        self::setAnalytics("analytics", null);
+        self::setAnalytics("analyticsList", []);
+        self::setAnalytics("scope", new Scope());
+        unset($_SESSION['matomo']);
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function setAnalytics(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 }

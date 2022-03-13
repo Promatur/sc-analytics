@@ -21,6 +21,27 @@ use ScAnalytics\Matomo\Requests\MLogoutRequest;
 class MLogoutRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new MLogoutRequest();
+        self::assertEquals("Account", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("logout", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
+        self::assertEquals("1", $req->getParameters()[MParameter::$NEWVISIT->getName()]);
+        self::assertEquals("", $req->getParameters()[MParameter::$USERID->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,26 +55,5 @@ class MLogoutRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new MLogoutRequest();
-        self::assertEquals("Account", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("logout", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("1", $req->getParameters()[MParameter::$NEWVISIT->getName()]);
-        self::assertEquals("", $req->getParameters()[MParameter::$USERID->getName()]);
     }
 }

@@ -49,20 +49,6 @@ class Analytics
     }
 
     /**
-     * Activates the best analytics system by iterating over the list of possible analytics handlers and assigning the first one available.
-     * @see Analytics::$analytics List of possible handlers
-     */
-    public static function auto(): void
-    {
-        foreach (self::$analyticsList as $analytics) {
-            if ($analytics->isAvailable()) {
-                self::$analytics = $analytics;
-                break;
-            }
-        }
-    }
-
-    /**
      * It will automatically assign the correct analytics handler or use the configured one.
      *
      * @see Analytics::init() Call init() before this method
@@ -83,6 +69,20 @@ class Analytics
         }
         if (is_null(self::$analytics)) {
             self::$analytics = new NoAnalytics();
+        }
+    }
+
+    /**
+     * Activates the best analytics system by iterating over the list of possible analytics handlers and assigning the first one available.
+     * @see Analytics::$analytics List of possible handlers
+     */
+    public static function auto(): void
+    {
+        foreach (self::$analyticsList as $analytics) {
+            if ($analytics->isAvailable()) {
+                self::$analytics = $analytics;
+                break;
+            }
         }
     }
 

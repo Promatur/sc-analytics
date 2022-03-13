@@ -14,19 +14,21 @@ class ARequestTest extends TestCase
 {
 
     /**
-     * Helper function setting properties using reflection.
-     *
-     * @param ARequest $instance The instance to set the value for
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
      * @throws ReflectionException
      */
-    private static function set(ARequest $instance, string $field, $value): void
+    public function test__construct(): void
     {
-        $apiDataClass = new ReflectionClass(ARequest::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($instance, $value);
+        AnalyticsConfig::$debug = true;
+        $stub = $this->getMockForAbstractClass(ARequest::class);
+        self::assertTrue(self::get($stub, "debug"));
+        self::assertIsArray(self::get($stub, "parameters"));
+        self::assertEmpty(self::get($stub, "parameters"));
+
+        AnalyticsConfig::$debug = false;
+        $stub = $this->getMockForAbstractClass(ARequest::class);
+        self::assertFalse(self::get($stub, "debug"));
+        self::assertIsArray(self::get($stub, "parameters"));
+        self::assertEmpty(self::get($stub, "parameters"));
     }
 
     /**
@@ -43,29 +45,6 @@ class ARequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         return $prop->getValue($instance);
-    }
-
-    protected function tearDown(): void
-    {
-        AnalyticsConfig::$debug = false;
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    public function test__construct(): void
-    {
-        AnalyticsConfig::$debug = true;
-        $stub = $this->getMockForAbstractClass(ARequest::class);
-        self::assertTrue(self::get($stub, "debug"));
-        self::assertIsArray(self::get($stub, "parameters"));
-        self::assertEmpty(self::get($stub, "parameters"));
-
-        AnalyticsConfig::$debug = false;
-        $stub = $this->getMockForAbstractClass(ARequest::class);
-        self::assertFalse(self::get($stub, "debug"));
-        self::assertIsArray(self::get($stub, "parameters"));
-        self::assertEmpty(self::get($stub, "parameters"));
     }
 
     /**
@@ -92,6 +71,22 @@ class ARequestTest extends TestCase
 
         self::set($stub, "debug", false);
         self::assertFalse($stub->isDebug());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param ARequest $instance The instance to set the value for
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(ARequest $instance, string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(ARequest::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($instance, $value);
     }
 
     /**
@@ -139,5 +134,10 @@ class ARequestTest extends TestCase
         $stub = $this->getMockForAbstractClass(ARequest::class);
         self::set($stub, "parameters", ["a" => "b", "c" => "d"]);
         self::assertEquals(["a" => "b", "c" => "d"], $stub->getParameters());
+    }
+
+    protected function tearDown(): void
+    {
+        AnalyticsConfig::$debug = false;
     }
 }

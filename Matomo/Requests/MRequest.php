@@ -94,6 +94,17 @@ class MRequest extends ARequest
     }
 
     /**
+     * @inheritDoc
+     */
+    public function setUserIdentifier(?string $userId): void
+    {
+        try {
+            $this->setParameter(MParameter::$USERID, $userId);
+        } catch (JsonException $ignored) {
+        }
+    }
+
+    /**
      * Static, because there is only one global page view id.
      *
      * @return string|null Six character unique ID, which is different for each page view. Gets generated on a MPageViewRequest
@@ -101,6 +112,14 @@ class MRequest extends ARequest
     public static function getPageViewID(): ?string
     {
         return self::$pageViewID;
+    }
+
+    /**
+     * Generates a six character page view ID
+     */
+    public static function generatePageViewID(): void
+    {
+        self::$pageViewID = substr(md5(uniqid(mt_rand(), true)), 0, 6);
     }
 
     /**
@@ -187,27 +206,6 @@ class MRequest extends ARequest
     }
 
     /**
-     * Sets a custom variable for a visit scope.
-     *
-     * @param string $key The key of the variable
-     * @param array|string|integer|float|bool|null $value The value of the variable
-     * @throws JsonException
-     */
-    public function addCustomVariable(string $key, $value): void
-    {
-        if (!empty($key) && !is_null($value) && (!is_array($value) || !empty($value))) {
-            if (is_bool($value)) {
-                $value = $value ? "1" : "0";
-            } else if (is_array($value)) {
-                $value = json_encode($value, JSON_THROW_ON_ERROR);
-            } else {
-                $value = (string)$value;
-            }
-            $this->customVariables[] = [$key, $value];
-        }
-    }
-
-    /**
      * Evaluates the results by the curl request to determine, if it was successful.
      *
      * @param string $errors Errors returned by the request
@@ -226,21 +224,23 @@ class MRequest extends ARequest
     }
 
     /**
-     * Generates a six character page view ID
+     * Sets a custom variable for a visit scope.
+     *
+     * @param string $key The key of the variable
+     * @param array|string|integer|float|bool|null $value The value of the variable
+     * @throws JsonException
      */
-    public static function generatePageViewID(): void
+    public function addCustomVariable(string $key, $value): void
     {
-        self::$pageViewID = substr(md5(uniqid(mt_rand(), true)), 0, 6);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setUserIdentifier(?string $userId): void
-    {
-        try {
-            $this->setParameter(MParameter::$USERID, $userId);
-        } catch (JsonException $ignored) {
+        if (!empty($key) && !is_null($value) && (!is_array($value) || !empty($value))) {
+            if (is_bool($value)) {
+                $value = $value ? "1" : "0";
+            } else if (is_array($value)) {
+                $value = json_encode($value, JSON_THROW_ON_ERROR);
+            } else {
+                $value = (string)$value;
+            }
+            $this->customVariables[] = [$key, $value];
         }
     }
 

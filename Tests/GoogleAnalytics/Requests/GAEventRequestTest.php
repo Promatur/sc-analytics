@@ -21,6 +21,29 @@ use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 class GAEventRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new GAEventRequest(true, "Category", "action", "label", 2);
+        self::assertEquals("0", $req->getParameters()[GAParameter::$NONINTERACTION->getName()]);
+        self::assertEquals("event", $req->getParameters()[GAParameter::$TYPE->getName()]);
+        self::assertEquals("Category", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("action", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
+        self::assertEquals("label", $req->getParameters()[GAParameter::$EVENTLABEL->getName()]);
+        self::assertEquals(2, $req->getParameters()[GAParameter::$EVENTVALUE->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,28 +57,5 @@ class GAEventRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new GAEventRequest(true, "Category", "action", "label", 2);
-        self::assertEquals("0", $req->getParameters()[GAParameter::$NONINTERACTION->getName()]);
-        self::assertEquals("event", $req->getParameters()[GAParameter::$TYPE->getName()]);
-        self::assertEquals("Category", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("action", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
-        self::assertEquals("label", $req->getParameters()[GAParameter::$EVENTLABEL->getName()]);
-        self::assertEquals(2, $req->getParameters()[GAParameter::$EVENTVALUE->getName()]);
     }
 }

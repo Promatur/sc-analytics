@@ -22,40 +22,6 @@ use ScAnalytics\GoogleAnalytics\Requests\GARequest;
 class GARequestTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function setAnalytics(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    protected function setUp(): void
-    {
-        AnalyticsConfig::$googleAnalyticsIDs = ["UA-XXXXXX-X"];
-        Analytics::init();
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        AnalyticsConfig::$debug = false;
-        AnalyticsConfig::$googleAnalyticsIDs = [];
-        self::setAnalytics("analytics", null);
-        self::setAnalytics("analyticsList", []);
-        self::setAnalytics("scope", new Scope());
-        unset($GLOBALS['start_time']);
-    }
-
     public function test__construct(): void
     {
         $req = new GARequest();
@@ -106,5 +72,39 @@ class GARequestTest extends TestCase
 
         $req->setUserIdentifier(null);
         self::assertArrayNotHasKey(GAParameter::$USERID->getName(), $req->getParameters());
+    }
+
+    protected function setUp(): void
+    {
+        AnalyticsConfig::$googleAnalyticsIDs = ["UA-XXXXXX-X"];
+        Analytics::init();
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        AnalyticsConfig::$debug = false;
+        AnalyticsConfig::$googleAnalyticsIDs = [];
+        self::setAnalytics("analytics", null);
+        self::setAnalytics("analyticsList", []);
+        self::setAnalytics("scope", new Scope());
+        unset($GLOBALS['start_time']);
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function setAnalytics(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 }

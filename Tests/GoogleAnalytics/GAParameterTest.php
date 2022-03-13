@@ -5,7 +5,6 @@ namespace ScAnalytics\Tests\GoogleAnalytics;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
-use ScAnalytics\Core\AParameter;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 
 /**

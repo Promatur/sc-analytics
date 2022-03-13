@@ -2,13 +2,13 @@
 
 namespace ScAnalytics\Tests\GoogleAnalytics\Requests;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\GALogoutRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the GALogoutRequest class.
@@ -20,6 +20,27 @@ use PHPUnit\Framework\TestCase;
  */
 class GALogoutRequestTest extends TestCase
 {
+
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new GALogoutRequest();
+        self::assertEquals("0", $req->getParameters()[GAParameter::$NONINTERACTION->getName()]);
+        self::assertEquals("event", $req->getParameters()[GAParameter::$TYPE->getName()]);
+        self::assertEquals("Account", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("logout", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
 
     /**
      * Helper function setting properties using reflection.
@@ -34,27 +55,6 @@ class GALogoutRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new GALogoutRequest();
-        self::assertEquals("0", $req->getParameters()[GAParameter::$NONINTERACTION->getName()]);
-        self::assertEquals("event", $req->getParameters()[GAParameter::$TYPE->getName()]);
-        self::assertEquals("Account", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("logout", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
     }
 
 }

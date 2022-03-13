@@ -30,41 +30,6 @@ use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
 class GoogleAnalyticsTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function setAnalytics(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    protected function setUp(): void
-    {
-        AnalyticsConfig::$googleAnalyticsIDs = ["UA-XXXXXX-X"];
-        Analytics::init();
-        $_COOKIE = [];
-        $_SESSION = [];
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        AnalyticsConfig::$googleAnalyticsIDs = [];
-        self::setAnalytics("analytics", null);
-        self::setAnalytics("analyticsList", []);
-        self::setAnalytics("scope", new Scope());
-        unset($_COOKIE["_ga"], $_COOKIE['_gid'], $_SESSION['ga_tempid']);
-    }
-
     public function testGetName(): void
     {
         $ga = new GoogleAnalytics();
@@ -164,5 +129,40 @@ class GoogleAnalyticsTest extends TestCase
     {
         $ga = new GoogleAnalytics();
         self::assertInstanceOf(GADownloadRequest::class, $ga->download("image.jpg"));
+    }
+
+    protected function setUp(): void
+    {
+        AnalyticsConfig::$googleAnalyticsIDs = ["UA-XXXXXX-X"];
+        Analytics::init();
+        $_COOKIE = [];
+        $_SESSION = [];
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        AnalyticsConfig::$googleAnalyticsIDs = [];
+        self::setAnalytics("analytics", null);
+        self::setAnalytics("analyticsList", []);
+        self::setAnalytics("scope", new Scope());
+        unset($_COOKIE["_ga"], $_COOKIE['_gid'], $_SESSION['ga_tempid']);
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function setAnalytics(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
     }
 }

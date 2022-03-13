@@ -61,75 +61,11 @@ class Matomo implements AnalyticsHandler
     }
 
     /**
-     * Stores a variable in the matomo session storage.
-     *
-     * @param string $key Key of the value
-     * @param mixed $value Value
-     */
-    public static function setVariable(string $key, $value): void
-    {
-        if (!isset($_SESSION['matomo'])) {
-            $_SESSION['matomo'] = [];
-        }
-        $arr = $_SESSION['matomo'];
-        $arr[$key] = $value;
-        $_SESSION['matomo'] = $arr;
-    }
-
-    /**
-     * Loads a variable from the matomo session storage.
-     *
-     * @param string $key Key of the variable
-     * @return mixed|null Value of the variable
-     */
-    public static function getVariable(string $key)
-    {
-        return $_SESSION['matomo'][$key] ?? null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getName(): string
-    {
-        return "Matomo";
-    }
-
-    /**
      * @inheritDoc
      */
     public function isAvailable(): bool
     {
         return !empty(AnalyticsConfig::$matomoID) && !empty(AnalyticsConfig::$matomoEndpoint);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
-    {
-        if (!$this->isAvailable()) {
-            return "";
-        }
-        if (is_null($pageViewRequest)) {
-            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof ARequest) {
-                /** @noinspection CallableParameterUseCaseInTypeContextInspection */
-                $pageViewRequest = $GLOBALS['sc_pageView'];
-            } else {
-                $pageViewRequest = new MPageViewRequest($pageData);
-            }
-        }
-        /** @var MPageViewRequest $pageViewRequest */
-        $pageViewRequest->send();
-        $url = AnalyticsConfig::$matomoEndpoint;
-        if (!HelperFunctions::endsWith($url, "/")) {
-            $url .= "/";
-        }
-        $assets = HelperFunctions::getAssetsDir();
-        if (file_exists($assets . '/matomo.min.js')) {
-            return '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/matomo.min.js" id="_matomo" data-pv="' . $pageViewRequest->getPageViewId() . '" data-url="' . $url . '" data-siteid="' . AnalyticsConfig::$matomoID . '" data-visitorid="' . self::getVisitorId() . '" defer></script>';
-        }
-        return "";
     }
 
     /**
@@ -164,100 +100,14 @@ class Matomo implements AnalyticsHandler
     }
 
     /**
-     * If the user initiating the request has the Matomo first party cookie,
-     * this function will try and return the ID parsed from this first party cookie (found in $_COOKIE).
+     * Loads a variable from the matomo session storage.
      *
-     * If you call this function from a server, where the call is triggered by a cron or script
-     * not initiated by the actual visitor being tracked, then it will return
-     * the random Visitor ID that was assigned to this visit object.
-     *
-     * This can be used if you wish to record more visits, actions or goals for this visitor ID later on.
-     *
-     * @return string|null 16 hex chars visitor ID string
+     * @param string $key Key of the variable
+     * @return mixed|null Value of the variable
      */
-    public static function getVisitorId(): ?string
+    public static function getVariable(string $key)
     {
-        $visitorId = self::getVariable("visitorId");
-        if (!empty($visitorId) && is_string($visitorId)) {
-            return $visitorId;
-        }
-        if (self::loadVisitorIdCookie()) {
-            $visitorId = self::getVariable("visitorId");
-            if (!empty($visitorId) && is_string($visitorId)) {
-                return $visitorId;
-            }
-        }
-        $visitorId = substr(str_replace("-", "", Analytics::getScope()->getClientId() ?? ""), 0, self::LENGTH_VISITOR_ID);
-        self::setVariable("visitorId", $visitorId);
-        return $visitorId;
-    }
-
-    /**
-     * Returns the currently assigned Attribution Information stored in a first party cookie.
-     *
-     * This function will only work if the user is initiating the current request, and his cookies
-     * can be read by PHP from the $_COOKIE array.
-     *
-     * @return string|null JSON Encoded string containing the Referrer information for Goal conversion attribution.
-     *                Will return false if the cookie could not be found
-     * @throws JsonException
-     * @see matomo.js getAttributionInfo()
-     */
-    public static function getAttributionInfo(): ?string
-    {
-        if (!empty(self::getVariable("attributionInfo"))) {
-            return json_encode(self::getVariable("attributionInfo"), JSON_THROW_ON_ERROR);
-        }
-
-        return self::getCookieMatchingName('ref');
-    }
-
-    /**
-     * Gets the custom variables from the cookie.
-     *
-     * @return mixed false, if cookie not found or the data as array
-     * @throws JsonException
-     */
-    protected static function getCustomVariables()
-    {
-        $cookie = self::getCookieMatchingName('cvar');
-        if (!$cookie) {
-            return false;
-        }
-
-        return json_decode($cookie, true, 512, JSON_THROW_ON_ERROR);
-    }
-
-    /**
-     * Sets a first party cookie to the client to improve dual JS-PHP tracking.
-     * This replicates the matomo.js tracker algorithms for consistency and better accuracy.
-     *
-     * @param string $cookieName Name of the cookie
-     * @param string $cookieValue Value of the cookie
-     * @param int $cookieTTL Time to live for the cookie
-     * @return void
-     * @noinspection PhpFullyQualifiedNameUsageInspection
-     */
-    protected static function setCookie(string $cookieName, string $cookieValue, int $cookieTTL): void
-    {
-        $cookieExpire = time() + $cookieTTL;
-        if (!headers_sent()) {
-            $header = 'Set-Cookie: ' . rawurlencode(self::getCookieName($cookieName)) . '=' . rawurlencode($cookieValue)
-                . (empty($cookieExpire) ? '' : '; expires=' . gmdate('D, d-M-Y H:i:s', $cookieExpire) . ' GMT')
-                . '; path=' . self::COOKIE_PATH
-                . (!HelperFunctions::isHTTPS() ? '' : '; secure')
-                . '; SameSite=' . rawurlencode("Lax");
-
-            header($header, false);
-        } else if (function_exists('\Sentry\configureScope')) {
-            \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($cookieName, $cookieValue, $cookieTTL, $cookieExpire): void {
-                $scope->setExtra('Cookie name', $cookieName);
-                $scope->setExtra('Cookie value', $cookieValue);
-                $scope->setExtra('Cookie ttl', $cookieTTL);
-                $scope->setExtra('Cookie expire', $cookieExpire);
-                \Sentry\captureMessage("Tried to set cookie with header, but headers are aleady sent.");
-            });
-        }
+        return $_SESSION['matomo'][$key] ?? null;
     }
 
     /**
@@ -325,6 +175,156 @@ class Matomo implements AnalyticsHandler
     protected static function getCurrentHost(): string
     {
         return $_SERVER['HTTP_HOST'] ?? 'unknown';
+    }
+
+    /**
+     * Stores a variable in the matomo session storage.
+     *
+     * @param string $key Key of the value
+     * @param mixed $value Value
+     */
+    public static function setVariable(string $key, $value): void
+    {
+        if (!isset($_SESSION['matomo'])) {
+            $_SESSION['matomo'] = [];
+        }
+        $arr = $_SESSION['matomo'];
+        $arr[$key] = $value;
+        $_SESSION['matomo'] = $arr;
+    }
+
+    /**
+     * Returns the currently assigned Attribution Information stored in a first party cookie.
+     *
+     * This function will only work if the user is initiating the current request, and his cookies
+     * can be read by PHP from the $_COOKIE array.
+     *
+     * @return string|null JSON Encoded string containing the Referrer information for Goal conversion attribution.
+     *                Will return false if the cookie could not be found
+     * @throws JsonException
+     * @see matomo.js getAttributionInfo()
+     */
+    public static function getAttributionInfo(): ?string
+    {
+        if (!empty(self::getVariable("attributionInfo"))) {
+            return json_encode(self::getVariable("attributionInfo"), JSON_THROW_ON_ERROR);
+        }
+
+        return self::getCookieMatchingName('ref');
+    }
+
+    /**
+     * Sets a first party cookie to the client to improve dual JS-PHP tracking.
+     * This replicates the matomo.js tracker algorithms for consistency and better accuracy.
+     *
+     * @param string $cookieName Name of the cookie
+     * @param string $cookieValue Value of the cookie
+     * @param int $cookieTTL Time to live for the cookie
+     * @return void
+     * @noinspection PhpFullyQualifiedNameUsageInspection
+     */
+    protected static function setCookie(string $cookieName, string $cookieValue, int $cookieTTL): void
+    {
+        $cookieExpire = time() + $cookieTTL;
+        if (!headers_sent()) {
+            $header = 'Set-Cookie: ' . rawurlencode(self::getCookieName($cookieName)) . '=' . rawurlencode($cookieValue)
+                . (empty($cookieExpire) ? '' : '; expires=' . gmdate('D, d-M-Y H:i:s', $cookieExpire) . ' GMT')
+                . '; path=' . self::COOKIE_PATH
+                . (!HelperFunctions::isHTTPS() ? '' : '; secure')
+                . '; SameSite=' . rawurlencode("Lax");
+
+            header($header, false);
+        } else if (function_exists('\Sentry\configureScope')) {
+            \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($cookieName, $cookieValue, $cookieTTL, $cookieExpire): void {
+                $scope->setExtra('Cookie name', $cookieName);
+                $scope->setExtra('Cookie value', $cookieValue);
+                $scope->setExtra('Cookie ttl', $cookieTTL);
+                $scope->setExtra('Cookie expire', $cookieExpire);
+                \Sentry\captureMessage("Tried to set cookie with header, but headers are aleady sent.");
+            });
+        }
+    }
+
+    /**
+     * If the user initiating the request has the Matomo first party cookie,
+     * this function will try and return the ID parsed from this first party cookie (found in $_COOKIE).
+     *
+     * If you call this function from a server, where the call is triggered by a cron or script
+     * not initiated by the actual visitor being tracked, then it will return
+     * the random Visitor ID that was assigned to this visit object.
+     *
+     * This can be used if you wish to record more visits, actions or goals for this visitor ID later on.
+     *
+     * @return string|null 16 hex chars visitor ID string
+     */
+    public static function getVisitorId(): ?string
+    {
+        $visitorId = self::getVariable("visitorId");
+        if (!empty($visitorId) && is_string($visitorId)) {
+            return $visitorId;
+        }
+        if (self::loadVisitorIdCookie()) {
+            $visitorId = self::getVariable("visitorId");
+            if (!empty($visitorId) && is_string($visitorId)) {
+                return $visitorId;
+            }
+        }
+        $visitorId = substr(str_replace("-", "", Analytics::getScope()->getClientId() ?? ""), 0, self::LENGTH_VISITOR_ID);
+        self::setVariable("visitorId", $visitorId);
+        return $visitorId;
+    }
+
+    /**
+     * Gets the custom variables from the cookie.
+     *
+     * @return mixed false, if cookie not found or the data as array
+     * @throws JsonException
+     */
+    protected static function getCustomVariables()
+    {
+        $cookie = self::getCookieMatchingName('cvar');
+        if (!$cookie) {
+            return false;
+        }
+
+        return json_decode($cookie, true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        return "Matomo";
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
+    {
+        if (!$this->isAvailable()) {
+            return "";
+        }
+        if (is_null($pageViewRequest)) {
+            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof ARequest) {
+                /** @noinspection CallableParameterUseCaseInTypeContextInspection */
+                $pageViewRequest = $GLOBALS['sc_pageView'];
+            } else {
+                $pageViewRequest = new MPageViewRequest($pageData);
+            }
+        }
+        /** @var MPageViewRequest $pageViewRequest */
+        $pageViewRequest->send();
+        $url = AnalyticsConfig::$matomoEndpoint;
+        if (!HelperFunctions::endsWith($url, "/")) {
+            $url .= "/";
+        }
+        $assets = HelperFunctions::getAssetsDir();
+        if (file_exists($assets . '/matomo.min.js')) {
+            return '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/matomo.min.js" id="_matomo" data-pv="' . $pageViewRequest->getPageViewId() . '" data-url="' . $url . '" data-siteid="' . AnalyticsConfig::$matomoID . '" data-visitorid="' . self::getVisitorId() . '" defer></script>';
+        }
+        return "";
     }
 
     // - Requests

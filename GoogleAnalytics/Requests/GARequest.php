@@ -82,6 +82,17 @@ class GARequest extends ARequest
     }
 
     /**
+     * @inheritDoc
+     */
+    public function setUserIdentifier(?string $userId): void
+    {
+        try {
+            $this->setParameter(GAParameter::$USERID, $userId);
+        } catch (JsonException $ignored) {
+        }
+    }
+
+    /**
      * Valid values are 'pageview', 'screenview', 'event', 'transaction', 'item', 'social', 'exception', 'timing'.
      *
      * @param string $type The name of the hit type
@@ -200,14 +211,6 @@ class GARequest extends ARequest
                 $this->setParameter(GAParameter::$LOADTIME, round((microtime(true) - $GLOBALS["start_time"]) * 1000));
             } catch (JsonException $ignored) {
             }
-        }
-    }
-
-    public function setUserIdentifier(?string $userId): void
-    {
-        try {
-            $this->setParameter(GAParameter::$USERID, $userId);
-        } catch (JsonException $ignored) {
         }
     }
 }

@@ -39,7 +39,9 @@
     "psr-4": {
       "ScAnalytics\\": ""
     },
-    "exclude-from-classmap": ["Tests/"]
+    "exclude-from-classmap": [
+      "Tests/"
+    ]
   },
   "require": {
     "php": "^7.3|^8.0",

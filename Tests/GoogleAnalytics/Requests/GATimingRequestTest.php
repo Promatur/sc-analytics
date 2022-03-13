@@ -21,6 +21,27 @@ use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
 class GATimingRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new GATimingRequest("cURL", "loadImage", 24, "Google CDN");
+        self::assertEquals("cURL", $req->getParameters()[GAParameter::$TIMINGCATEGORY->getName()]);
+        self::assertEquals("loadImage", $req->getParameters()[GAParameter::$TIMINGVARIABLE->getName()]);
+        self::assertEquals("Google CDN", $req->getParameters()[GAParameter::$TIMINGLABEL->getName()]);
+        self::assertEquals("24", $req->getParameters()[GAParameter::$TIMINGTIME->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,27 +55,6 @@ class GATimingRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new GATimingRequest("cURL", "loadImage", 24, "Google CDN");
-        self::assertEquals("cURL", $req->getParameters()[GAParameter::$TIMINGCATEGORY->getName()]);
-        self::assertEquals("loadImage", $req->getParameters()[GAParameter::$TIMINGVARIABLE->getName()]);
-        self::assertEquals("Google CDN", $req->getParameters()[GAParameter::$TIMINGLABEL->getName()]);
-        self::assertEquals("24", $req->getParameters()[GAParameter::$TIMINGTIME->getName()]);
     }
 
 }

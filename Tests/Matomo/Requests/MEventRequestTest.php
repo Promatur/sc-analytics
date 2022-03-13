@@ -21,6 +21,28 @@ use ScAnalytics\Matomo\Requests\MEventRequest;
 class MEventRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new MEventRequest("Category", "action", "label", 2);
+        self::assertEquals("Category/action", $req->getParameters()[MParameter::$ACTION->getName()]);
+        self::assertEquals("Category", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("action", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
+        self::assertEquals("label", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertEquals(2, $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,27 +56,5 @@ class MEventRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new MEventRequest("Category", "action", "label", 2);
-        self::assertEquals("Category/action", $req->getParameters()[MParameter::$ACTION->getName()]);
-        self::assertEquals("Category", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("action", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("label", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
-        self::assertEquals(2, $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
     }
 }

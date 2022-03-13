@@ -54,17 +54,6 @@ class Scope
         $this->userId = $userId;
     }
 
-
-    /**
-     * @param string|null $language The language the user is using to visit the website
-     * @return Scope Current instance
-     */
-    public function setLanguage(?string $language): Scope
-    {
-        $this->language = $language;
-        return $this;
-    }
-
     /**
      * @param int $index The index of the custom dimension
      * @param string|null $value The value of the custom dimension
@@ -91,29 +80,21 @@ class Scope
     }
 
     /**
-     * @param string|null $clientId A unique ID for the client visiting the website (logged in or not)
-     * @return Scope Current instance
-     */
-    public function setClientId(?string $clientId): Scope
-    {
-        $this->clientId = $clientId;
-        return $this;
-    }
-
-    /**
-     * @param string|null $userId A unique ID for a logged-in user. Can be an auto-incremented id
-     */
-    public function setUserId(?string $userId): void
-    {
-        $this->userId = $userId;
-    }
-
-    /**
      * @return string|null The language the user is using to visit the website
      */
     public function getLanguage(): ?string
     {
         return $this->language;
+    }
+
+    /**
+     * @param string|null $language The language the user is using to visit the website
+     * @return Scope Current instance
+     */
+    public function setLanguage(?string $language): Scope
+    {
+        $this->language = $language;
+        return $this;
     }
 
     /**
@@ -159,11 +140,29 @@ class Scope
     }
 
     /**
+     * @param string|null $clientId A unique ID for the client visiting the website (logged in or not)
+     * @return Scope Current instance
+     */
+    public function setClientId(?string $clientId): Scope
+    {
+        $this->clientId = $clientId;
+        return $this;
+    }
+
+    /**
      * @return string|null A unique ID for a logged-in user. Can be an auto-incremented id
      */
     public function getUserId(): ?string
     {
         return $this->userId;
+    }
+
+    /**
+     * @param string|null $userId A unique ID for a logged-in user. Can be an auto-incremented id
+     */
+    public function setUserId(?string $userId): void
+    {
+        $this->userId = $userId;
     }
 
 }

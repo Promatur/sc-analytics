@@ -21,6 +21,29 @@ use ScAnalytics\Matomo\Requests\MDownloadRequest;
 class MDownloadRequestTest extends TestCase
 {
 
+    public function test__construct(): void
+    {
+        Analytics::init();
+
+        $req = new MDownloadRequest("file.txt", 20);
+        self::assertEquals("Download", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("download", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
+        self::assertEquals("file.txt", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertEquals(20, $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
+        self::assertEquals("http://UNKNOWN", $req->getParameters()[MParameter::$DOWNLOAD->getName()]);
+        self::assertEquals(20, $req->getParameters()[MParameter::$BANDWIDTH->getName()]);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+    }
+
     /**
      * Helper function setting properties using reflection.
      *
@@ -34,28 +57,5 @@ class MDownloadRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-    }
-
-    public function test__construct(): void
-    {
-        Analytics::init();
-
-        $req = new MDownloadRequest("file.txt", 20);
-        self::assertEquals("Download", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("download", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("file.txt", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
-        self::assertEquals(20, $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
-        self::assertEquals("http://UNKNOWN", $req->getParameters()[MParameter::$DOWNLOAD->getName()]);
-        self::assertEquals(20, $req->getParameters()[MParameter::$BANDWIDTH->getName()]);
     }
 }

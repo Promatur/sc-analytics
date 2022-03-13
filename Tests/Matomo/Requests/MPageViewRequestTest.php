@@ -23,6 +23,19 @@ class MPageViewRequestTest extends TestCase
 {
 
     /**
+     * @throws ReflectionException
+     */
+    public function test__construct(): void
+    {
+        Analytics::init();
+        $GLOBALS['start_time'] = microtime(true);
+        $pageView = new MPageViewRequest();
+        self::assertNotEmpty(self::get($pageView, "pageViewID"));
+        self::assertNotEmpty($pageView->getParameters()[MParameter::$ACTION->getName()]);
+        self::assertArrayHasKey(MParameter::$GENERATIONTIME->getName(), $pageView->getParameters());
+    }
+
+    /**
      * Helper function accessing properties using reflection.
      *
      * @param MPageViewRequest $instance The instance to get the value from
@@ -40,6 +53,17 @@ class MPageViewRequestTest extends TestCase
     }
 
     /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        self::set("analytics", null);
+        self::set("analyticsList", []);
+        self::set("scope", new Scope());
+        unset($GLOBALS['start_time']);
+    }
+
+    /**
      * Helper function setting properties using reflection.
      *
      * @param string $field Name of the field
@@ -52,29 +76,5 @@ class MPageViewRequestTest extends TestCase
         $prop = $apiDataClass->getProperty($field);
         $prop->setAccessible(true);
         $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        self::set("analytics", null);
-        self::set("analyticsList", []);
-        self::set("scope", new Scope());
-        unset($GLOBALS['start_time']);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    public function test__construct(): void
-    {
-        Analytics::init();
-        $GLOBALS['start_time'] = microtime(true);
-        $pageView = new MPageViewRequest();
-        self::assertNotEmpty(self::get($pageView, "pageViewID"));
-        self::assertNotEmpty($pageView->getParameters()[MParameter::$ACTION->getName()]);
-        self::assertArrayHasKey(MParameter::$GENERATIONTIME->getName(), $pageView->getParameters());
     }
 }

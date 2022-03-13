@@ -39,14 +39,6 @@ class GoogleAnalytics implements AnalyticsHandler
     /**
      * @inheritDoc
      */
-    public function isAvailable(): bool
-    {
-        return !empty(AnalyticsConfig::$googleAnalyticsIDs);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
     {
         if (!$this->isAvailable()) {
@@ -67,6 +59,14 @@ class GoogleAnalytics implements AnalyticsHandler
             $result .= '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/ga.min.js" id="_ga" data-keys="' . implode(";", AnalyticsConfig::$googleAnalyticsIDs) . '" data-clientid="' . self::getClientID() . '" defer></script>';
         }
         return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isAvailable(): bool
+    {
+        return !empty(AnalyticsConfig::$googleAnalyticsIDs);
     }
 
     /**

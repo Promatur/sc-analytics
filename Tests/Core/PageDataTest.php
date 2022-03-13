@@ -20,38 +20,6 @@ class PageDataTest extends TestCase
 {
 
     /**
-     * Helper function accessing properties using reflection.
-     *
-     * @param PageData $instance The instance to get the value from
-     * @param string $field Name of the field
-     * @return mixed The contents of the field
-     * @throws ReflectionException
-     */
-    private static function get(PageData $instance, string $field)
-    {
-        $apiDataClass = new ReflectionClass(PageData::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        return $prop->getValue($instance);
-    }
-
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param PageData $instance The instance to set the value for
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(PageData $instance, string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(PageData::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($instance, $value);
-    }
-
-    /**
      * @throws ReflectionException
      */
     public function test__construct(): void
@@ -69,6 +37,22 @@ class PageDataTest extends TestCase
         $obj = new PageData("abc", ["abc", "def"]);
         self::assertEquals("abc", self::get($obj, "pageTitle"));
         self::assertEquals(["abc", "def"], self::get($obj, "parents"));
+    }
+
+    /**
+     * Helper function accessing properties using reflection.
+     *
+     * @param PageData $instance The instance to get the value from
+     * @param string $field Name of the field
+     * @return mixed The contents of the field
+     * @throws ReflectionException
+     */
+    private static function get(PageData $instance, string $field)
+    {
+        $apiDataClass = new ReflectionClass(PageData::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        return $prop->getValue($instance);
     }
 
     /**
@@ -93,6 +77,22 @@ class PageDataTest extends TestCase
 
         self::set($obj, "pageTitle", "def");
         self::assertEquals("def", $obj->getPageTitle());
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param PageData $instance The instance to set the value for
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(PageData $instance, string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(PageData::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($instance, $value);
     }
 
     /**

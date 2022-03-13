@@ -23,67 +23,6 @@ use ScAnalytics\Matomo\Requests\MRequest;
 class MRequestTest extends TestCase
 {
 
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function setAnalytics(string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(Analytics::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($value);
-    }
-
-    /**
-     * @throws ReflectionException
-     */
-    protected function tearDown(): void
-    {
-        AnalyticsConfig::$debug = false;
-        AnalyticsConfig::$matomoID = "";
-        self::setAnalytics("analytics", null);
-        self::setAnalytics("analyticsList", []);
-        self::setAnalytics("scope", new Scope());
-        self::set(null, "pageViewID", null);
-        unset($GLOBALS['start_time']);
-    }
-
-    /**
-     * Helper function accessing properties using reflection.
-     *
-     * @param MRequest|null $instance The instance to get the value from
-     * @param string $field Name of the field
-     * @return mixed The contents of the field
-     * @throws ReflectionException
-     */
-    private static function get(?MRequest $instance, string $field)
-    {
-        $apiDataClass = new ReflectionClass(MRequest::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        return $prop->getValue($instance);
-    }
-
-    /**
-     * Helper function setting properties using reflection.
-     *
-     * @param MRequest|null $instance The instance to set the value for
-     * @param string $field Name of the field
-     * @param mixed $value Value to set
-     * @throws ReflectionException
-     */
-    private static function set(?MRequest $instance, string $field, $value): void
-    {
-        $apiDataClass = new ReflectionClass(MRequest::class);
-        $prop = $apiDataClass->getProperty($field);
-        $prop->setAccessible(true);
-        $prop->setValue($instance, $value);
-    }
-
     public function test__construct(): void
     {
         AnalyticsConfig::$matomoID = "2";
@@ -124,6 +63,22 @@ class MRequestTest extends TestCase
         self::set($req, "customVariables", []);
         $req->addCustomVariable("key", true);
         self::assertEquals([["key", "1"]], self::get($req, "customVariables"));
+    }
+
+    /**
+     * Helper function accessing properties using reflection.
+     *
+     * @param MRequest|null $instance The instance to get the value from
+     * @param string $field Name of the field
+     * @return mixed The contents of the field
+     * @throws ReflectionException
+     */
+    private static function get(?MRequest $instance, string $field)
+    {
+        $apiDataClass = new ReflectionClass(MRequest::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        return $prop->getValue($instance);
     }
 
     public function testUpdateGenerationTime(): void
@@ -202,5 +157,50 @@ class MRequestTest extends TestCase
 
         $req->setUserIdentifier(null);
         self::assertArrayNotHasKey(MParameter::$USERID->getName(), $req->getParameters());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        AnalyticsConfig::$debug = false;
+        AnalyticsConfig::$matomoID = "";
+        self::setAnalytics("analytics", null);
+        self::setAnalytics("analyticsList", []);
+        self::setAnalytics("scope", new Scope());
+        self::set(null, "pageViewID", null);
+        unset($GLOBALS['start_time']);
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function setAnalytics(string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(Analytics::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($value);
+    }
+
+    /**
+     * Helper function setting properties using reflection.
+     *
+     * @param MRequest|null $instance The instance to set the value for
+     * @param string $field Name of the field
+     * @param mixed $value Value to set
+     * @throws ReflectionException
+     */
+    private static function set(?MRequest $instance, string $field, $value): void
+    {
+        $apiDataClass = new ReflectionClass(MRequest::class);
+        $prop = $apiDataClass->getProperty($field);
+        $prop->setAccessible(true);
+        $prop->setValue($instance, $value);
     }
 }

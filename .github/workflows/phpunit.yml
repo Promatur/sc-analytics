@@ -23,8 +23,8 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest, windows-latest]
-        php-version: ['7.3', '8.1']
+        operating-system: [ ubuntu-latest, windows-latest ]
+        php-version: [ '7.3', '8.1' ]
         include:
           - php-version: 7.3
             operating-system: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [macOS-latest]
+        operating-system: [ macOS-latest ]
         php-version: [ '7.3', '8.1' ]
     steps:
       - uses: actions/checkout@v2

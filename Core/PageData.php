@@ -44,19 +44,19 @@ class PageData
     }
 
     /**
-     * @return string[]|null Names of the pages in the breadcrumb link path
-     */
-    public function getParents(): ?array
-    {
-        return $this->parents;
-    }
-
-    /**
      * @param string $pageTitle Title of the current page
      */
     public function setPageTitle(string $pageTitle): void
     {
         $this->pageTitle = $pageTitle;
+    }
+
+    /**
+     * @return string[]|null Names of the pages in the breadcrumb link path
+     */
+    public function getParents(): ?array
+    {
+        return $this->parents;
     }
 
     /**
