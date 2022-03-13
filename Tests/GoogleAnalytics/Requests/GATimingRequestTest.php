@@ -1,24 +1,24 @@
 <?php
 
-namespace ScAnalytics\Tests\Matomo\Requests;
+namespace ScAnalytics\Tests\GoogleAnalytics\Requests;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\Scope;
-use ScAnalytics\Matomo\MParameter;
-use ScAnalytics\Matomo\Requests\MTimingRequest;
+use ScAnalytics\GoogleAnalytics\GAParameter;
+use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
 
 /**
- * Tests the MTimingRequest class.
+ * Tests the GATimingRequest class.
  *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
  * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  */
-class MTimingRequestTest extends TestCase
+class GATimingRequestTest extends TestCase
 {
 
     /**
@@ -50,10 +50,11 @@ class MTimingRequestTest extends TestCase
     {
         Analytics::init();
 
-        $req = new MTimingRequest("cURL", "loadImage", 24, "Google CDN");
-        self::assertEquals("Timing - cURL", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("loadImage", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("Google CDN", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
-        self::assertEquals("24", $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
+        $req = new GATimingRequest("cURL", "loadImage", 24, "Google CDN");
+        self::assertEquals("cURL", $req->getParameters()[GAParameter::$TIMINGCATEGORY->getName()]);
+        self::assertEquals("loadImage", $req->getParameters()[GAParameter::$TIMINGVARIABLE->getName()]);
+        self::assertEquals("Google CDN", $req->getParameters()[GAParameter::$TIMINGLABEL->getName()]);
+        self::assertEquals("24", $req->getParameters()[GAParameter::$TIMINGTIME->getName()]);
     }
+
 }
