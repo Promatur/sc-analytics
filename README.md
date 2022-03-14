@@ -18,6 +18,7 @@ Server-Client-Analytics
 A combination of clientside and serverside analytics for PHP-based websites. This repository builds upon existing
 analytics solutions and offers integrations for [Matomo](https://matomo.org)
 and [Google Analytics](https://analytics.google.com).
+Tested using PHP `7.3`, `7.4` and `8.1`.
 
 ## Usage
 

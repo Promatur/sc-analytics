@@ -1,6 +1,6 @@
 {
   "name": "promatur/sc-analytics",
-  "version": "v0.1.0-alpha",
+  "version": "v1.0.0",
   "type": "library",
   "description": "A combination of clientside and serverside analytics for PHP-based websites.",
   "keywords": [
