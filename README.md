@@ -1,7 +1,7 @@
 Server-Client-Analytics
 ==============
 
-[![Latest Stable Version](https://poser.pugx.org/promatur/sc-analytics/v/stable)](https://packagist.org/packages/promatur/sc-analytics)
+[![Latest Stable Version](https://poser.pugx.org/promatur/sc-analytics/v/stable)](https://github.com/Promatur/sc-analytics/releases/latest)
 [![Latest Unstable Version](https://poser.pugx.org/promatur/sc-analytics/v/unstable)](https://packagist.org/packages/promatur/sc-analytics)
 [![Total Downloads](https://poser.pugx.org/promatur/sc-analytics/downloads)](https://packagist.org/packages/promatur/sc-analytics)
 [![License](https://poser.pugx.org/promatur/sc-analytics/license)](https://packagist.org/packages/promatur/sc-analytics)
