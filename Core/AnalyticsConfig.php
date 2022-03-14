@@ -60,8 +60,6 @@ class AnalyticsConfig
     public static $matomoToken = "";
 
     /**
-     *
-     *
      * @var string[] Google Analytics IDs
      */
     public static $googleAnalyticsIDs = [];
