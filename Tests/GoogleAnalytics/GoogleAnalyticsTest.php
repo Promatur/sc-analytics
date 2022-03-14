@@ -61,7 +61,7 @@ class GoogleAnalyticsTest extends TestCase
         $code = $ga->loadJS($pageData);
         self::assertStringContainsString('<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-X">', $code);
         self::assertStringContainsString('<script src="', $code);
-        self::assertStringContainsString('/ga.min.js', $code);
+        self::assertStringContainsString('/ga.min.js?cb=', $code);
         self::assertStringContainsString('id="_ga"', $code);
         self::assertStringContainsString('data-keys="UA-XXXXXX-X;UA-000000-2"', $code);
         self::assertStringContainsString('data-consent="false"', $code);

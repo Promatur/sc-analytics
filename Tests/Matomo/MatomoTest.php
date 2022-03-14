@@ -87,7 +87,7 @@ class MatomoTest extends TestCase
         self::assertStringContainsString('<script', $code);
         self::assertStringContainsString('data-pv="' . $pageViewId . '"', $code);
         self::assertStringContainsString('id="_matomo"', $code);
-        self::assertStringContainsString("/matomo.min.js", $code);
+        self::assertStringContainsString("/matomo.min.js?cb=", $code);
         self::assertStringContainsString('data-url="https://example.com/"', $code);
         self::assertStringContainsString('data-siteid="2"', $code);
         self::assertStringContainsString('data-visitorid="' . Matomo::getVisitorId() . '"', $code);

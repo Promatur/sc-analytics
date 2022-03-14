@@ -322,7 +322,8 @@ class Matomo implements AnalyticsHandler
         }
         $assets = HelperFunctions::getAssetsDir();
         if (file_exists($assets . '/matomo.min.js')) {
-            return '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/matomo.min.js" id="_matomo" data-pv="' . $pageViewRequest->getPageViewId() . '" data-url="' . $url . '" data-siteid="' . AnalyticsConfig::$matomoID . '" data-visitorid="' . self::getVisitorId() . '" defer></script>';
+            $cacheBuster = filemtime($assets . '/matomo.min.js');
+            return '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/matomo.min.js?cb=' . $cacheBuster . '" id="_matomo" data-pv="' . $pageViewRequest->getPageViewId() . '" data-url="' . $url . '" data-siteid="' . AnalyticsConfig::$matomoID . '" data-visitorid="' . self::getVisitorId() . '" defer></script>';
         }
         return "";
     }
