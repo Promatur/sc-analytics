@@ -10,10 +10,6 @@ use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
-use Sentry\Severity;
-use Sentry\State\Scope;
-use function Sentry\captureMessage;
-use function Sentry\configureScope;
 
 /**
  * Class GARequest. Represents a basic request to the Google Analytics API.
@@ -146,15 +142,15 @@ class GARequest extends ARequest
                 $debug = $this->isDebug();
                 $query = ($this->isDebug() ? self::$DEBUG_ENDPOINT : self::$ENDPOINT) . "?" . $content;
                 if (function_exists('\Sentry\configureScope')) {
-                    configureScope(function (Scope $scope) use ($debug, $result, $errors, $response, $parameters, $query): void {
-                        $scope->setLevel(Severity::warning());
+                    \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($debug, $result, $errors, $response, $parameters, $query): void {
+                        $scope->setLevel(\Sentry\Severity::warning());
                         $scope->setExtra('Debug', $debug);
                         $scope->setExtra('Parameters', $parameters);
                         $scope->setExtra('Result', $result);
                         $scope->setExtra('Errors', $errors);
                         $scope->setExtra('Response Code', $response);
                         $scope->setExtra('Query', $query);
-                        captureMessage("Error sending Google Analytics request.");
+                        \Sentry\captureMessage("Error sending Google Analytics request.");
                     });
                 }
                 return false;

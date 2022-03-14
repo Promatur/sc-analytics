@@ -64,6 +64,7 @@ class GoogleAnalyticsTest extends TestCase
         self::assertStringContainsString('/ga.min.js', $code);
         self::assertStringContainsString('id="_ga"', $code);
         self::assertStringContainsString('data-keys="UA-XXXXXX-X;UA-000000-2"', $code);
+        self::assertStringContainsString('data-consent="false"', $code);
         self::assertStringContainsString('data-clientid="' . $clientId . '"', $code);
         self::assertStringContainsString('defer', $code);
     }
