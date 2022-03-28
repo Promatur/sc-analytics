@@ -35,7 +35,7 @@ class AnalyticsConfig
     public static $assets = "assets";
 
     /**
-     * Your preferred analytics handler. Possible options: 'auto', 'matomo', 'google analytics'.
+     * Your preferred analytics handler. Possible options: 'auto', 'matomo', 'google analytics' (universal), 'google analytics 4'.
      *
      * @var string Preferred analytics handler
      */
@@ -60,8 +60,20 @@ class AnalyticsConfig
     public static $matomoToken = "";
 
     /**
-     * @var string[] Google Analytics IDs
+     * @var string[] Google Universal Analytics IDs
      */
     public static $googleAnalyticsIDs = [];
+
+    /**
+     * @var string Measurement ID. The identifier for a Data Stream. Found in the Google Analytics UI under:
+    <i>Admin > Data Streams > choose your stream > Measurement ID</i>
+     */
+    public static $googleAnalytics4Id = "";
+
+    /**
+     * @var string Required. An API Secret that is generated through the Google Analytics UI.<br/>
+     * To create a new secret, navigate in the Google Analytics UI to: <i>Admin > Data Streams > choose your stream > Measurement Protocol > Create</i>
+     */
+    public static $googleAnalytics4Secret = "";
 
 }
