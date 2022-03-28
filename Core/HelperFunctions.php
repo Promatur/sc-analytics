@@ -164,4 +164,33 @@ class HelperFunctions
         }
     }
 
+    /**
+     * Handles specific data types:
+     * <ul>
+     * <li>Boolean is converted to 1 or 0</li>
+     * <li>Array is encoded in Json</li>
+     * <li>Everything else is cast as a string</li>
+     * </ul>
+     *
+     * Passing a null value or an empty array will remove the parameter from the request.
+     *
+     * @param string|int|bool|float|array|null $value The value of the parameter
+     * @return string|null A string version of the <code>$value</code> or <code>null</code> if the value is null or the array is empty
+     * @throws \JsonException Thrown when an array cannot be encoded in JSON
+     */
+    public static function toStringValue($value): ?string
+    {
+        if (((!empty($value)) || !is_array($value)) && !is_null($value)) {
+            if (is_bool($value)) {
+                return $value ? "1" : "0";
+            }
+            if (is_array($value)) {
+                return json_encode($value, JSON_THROW_ON_ERROR);
+            }
+            return (string)$value;
+        }
+
+        return null;
+    }
+
 }

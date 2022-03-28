@@ -78,32 +78,22 @@ abstract class ARequest
     abstract public function updateGenerationTime(): void;
 
     /**
-     * Sets a parameter of the request. Handles specific data types:
-     * <ul>
-     * <li>Boolean is converted to 1 or 0</li>
-     * <li>Array is encoded in Json</li>
-     * <li>Everything else is cast as a string</li>
-     * </ul>
+     * Sets a parameter of the request.
      *
      * Passing a null value or an empty array will remove the parameter from the request.
      *
      * @param AParameter $key Key of the parameter
      * @param string|int|bool|float|array|null $value The value of the parameter. Set to <code>null</code> to remove it
      * @throws JsonException Thrown when an array cannot be encoded in JSON
+     * @see HelperFunctions::toStringValue() Supported data types
      */
     public function setParameter(AParameter $key, $value): void
     {
-        if (((!empty($value)) || !is_array($value)) && !is_null($value)) {
-            if (is_bool($value)) {
-                $value = $value ? "1" : "0";
-            } else if (is_array($value)) {
-                $value = json_encode($value, JSON_THROW_ON_ERROR);
-            } else {
-                $value = (string)$value;
-            }
-            $this->parameters[$key->getName()] = $value;
-        } else {
+        $val = HelperFunctions::toStringValue($value);
+        if (is_null($val)) {
             unset($this->parameters[$key->getName()]);
+        } else {
+            $this->parameters[$key->getName()] = $val;
         }
     }
 

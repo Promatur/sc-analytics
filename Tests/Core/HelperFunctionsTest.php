@@ -3,6 +3,7 @@
 namespace ScAnalytics\Tests\Core;
 
 use Exception;
+use JsonException;
 use PHPUnit\Framework\TestCase;
 use ScAnalytics\Core\HelperFunctions;
 
@@ -67,8 +68,6 @@ class HelperFunctionsTest extends TestCase
         self::assertEquals("http://promatur.com", HelperFunctions::getDomain());
     }
 
-    /** @noinspection HttpUrlsUsage */
-
     public function testGetURL(): void
     {
         self::assertEquals("http://UNKNOWN", HelperFunctions::getURL());
@@ -116,6 +115,22 @@ class HelperFunctionsTest extends TestCase
             $list[] = $uuid;
             self::assertMatchesRegularExpression("/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/", $uuid);
         }
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function testToStringValue(): void
+    {
+        self::assertEquals('{"a":"b"}', HelperFunctions::toStringValue(array("a" => "b")));
+        self::assertEquals('20', HelperFunctions::toStringValue(20));
+        self::assertEquals('0', HelperFunctions::toStringValue(0));
+        self::assertEquals('5.4', HelperFunctions::toStringValue(5.4));
+        self::assertEquals('abc', HelperFunctions::toStringValue("abc"));
+        self::assertEquals('1', HelperFunctions::toStringValue(true));
+        self::assertEquals('0', HelperFunctions::toStringValue(false));
+        self::assertNull(HelperFunctions::toStringValue([]));
+        self::assertNull(HelperFunctions::toStringValue(null));
     }
 
     protected function tearDown(): void
