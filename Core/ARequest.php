@@ -79,7 +79,6 @@ abstract class ARequest
 
     /**
      * Sets a parameter of the request.
-     *
      * Passing a null value or an empty array will remove the parameter from the request.
      *
      * @param AParameter $key Key of the parameter

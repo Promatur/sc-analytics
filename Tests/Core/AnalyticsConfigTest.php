@@ -32,6 +32,8 @@ class AnalyticsConfigTest extends TestCase
         self::assertIsNotArray(AnalyticsConfig::$matomoToken);
         self::assertEmpty(AnalyticsConfig::$googleAnalyticsIDs);
         self::assertIsArray(AnalyticsConfig::$googleAnalyticsIDs);
+        self::assertEmpty(AnalyticsConfig::$googleAnalytics4);
+        self::assertIsArray(AnalyticsConfig::$googleAnalytics4);
         self::assertEquals("assets", AnalyticsConfig::$assets);
     }
 

@@ -65,15 +65,8 @@ class AnalyticsConfig
     public static $googleAnalyticsIDs = [];
 
     /**
-     * @var string Measurement ID. The identifier for a Data Stream. Found in the Google Analytics UI under:
-    <i>Admin > Data Streams > choose your stream > Measurement ID</i>
+     * @var array<string, string> Google Analytics 4 data with the Measurement IDs as keys and the corresponding API Secret as value
      */
-    public static $googleAnalytics4Id = "";
-
-    /**
-     * @var string Required. An API Secret that is generated through the Google Analytics UI.<br/>
-     * To create a new secret, navigate in the Google Analytics UI to: <i>Admin > Data Streams > choose your stream > Measurement Protocol > Create</i>
-     */
-    public static $googleAnalytics4Secret = "";
+    public static $googleAnalytics4 = [];
 
 }
