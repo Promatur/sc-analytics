@@ -14,15 +14,4 @@ use ScAnalytics\Core\AParameter;
  * @link https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events Event Reference
  */
 class GA4EventParameter extends AParameter
-{
-
-    /**
-     * Initializes all supported parameters.
-     */
-    public static function init(): void
-    {
-
-    }
-
-}
-GA4EventParameter::init();
+{}

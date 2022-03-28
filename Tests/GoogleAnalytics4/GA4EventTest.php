@@ -70,13 +70,13 @@ class GA4EventTest extends TestCase
     public function testSetParameters()
     {
         $event = new GA4Event("abc");
-        $event->setParameters(new GA4EventParameter("test"), true);
+        $event->setParameter(new GA4EventParameter("test"), true);
         self::assertEquals(["test" => '1'], self::get($event, "parameters"));
 
-        $event->setParameters(new GA4EventParameter("test2"), "abc");
+        $event->setParameter(new GA4EventParameter("test2"), "abc");
         self::assertEquals(["test" => '1', "test2" => "abc"], self::get($event, "parameters"));
 
-        $event->setParameters(new GA4EventParameter("test"), null);
+        $event->setParameter(new GA4EventParameter("test"), null);
         self::assertEquals(["test2" => "abc"], self::get($event, "parameters"));
     }
 

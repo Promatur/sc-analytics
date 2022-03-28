@@ -2,7 +2,9 @@
 
 namespace ScAnalytics\GoogleAnalytics4;
 
+use JsonException;
 use JsonSerializable;
+use ScAnalytics\Analytics;
 use ScAnalytics\Core\HelperFunctions;
 
 /**
@@ -13,6 +15,7 @@ use ScAnalytics\Core\HelperFunctions;
  * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  * @link https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events Event Reference
+ * @link https://support.google.com/analytics/answer/9234069 Default events
  */
 class GA4Event implements JsonSerializable
 {
@@ -36,6 +39,10 @@ class GA4Event implements JsonSerializable
     {
         $this->name = $name;
         $this->parameters = [];
+        try {
+            $this->setParameter(new GA4EventParameter("language"), Analytics::getScope()->getLanguage());
+        } catch (JsonException $ignored) {
+        }
     }
 
     /**
@@ -44,10 +51,10 @@ class GA4Event implements JsonSerializable
      *
      * @param GA4EventParameter $key Key of the parameter
      * @param string|int|bool|float|array|null $value The value of the parameter. Set to <code>null</code> to remove it
-     * @throws \JsonException Thrown when an array cannot be encoded in JSON
+     * @throws JsonException Thrown when an array cannot be encoded in JSON
      * @see HelperFunctions::toStringValue() Supported data types
      */
-    public function setParameters(GA4EventParameter $key, $value): void
+    public function setParameter(GA4EventParameter $key, $value): void
     {
         $val = HelperFunctions::toStringValue($value);
         if (is_null($val)) {
