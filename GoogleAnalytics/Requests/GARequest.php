@@ -150,7 +150,7 @@ class GARequest extends ARequest
                         $scope->setExtra('Errors', $errors);
                         $scope->setExtra('Response Code', $response);
                         $scope->setExtra('Query', $query);
-                        \Sentry\captureMessage("Error sending Google Analytics request.");
+                        \Sentry\captureMessage("Error sending Google Universal Analytics request.");
                     });
                 }
                 return false;

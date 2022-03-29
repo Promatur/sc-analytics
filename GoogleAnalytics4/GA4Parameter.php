@@ -47,8 +47,9 @@ class GA4Parameter extends AParameter
     public static $NON_PERSONALIZED_ADS;
 
     /**
-     * @var GA4Parameter Required. An array of event items. Up to 25 events can be sent per request.
+     * @var GA4Parameter <b>Do not use, will be set automatically.</b>. An array of event items. Up to 25 events can be sent per request.
      * @link Events https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events reference
+     * @see GA4Event
      */
     public static $EVENTS;
 

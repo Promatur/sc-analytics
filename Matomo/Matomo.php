@@ -240,7 +240,7 @@ class Matomo implements AnalyticsHandler
                 $scope->setExtra('Cookie value', $cookieValue);
                 $scope->setExtra('Cookie ttl', $cookieTTL);
                 $scope->setExtra('Cookie expire', $cookieExpire);
-                \Sentry\captureMessage("Tried to set cookie with header, but headers are aleady sent.");
+                \Sentry\captureMessage("Tried to set cookie with header, but headers are already sent.");
             });
         }
     }

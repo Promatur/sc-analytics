@@ -18,9 +18,9 @@ abstract class ARequest
 {
 
     /**
-     * @var String[] A key-value-map of all parameters
+     * @var array<string, string> A key-value-map of all parameters
      */
-    private $parameters = array();
+    private $parameters = [];
 
     /**
      * @var bool A boolean, if the request should be sent to the debug endpoint
@@ -97,7 +97,7 @@ abstract class ARequest
     }
 
     /**
-     * @return String[] A key-value-map of all parameters
+     * @return array<string, string> A key-value-map of all parameters
      */
     public function getParameters(): array
     {
