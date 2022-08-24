@@ -13,7 +13,6 @@ use ScAnalytics\Core\Transaction;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
 use PHPUnit\Framework\TestCase;
-use ScAnalytics\Matomo\Requests\ECommerce\MECommerceRequest;
 
 /**
  * Tests the MECommercePurchaseRequest class.
