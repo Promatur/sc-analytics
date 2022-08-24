@@ -23,11 +23,16 @@ class HelperFunctions
 
     /**
      * Formats a money object with a decimal point.
+     * Returns "<i>null</i>" if the money object is <code>null</code>.
      *
-     * @param Money $money A money object to format
+     * @param Money|null $money A money object to format
      * @return string A formatted string
      */
-    public static function functional(Money $money): string {
+    public static function functional(?Money $money): string
+    {
+        if (is_null($money)) {
+            return "null";
+        }
         return (new DecimalMoneyFormatter(new ISOCurrencies()))->format($money);
     }
 

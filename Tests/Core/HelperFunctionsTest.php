@@ -24,6 +24,7 @@ class HelperFunctionsTest extends TestCase
         self::assertEquals("-3.00", HelperFunctions::functional(new Money(-300, new Currency("EUR"))));
         self::assertEquals("1000.00", HelperFunctions::functional(new Money(100000, new Currency("EUR"))));
         self::assertEquals("0.00", HelperFunctions::functional(new Money(0, new Currency("EUR"))));
+        self::assertEquals("null", HelperFunctions::functional(null));
     }
 
     public function testGetRoot(): void
