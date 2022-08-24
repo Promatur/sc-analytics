@@ -46,6 +46,7 @@
   "require": {
     "php": "^7.3|^8.0",
     "frontpack/composer-assets-plugin": "^0.11.0",
+    "moneyphp/money": "^3.3",
     "ext-json": "*",
     "ext-curl": "*"
   },
@@ -62,5 +63,10 @@
     "assets-files": "Assets",
     "assets-dir": "libraries",
     "assets-strategy": "copy"
+  },
+  "config": {
+    "allow-plugins": {
+      "frontpack/composer-assets-plugin": true
+    }
   }
 }

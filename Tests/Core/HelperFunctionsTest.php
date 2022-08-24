@@ -3,6 +3,8 @@
 namespace ScAnalytics\Tests\Core;
 
 use Exception;
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
 use ScAnalytics\Core\HelperFunctions;
 
@@ -16,6 +18,13 @@ use ScAnalytics\Core\HelperFunctions;
  */
 class HelperFunctionsTest extends TestCase
 {
+
+    public function testFunctional(): void {
+        self::assertEquals("1.00", HelperFunctions::functional(new Money(100, new Currency("EUR"))));
+        self::assertEquals("-3.00", HelperFunctions::functional(new Money(-300, new Currency("EUR"))));
+        self::assertEquals("1000.00", HelperFunctions::functional(new Money(100000, new Currency("EUR"))));
+        self::assertEquals("0.00", HelperFunctions::functional(new Money(0, new Currency("EUR"))));
+    }
 
     public function testGetRoot(): void
     {
