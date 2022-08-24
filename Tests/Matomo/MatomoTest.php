@@ -2,14 +2,20 @@
 
 namespace ScAnalytics\Tests\Matomo;
 
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
+use ScAnalytics\Core\Transaction;
 use ScAnalytics\Matomo\Matomo;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
 use ScAnalytics\Matomo\Requests\MDownloadRequest;
 use ScAnalytics\Matomo\Requests\MEventRequest;
 use ScAnalytics\Matomo\Requests\MExceptionRequest;
@@ -153,6 +159,19 @@ class MatomoTest extends TestCase
     {
         $ga = new Matomo();
         self::assertInstanceOf(MDownloadRequest::class, $ga->download("image.jpg"));
+    }
+
+    public function testPurchase(): void
+    {
+        $ga = new Matomo();
+        $m = new Money(0, new Currency("EUR"));
+        self::assertInstanceOf(MECommercePurchaseRequest::class, $ga->purchase(new Transaction("id", [], $m, $m, $m, $m, $m)));
+    }
+
+    public function testProductClick(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceProductClickRequest::class, $ga->productClick("list", new Product("id")));
     }
 
     protected function setUp(): void

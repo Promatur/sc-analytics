@@ -8,6 +8,8 @@ use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\Core\Product;
+use ScAnalytics\Core\Transaction;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -16,6 +18,7 @@ use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GASearchRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GASocialRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
+use ScAnalytics\NoAnalytics\NoRequest;
 
 /**
  * Class GoogleAnalytics. Responsible for managing Google Analytics.
@@ -154,5 +157,55 @@ class GoogleAnalytics implements AnalyticsHandler
     public function download(string $fileName, ?int $size = null): ARequest
     {
         return new GADownloadRequest($fileName, $size);
+    }
+
+    // - ECommerce
+
+    /**
+     * @inheritDoc
+     */
+    public function addCart(array $products): ARequest
+    {
+        return new NoRequest();// TODO: Implement addCart() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeCart(array $products): ARequest
+    {
+        return new NoRequest();// TODO: Implement removeCart() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function purchase(Transaction $transaction): ARequest
+    {
+        return new NoRequest();// TODO: Implement purchase() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
+    {
+        return new NoRequest();// TODO: Implement checkoutStep() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest
+    {
+        return new NoRequest();// TODO: Implement productClick() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productPage(Product $product, ?PageData $pageData = null): ARequest
+    {
+        return new NoRequest();// TODO: Implement productPage() method.
     }
 }
