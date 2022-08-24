@@ -12,7 +12,6 @@ use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceRequest;
 use PHPUnit\Framework\TestCase;
-use function PHPUnit\Framework\assertEquals;
 
 /**
  * Tests the MECommerceRequest class.

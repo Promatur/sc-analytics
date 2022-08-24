@@ -14,7 +14,7 @@ use ScAnalytics\Matomo\Requests\MRequest;
 
 /**
  * Class MECommerceRequest. A generic ECommerce request for Matomo.
- * @package PromaturAPI\Analytics\Matomo\API\Requests\ECommerce
+ *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
  * @copyright All Rights Reserved.
