@@ -39,19 +39,26 @@ class Scope
     private $userId;
 
     /**
+     * @var int|null The timestamp of the last ecommerce order of the user
+     */
+    private $lastOrder;
+
+    /**
      * @param string|null $language The language the user is using to visit the website
      * @param string[] $customDimensions Some custom dimensions, configured by the analytics provider
      * @param bool $analyticsConsent A boolean if the user has given consent to analyze personal data
      * @param string|null $clientId A unique ID for the client visiting the website (logged in or not)
      * @param string|null $userId A unique ID for a logged-in user. Can be an auto-incremented id
+     * @param int|null $lastOrder The timestamp of the last ecommerce order of the user
      */
-    public function __construct(?string $language = null, array $customDimensions = [], bool $analyticsConsent = false, ?string $clientId = null, ?string $userId = null)
+    public function __construct(?string $language = null, array $customDimensions = [], bool $analyticsConsent = false, ?string $clientId = null, ?string $userId = null, ?int $lastOrder = null)
     {
         $this->language = $language;
         $this->customDimensions = $customDimensions;
         $this->analyticsConsent = $analyticsConsent;
         $this->clientId = $clientId;
         $this->userId = $userId;
+        $this->lastOrder = $lastOrder;
     }
 
     /**
@@ -165,4 +172,19 @@ class Scope
         $this->userId = $userId;
     }
 
+    /**
+     * @return int|null The timestamp of the last ecommerce order of the user
+     */
+    public function getLastOrder(): ?int
+    {
+        return $this->lastOrder;
+    }
+
+    /**
+     * @param int|null $lastOrder The timestamp of the last ecommerce order of the user
+     */
+    public function setLastOrder(?int $lastOrder): void
+    {
+        $this->lastOrder = $lastOrder;
+    }
 }
