@@ -63,7 +63,8 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $subTotal = new Money(399, new Currency('EUR'));
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
 
         $this->assertEquals("id", self::get($tx, "id"));
         self::assertEquals($products, self::get($tx, "products"));
@@ -71,6 +72,7 @@ class TransactionTest extends TestCase
         self::assertEquals($taxes, self::get($tx, "taxes"));
         self::assertEquals($discounts, self::get($tx, "discounts"));
         self::assertEquals($total, self::get($tx, "total"));
+        self::assertEquals($subTotal, self::get($tx, "subTotal"));
         self::assertEquals("affiliation", self::get($tx, "affiliation"));
         self::assertEquals("coupon", self::get($tx, "coupon"));
     }
@@ -85,9 +87,10 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
 
         $p = new Money(1234, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
         self::set($tx, "total", $p);
         $this->assertEquals($p, $tx->getTotal());
     }
@@ -102,9 +105,10 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
 
         $p = new Money(1234, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
         self::set($tx, "shipping", $p);
         $this->assertEquals($p, $tx->getShipping());
     }
@@ -119,8 +123,9 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
 
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
         self::set($tx, "affiliation", "aff");
         $this->assertEquals("aff", $tx->getAffiliation());
     }
@@ -135,8 +140,9 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
 
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
         self::set($tx, "coupon", "coup");
         $this->assertEquals("coup", $tx->getCoupon());
     }
@@ -152,9 +158,10 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
 
         $p = new Money(1234, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
         self::set($tx, "discounts", $p);
         $this->assertEquals($p, $tx->getDiscounts());
     }
@@ -169,7 +176,8 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $subTotal = new Money(399, new Currency('EUR'));
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
 
         $p = [new Product("b")];
         self::set($tx, "products", $p);
@@ -186,7 +194,8 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $subTotal = new Money(399, new Currency('EUR'));
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
 
         self::set($tx, "id", "identifier");
         $this->assertEquals("identifier", $tx->getId());
@@ -203,9 +212,10 @@ class TransactionTest extends TestCase
         $taxes = new Money(434, new Currency('EUR'));
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
 
         $p = new Money(1234, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal,"affiliation", "coupon");
         self::set($tx, "taxes", $p);
         $this->assertEquals($p, $tx->getTaxes());
     }

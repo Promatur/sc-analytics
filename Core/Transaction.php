@@ -45,6 +45,11 @@ class Transaction
     private $total;
 
     /**
+     * @var Money The subtotal of the transaction
+     */
+    private $subTotal;
+
+    /**
      * @var string|null Affiliation or store name of a transaction
      */
     private $affiliation;
@@ -61,10 +66,11 @@ class Transaction
      * @param Money $taxes The taxes of the transaction
      * @param Money $discounts The total amount of discounts applied to the transaction
      * @param Money $total The total price of the transaction
+     * @param Money $subTotal The subtotal of the transaction
      * @param string|null $affiliation Affiliation or store name of a transaction
      * @param string|null $coupon A coupon code used for the transaction
      */
-    public function __construct(string $id, array $products, Money $shipping, Money $taxes, Money $discounts, Money $total, ?string $affiliation = null, ?string $coupon = null)
+    public function __construct(string $id, array $products, Money $shipping, Money $taxes, Money $discounts, Money $total, Money $subTotal, ?string $affiliation = null, ?string $coupon = null)
     {
         $this->id = $id;
         $this->products = $products;
@@ -72,6 +78,7 @@ class Transaction
         $this->taxes = $taxes;
         $this->discounts = $discounts;
         $this->total = $total;
+        $this->subTotal = $subTotal;
         $this->affiliation = $affiliation;
         $this->coupon = $coupon;
     }
@@ -122,6 +129,14 @@ class Transaction
     public function getTotal(): Money
     {
         return $this->total;
+    }
+
+    /**
+     * @return Money The subtotal of the transaction
+     */
+    public function getSubTotal(): Money
+    {
+        return $this->subTotal;
     }
 
     /**
