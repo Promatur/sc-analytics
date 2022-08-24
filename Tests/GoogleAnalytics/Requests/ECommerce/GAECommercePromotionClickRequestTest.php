@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class GAECommercePromotionClickRequestTest extends TestCase
 {
 
-    public function test__construct()
+    public function test__construct(): void
     {
         Analytics::init();
 

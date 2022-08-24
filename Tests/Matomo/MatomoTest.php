@@ -15,6 +15,7 @@ use ScAnalytics\Core\Scope;
 use ScAnalytics\Core\Transaction;
 use ScAnalytics\Matomo\Matomo;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
 use ScAnalytics\Matomo\Requests\MDownloadRequest;
 use ScAnalytics\Matomo\Requests\MEventRequest;
@@ -172,6 +173,12 @@ class MatomoTest extends TestCase
     {
         $ga = new Matomo();
         self::assertInstanceOf(MECommerceProductClickRequest::class, $ga->productClick("list", new Product("id")));
+    }
+
+    public function testProductPage(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceProductPageRequest::class, $ga->productPage(new Product("id")));
     }
 
     protected function setUp(): void

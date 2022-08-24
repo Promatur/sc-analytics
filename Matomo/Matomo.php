@@ -13,6 +13,7 @@ use ScAnalytics\Core\Product;
 use ScAnalytics\Core\PurchasableProduct;
 use ScAnalytics\Core\Transaction;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
 use ScAnalytics\Matomo\Requests\MDownloadRequest;
 use ScAnalytics\Matomo\Requests\MEventRequest;
@@ -447,6 +448,6 @@ class Matomo implements AnalyticsHandler
      */
     public function productPage(Product $product, ?PageData $pageData = null): ARequest
     {
-        return new NoRequest();// TODO: Implement productPage() method.
+        return new MECommerceProductPageRequest($product, $pageData);
     }
 }
