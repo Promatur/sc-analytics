@@ -11,6 +11,7 @@ use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Transaction;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -175,7 +176,7 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function removeCart(array $products): ARequest
     {
-        return new NoRequest();// TODO: Implement removeCart() method.
+        return new GAECommerceCartRemoveRequest($products);
     }
 
     /**

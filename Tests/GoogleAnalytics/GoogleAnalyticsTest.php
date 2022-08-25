@@ -11,6 +11,7 @@ use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -137,6 +138,12 @@ class GoogleAnalyticsTest extends TestCase
     {
         $ga = new GoogleAnalytics();
         self::assertInstanceOf(GAECommerceCartAddRequest::class, $ga->addCart([]));
+    }
+
+    public function testRemoveCart(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceCartRemoveRequest::class, $ga->removeCart([]));
     }
 
     protected function setUp(): void
