@@ -10,6 +10,7 @@ use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Transaction;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -166,7 +167,7 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function addCart(array $products): ARequest
     {
-        return new NoRequest();// TODO: Implement addCart() method.
+        return new GAECommerceCartAddRequest($products);
     }
 
     /**

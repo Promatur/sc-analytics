@@ -10,6 +10,7 @@ use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -130,6 +131,12 @@ class GoogleAnalyticsTest extends TestCase
     {
         $ga = new GoogleAnalytics();
         self::assertInstanceOf(GADownloadRequest::class, $ga->download("image.jpg"));
+    }
+
+    public function testAddCart(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceCartAddRequest::class, $ga->addCart([]));
     }
 
     protected function setUp(): void
