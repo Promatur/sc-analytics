@@ -10,21 +10,20 @@ use ScAnalytics\Analytics;
 use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
-use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Tests the GAECommerceCartRemoveRequest class.
+ *
+ * @author Jan-Nicklas Adler
+ * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @copyright All Rights Reserved.
+ */
 class GAECommerceCartRemoveRequestTest extends TestCase
 {
 
-    /**
-     * Tests the GAECommerceCartAddRequest class.
-     *
-     * @author Jan-Nicklas Adler
-     * @version 1.0.0
-     * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
-     * @copyright All Rights Reserved.
-     */
     public function test__construct(): void
     {
         Analytics::init();

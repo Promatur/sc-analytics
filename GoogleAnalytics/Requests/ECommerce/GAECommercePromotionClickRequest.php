@@ -15,6 +15,7 @@ use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
  * @author Jan-Nicklas Adler
  * @version 1.0.0
  * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  */
 class GAECommercePromotionClickRequest extends GAEventRequest
