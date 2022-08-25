@@ -13,6 +13,7 @@ use ScAnalytics\Core\Transaction;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
@@ -202,7 +203,7 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest
     {
-        return new NoRequest();// TODO: Implement productClick() method.
+        return new GAECommerceProductClickRequest($listName, $product, $productPosition);
     }
 
     /**

@@ -17,6 +17,7 @@ use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
@@ -163,6 +164,12 @@ class GoogleAnalyticsTest extends TestCase
     {
         $ga = new GoogleAnalytics();
         self::assertInstanceOf(GAECommerceCheckoutStepRequest::class, $ga->checkoutStep(null, [], 1));
+    }
+
+    public function testProductClick(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceProductClickRequest::class, $ga->productClick("list", new Product("id")));
     }
 
     protected function setUp(): void

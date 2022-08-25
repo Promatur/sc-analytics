@@ -11,40 +11,41 @@ use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests the GAECommerceCheckoutStepRequest class.
+ * Tests the GAECommerceProductClickRequest class.
  *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
  * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  */
-class GAECommerceCheckoutStepRequestTest extends TestCase
+class GAECommerceProductClickRequestTest extends TestCase
 {
 
     public function test__construct(): void
     {
         Analytics::init();
-        $req = new GAECommerceCheckoutStepRequest(null, [new Product("id", new Money(300, new Currency("EUR")), new Money(250, new Currency("EUR")), "key", "name", "category", "variant", "brand", 2, "coupon")], 2, "PayPal");
+        $req = new GAECommerceProductClickRequest("list", new Product("id", new Money(300, new Currency("EUR")), new Money(250, new Currency("EUR")), "key", "name", "category", "variant", "brand", 2, "coupon"), 2);
 
-        self::assertEquals("pageview", $req->getParameters()[GAParameter::$TYPE->getName()]);
-        self::assertEquals("checkout", $req->getParameters()[GAParameter::$PRODUCTACTION->getName()]);
+        self::assertEquals("0", $req->getParameters()[GAParameter::$NONINTERACTION->getName()]);
+        self::assertEquals("event", $req->getParameters()[GAParameter::$TYPE->getName()]);
+        self::assertEquals("UX", $req->getParameters()[GAParameter::$EVENTCATEGORY->getName()]);
+        self::assertEquals("click", $req->getParameters()[GAParameter::$EVENTACTION->getName()]);
+
+        self::assertEquals("click", $req->getParameters()[GAParameter::$PRODUCTACTION->getName()]);
         self::assertEquals("USD", $req->getParameters()[GAParameter::$CURRENCY->getName()]);
-        self::assertEquals(2, $req->getParameters()[GAParameter::$CHECKOUTSTEP->getName()]);
-        self::assertEquals("PayPal", $req->getParameters()[GAParameter::$CHECKOUTSTEPOPTION->getName()]);
-
+        self::assertEquals("list", $req->getParameters()[GAParameter::$PRODUCTACTIONLIST->getName()]);
 
         self::assertEquals("id", $req->getParameters()[GAParameter::$PRODUCTSKU->withValue(1)->getName()]);
         self::assertEquals("key", $req->getParameters()[GAParameter::$PRODUCTNAME->withValue(1)->getName()]);
         self::assertEquals("brand", $req->getParameters()[GAParameter::$PRODUCTBRAND->withValue(1)->getName()]);
         self::assertEquals("category", $req->getParameters()[GAParameter::$PRODUCTCATEGORY->withValue(1)->getName()]);
         self::assertEquals("variant", $req->getParameters()[GAParameter::$PRODUCTVARIANT->withValue(1)->getName()]);
-        self::assertEquals(1, $req->getParameters()[GAParameter::$PRODUCTPOSITION->withValue(1)->getName()]);
+        self::assertEquals(2, $req->getParameters()[GAParameter::$PRODUCTPOSITION->withValue(1)->getName()]);
         self::assertEquals("3.00", $req->getParameters()[GAParameter::$PRODUCTPRICE->withValue(1)->getName()]);
-        self::assertEquals(2, $req->getParameters()[GAParameter::$PRODUCTQUANTITY->withValue(1)->getName()]);
-        self::assertEquals("coupon", $req->getParameters()[GAParameter::$PRODUCTCOUPON->withValue(1)->getName()]);
     }
 
     /**
