@@ -14,6 +14,7 @@ use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Core\Transaction;
 use ScAnalytics\Matomo\Matomo;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCheckoutStepRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
@@ -37,7 +38,7 @@ use ScAnalytics\Matomo\Requests\MTimingRequest;
  */
 class MatomoTest extends TestCase
 {
-
+    
     public function test__construct(): void
     {
         new Matomo();
@@ -80,7 +81,6 @@ class MatomoTest extends TestCase
 
     public function testLoadJS(): void
     {
-        Analytics::init();
         $matomo = new Matomo();
         $pageData = new PageData("title");
 
@@ -103,7 +103,6 @@ class MatomoTest extends TestCase
 
     public function testGetVisitorId(): void
     {
-        Analytics::init();
         /** @var string $visitorId */
         $visitorId = Matomo::getVisitorId();
         self::assertNotEmpty($visitorId);
@@ -169,6 +168,12 @@ class MatomoTest extends TestCase
         self::assertInstanceOf(MECommercePurchaseRequest::class, $ga->purchase(new Transaction("id", [], $m, $m, $m, $m, $m)));
     }
 
+    public function testCheckoutStep(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceCheckoutStepRequest::class, $ga->checkoutStep(null, [new Product("id")], 2));
+    }
+
     public function testProductClick(): void
     {
         $ga = new Matomo();
@@ -184,6 +189,7 @@ class MatomoTest extends TestCase
     protected function setUp(): void
     {
         $_SESSION = [];
+        Analytics::init();
     }
 
     /**

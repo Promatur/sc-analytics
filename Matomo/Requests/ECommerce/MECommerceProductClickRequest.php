@@ -13,6 +13,7 @@ use ScAnalytics\Matomo\Requests\MRequest;
  *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  * @link https://developer.matomo.org/api-reference/tracking-api#optional-content-tracking-info API Documentation
  * @link https://matomo.org/docs/content-tracking/ Content tracking

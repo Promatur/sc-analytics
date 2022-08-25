@@ -12,6 +12,7 @@ use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Product;
 use ScAnalytics\Core\PurchasableProduct;
 use ScAnalytics\Core\Transaction;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCheckoutStepRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
@@ -432,7 +433,7 @@ class Matomo implements AnalyticsHandler
      */
     public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
     {
-        return new NoRequest();// TODO: Implement checkoutStep() method.
+        return new MECommerceCheckoutStepRequest($pageData, $products, $step, $option);
     }
 
     /**
