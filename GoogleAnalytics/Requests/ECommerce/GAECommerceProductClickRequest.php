@@ -12,9 +12,10 @@ use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 
 /**
  * Class GAECommerceProductClickRequest. Measures a click on a product.
- * @package PromaturAPI\Analytics\GoogleAnalyticsAPI\Requests\ECommerce
+ *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  * @link https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide#measuring-actions
  * @link https://developers.google.com/analytics/devguides/collection/gtagjs/enhanced-ecommerce#action-types

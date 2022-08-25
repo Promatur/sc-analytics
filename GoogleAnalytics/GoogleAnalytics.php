@@ -14,6 +14,7 @@ use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductPageRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
@@ -23,7 +24,6 @@ use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GASearchRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GASocialRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
-use ScAnalytics\NoAnalytics\NoRequest;
 
 /**
  * Class GoogleAnalytics. Responsible for managing Google Analytics.
@@ -211,6 +211,6 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function productPage(Product $product, ?PageData $pageData = null): ARequest
     {
-        return new NoRequest();// TODO: Implement productPage() method.
+        return new GAECommerceProductPageRequest($product, $pageData);
     }
 }
