@@ -14,6 +14,7 @@ use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Core\Transaction;
 use ScAnalytics\Matomo\Matomo;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCartUpdateRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCheckoutStepRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
@@ -159,6 +160,18 @@ class MatomoTest extends TestCase
     {
         $ga = new Matomo();
         self::assertInstanceOf(MDownloadRequest::class, $ga->download("image.jpg"));
+    }
+
+    public function testAddCart(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceCartUpdateRequest::class, $ga->addCart([]));
+    }
+
+    public function testRemoveCart(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceCartUpdateRequest::class, $ga->removeCart([]));
     }
 
     public function testPurchase(): void

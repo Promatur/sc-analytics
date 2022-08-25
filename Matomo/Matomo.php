@@ -10,8 +10,8 @@ use ScAnalytics\Core\ARequest;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Product;
-use ScAnalytics\Core\PurchasableProduct;
 use ScAnalytics\Core\Transaction;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCartUpdateRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCheckoutStepRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
@@ -24,7 +24,6 @@ use ScAnalytics\Matomo\Requests\MPageViewRequest;
 use ScAnalytics\Matomo\Requests\MSearchRequest;
 use ScAnalytics\Matomo\Requests\MSocialRequest;
 use ScAnalytics\Matomo\Requests\MTimingRequest;
-use ScAnalytics\NoAnalytics\NoRequest;
 
 /**
  * Class Matomo. The matomo analytics handler handles the integration of the Matomo analytics platform.
@@ -409,7 +408,7 @@ class Matomo implements AnalyticsHandler
      */
     public function addCart(array $products): ARequest
     {
-        return new NoRequest();// TODO: Implement addCart() method.
+        return new MECommerceCartUpdateRequest($products);
     }
 
     /**
@@ -417,7 +416,7 @@ class Matomo implements AnalyticsHandler
      */
     public function removeCart(array $products): ARequest
     {
-        return new NoRequest();// TODO: Implement removeCart() method.
+        return new MECommerceCartUpdateRequest($products);
     }
 
     /**
