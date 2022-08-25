@@ -12,6 +12,8 @@ use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Transaction;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -184,7 +186,7 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function purchase(Transaction $transaction): ARequest
     {
-        return new NoRequest();// TODO: Implement purchase() method.
+        return new GAECommercePurchaseRequest($transaction);
     }
 
     /**
@@ -192,7 +194,7 @@ class GoogleAnalytics implements AnalyticsHandler
      */
     public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
     {
-        return new NoRequest();// TODO: Implement checkoutStep() method.
+        return new GAECommerceCheckoutStepRequest($pageData, $products, $step, $option);
     }
 
     /**

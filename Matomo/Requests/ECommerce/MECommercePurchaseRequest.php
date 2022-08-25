@@ -26,6 +26,9 @@ class MECommercePurchaseRequest extends MECommerceRequest
     {
         parent::__construct($transaction->getTotal(), $transaction->getSubTotal(), $transaction->getTaxes(), $transaction->getShipping(), $transaction->getDiscounts(), $transaction->getProducts());
         $this->setParameter(MParameter::$ORDERID, $transaction->getId());
+        if (!empty($transaction->getUser())) {
+            $this->setUserIdentifier($transaction->getUser());
+        }
     }
 
 }

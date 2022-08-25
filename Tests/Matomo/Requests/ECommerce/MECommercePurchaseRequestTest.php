@@ -34,7 +34,7 @@ class MECommercePurchaseRequestTest extends TestCase
         $shipping = new Money(80, new Currency("EUR"));
         $discount = new Money(200, new Currency("EUR"));
         $products = [new Product("product1")];
-        $tx = new Transaction("transaction1", $products, $shipping, $tax, $discount, $total, $subTotal);
+        $tx = new Transaction("transaction1", $products, $shipping, $tax, $discount, $total, $subTotal, "affiliate", "coupon", "user");
         $req = new MECommercePurchaseRequest($tx);
 
         self::assertEquals(0, $req->getParameters()[MParameter::$CONVERSIONGOAL->getName()]);
@@ -46,6 +46,7 @@ class MECommercePurchaseRequestTest extends TestCase
         self::assertEquals(1661360288, $req->getParameters()[MParameter::$LASTORDERTIMESTAMP->getName()]);
         self::assertEquals('[["product1",null,null,null,null]]', $req->getParameters()[MParameter::$ECITEMS->getName()]);
         self::assertEquals('transaction1', $req->getParameters()[MParameter::$ORDERID->getName()]);
+        self::assertEquals('user', $req->getParameters()[MParameter::$USERID->getName()]);
     }
 
     /**

@@ -60,6 +60,16 @@ class Transaction
     private $coupon;
 
     /**
+     * @var string|null The user id of the user who performed the transaction
+     */
+    private $user;
+
+    /**
+     * @var string The currency of the transaction. Defaults to <code>AnalyticsConfig::$currency</code>
+     */
+    private $currency;
+
+    /**
      * @param string $id A unique transaction id
      * @param Product[] $products A list of products involved in the transaction
      * @param Money $shipping The shipping costs of the transaction
@@ -69,8 +79,10 @@ class Transaction
      * @param Money $subTotal The subtotal of the transaction
      * @param string|null $affiliation Affiliation or store name of a transaction
      * @param string|null $coupon A coupon code used for the transaction
+     * @param string|null $user A user id of the user who made the transaction
+     * @param string|null $currency The currency of the transaction
      */
-    public function __construct(string $id, array $products, Money $shipping, Money $taxes, Money $discounts, Money $total, Money $subTotal, ?string $affiliation = null, ?string $coupon = null)
+    public function __construct(string $id, array $products, Money $shipping, Money $taxes, Money $discounts, Money $total, Money $subTotal, ?string $affiliation = null, ?string $coupon = null, ?string $user = null, ?string $currency = null)
     {
         $this->id = $id;
         $this->products = $products;
@@ -81,6 +93,8 @@ class Transaction
         $this->subTotal = $subTotal;
         $this->affiliation = $affiliation;
         $this->coupon = $coupon;
+        $this->user = $user;
+        $this->currency = empty($currency) ? AnalyticsConfig::$currency : $currency;
     }
 
     /**
@@ -153,5 +167,21 @@ class Transaction
     public function getCoupon(): ?string
     {
         return $this->coupon;
+    }
+
+    /**
+     * @return string|null The user id of the user who performed the transaction
+     */
+    public function getUser(): ?string
+    {
+        return $this->user;
+    }
+
+    /**
+     * @return string The currency of the transaction. Defaults to <code>AnalyticsConfig::$currency</code>
+     */
+    public function getCurrency(): string
+    {
+        return $this->currency;
     }
 }

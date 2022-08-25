@@ -2,16 +2,22 @@
 
 namespace ScAnalytics\Tests\GoogleAnalytics;
 
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
+use ScAnalytics\Core\Transaction;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -144,6 +150,19 @@ class GoogleAnalyticsTest extends TestCase
     {
         $ga = new GoogleAnalytics();
         self::assertInstanceOf(GAECommerceCartRemoveRequest::class, $ga->removeCart([]));
+    }
+
+    public function testPurchase(): void
+    {
+        $ga = new GoogleAnalytics();
+        $m = new Money(100, new Currency("EUR"));
+        self::assertInstanceOf(GAECommercePurchaseRequest::class, $ga->purchase(new Transaction("id", [new Product("p")], $m, $m, $m, $m, $m)));
+    }
+
+    public function testCheckoutStep(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceCheckoutStepRequest::class, $ga->checkoutStep(null, [], 1));
     }
 
     protected function setUp(): void

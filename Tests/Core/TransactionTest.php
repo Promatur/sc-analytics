@@ -64,7 +64,7 @@ class TransactionTest extends TestCase
         $discounts = new Money(1000, new Currency('EUR'));
         $total = new Money(4999, new Currency('EUR'));
         $subTotal = new Money(399, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon", "user");
 
         $this->assertEquals("id", self::get($tx, "id"));
         self::assertEquals($products, self::get($tx, "products"));
@@ -75,6 +75,8 @@ class TransactionTest extends TestCase
         self::assertEquals($subTotal, self::get($tx, "subTotal"));
         self::assertEquals("affiliation", self::get($tx, "affiliation"));
         self::assertEquals("coupon", self::get($tx, "coupon"));
+        self::assertEquals("user", self::get($tx, "user"));
+        self::assertEquals("USD", self::get($tx, "currency"));
     }
 
     /**
@@ -218,5 +220,39 @@ class TransactionTest extends TestCase
         $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal,"affiliation", "coupon");
         self::set($tx, "taxes", $p);
         $this->assertEquals($p, $tx->getTaxes());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetUser(): void
+    {
+        $products = [new Product("a")];
+        $shipping = new Money(299, new Currency('EUR'));
+        $taxes = new Money(434, new Currency('EUR'));
+        $discounts = new Money(1000, new Currency('EUR'));
+        $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
+
+        self::set($tx, "user", "userid");
+        $this->assertEquals("userid", $tx->getUser());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetCurrency(): void
+    {
+        $products = [new Product("a")];
+        $shipping = new Money(299, new Currency('EUR'));
+        $taxes = new Money(434, new Currency('EUR'));
+        $discounts = new Money(1000, new Currency('EUR'));
+        $total = new Money(4999, new Currency('EUR'));
+        $subTotal = new Money(399, new Currency('EUR'));
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
+
+        self::set($tx, "currency", "EUR");
+        $this->assertEquals("EUR", $tx->getCurrency());
     }
 }
