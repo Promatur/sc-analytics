@@ -39,7 +39,7 @@ class Promotion
      * @param string|null $creative The name of the creative element of the promotion
      * @param string|null $position The position of the promotion on the page
      */
-    public function __construct(?string $id, ?string $name, ?string $creative, ?string $position)
+    public function __construct(?string $id, ?string $name = null, ?string $creative = null, ?string $position = null)
     {
         $this->id = $id;
         $this->name = $name;

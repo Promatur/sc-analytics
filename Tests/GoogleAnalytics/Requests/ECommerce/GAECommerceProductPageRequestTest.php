@@ -10,12 +10,11 @@ use ScAnalytics\Analytics;
 use ScAnalytics\Core\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
-use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductPageRequest;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests the GAECommerceProductClickRequest class.
+ * Tests the GAECommerceProductPageRequest class.
  *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
