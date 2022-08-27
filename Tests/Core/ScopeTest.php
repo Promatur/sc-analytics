@@ -30,6 +30,7 @@ class ScopeTest extends TestCase
         self::assertFalse(self::get($scope, "analyticsConsent"));
         self::assertNull(self::get($scope, "clientId"));
         self::assertNull(self::get($scope, "userId"));
+        self::assertNull(self::get($scope, "lastOrder"));
     }
 
     /**
@@ -85,6 +86,26 @@ class ScopeTest extends TestCase
         $scope = new Scope();
         $scope->setUserId("482");
         self::assertEquals("482", self::get($scope, "userId"));
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testSetLastOrder(): void
+    {
+        $scope = new Scope();
+        $scope->setLastOrder(1661360288);
+        self::assertEquals(1661360288, self::get($scope, "lastOrder"));
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetLastOrder(): void
+    {
+        $scope = new Scope();
+        self::set($scope, "lastOrder", 1661360281);
+        self::assertEquals(1661360281, $scope->getLastOrder());
     }
 
     /**

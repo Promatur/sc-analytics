@@ -7,8 +7,15 @@ use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCartUpdateRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCheckoutStepRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
 use ScAnalytics\Matomo\Requests\MDownloadRequest;
 use ScAnalytics\Matomo\Requests\MEventRequest;
 use ScAnalytics\Matomo\Requests\MExceptionRequest;
@@ -392,5 +399,55 @@ class Matomo implements AnalyticsHandler
     public function download(string $fileName, ?int $size = null): ARequest
     {
         return new MDownloadRequest($fileName, $size);
+    }
+
+    // - ECommerce
+
+    /**
+     * @inheritDoc
+     */
+    public function addCart(array $products): ARequest
+    {
+        return new MECommerceCartUpdateRequest($products);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeCart(array $products): ARequest
+    {
+        return new MECommerceCartUpdateRequest($products);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function purchase(Transaction $transaction): ARequest
+    {
+        return new MECommercePurchaseRequest($transaction);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
+    {
+        return new MECommerceCheckoutStepRequest($pageData, $products, $step, $option);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest
+    {
+        return new MECommerceProductClickRequest($listName, $product);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productPage(Product $product, ?PageData $pageData = null): ARequest
+    {
+        return new MECommerceProductPageRequest($product, $pageData);
     }
 }

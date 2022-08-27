@@ -2,14 +2,23 @@
 
 namespace ScAnalytics\Tests\Matomo;
 
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\Matomo;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCartUpdateRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCheckoutStepRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductPageRequest;
+use ScAnalytics\Matomo\Requests\ECommerce\MECommercePurchaseRequest;
 use ScAnalytics\Matomo\Requests\MDownloadRequest;
 use ScAnalytics\Matomo\Requests\MEventRequest;
 use ScAnalytics\Matomo\Requests\MExceptionRequest;
@@ -30,7 +39,7 @@ use ScAnalytics\Matomo\Requests\MTimingRequest;
  */
 class MatomoTest extends TestCase
 {
-
+    
     public function test__construct(): void
     {
         new Matomo();
@@ -73,7 +82,6 @@ class MatomoTest extends TestCase
 
     public function testLoadJS(): void
     {
-        Analytics::init();
         $matomo = new Matomo();
         $pageData = new PageData("title");
 
@@ -96,7 +104,6 @@ class MatomoTest extends TestCase
 
     public function testGetVisitorId(): void
     {
-        Analytics::init();
         /** @var string $visitorId */
         $visitorId = Matomo::getVisitorId();
         self::assertNotEmpty($visitorId);
@@ -155,9 +162,47 @@ class MatomoTest extends TestCase
         self::assertInstanceOf(MDownloadRequest::class, $ga->download("image.jpg"));
     }
 
+    public function testAddCart(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceCartUpdateRequest::class, $ga->addCart([]));
+    }
+
+    public function testRemoveCart(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceCartUpdateRequest::class, $ga->removeCart([]));
+    }
+
+    public function testPurchase(): void
+    {
+        $ga = new Matomo();
+        $m = new Money(0, new Currency("EUR"));
+        self::assertInstanceOf(MECommercePurchaseRequest::class, $ga->purchase(new Transaction("id", [], $m, $m, $m, $m, $m)));
+    }
+
+    public function testCheckoutStep(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceCheckoutStepRequest::class, $ga->checkoutStep(null, [new Product("id")], 2));
+    }
+
+    public function testProductClick(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceProductClickRequest::class, $ga->productClick("list", new Product("id")));
+    }
+
+    public function testProductPage(): void
+    {
+        $ga = new Matomo();
+        self::assertInstanceOf(MECommerceProductPageRequest::class, $ga->productPage(new Product("id")));
+    }
+
     protected function setUp(): void
     {
         $_SESSION = [];
+        Analytics::init();
     }
 
     /**

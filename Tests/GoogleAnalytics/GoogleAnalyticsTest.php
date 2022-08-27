@@ -2,14 +2,24 @@
 
 namespace ScAnalytics\Tests\GoogleAnalytics;
 
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductPageRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -130,6 +140,43 @@ class GoogleAnalyticsTest extends TestCase
     {
         $ga = new GoogleAnalytics();
         self::assertInstanceOf(GADownloadRequest::class, $ga->download("image.jpg"));
+    }
+
+    public function testAddCart(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceCartAddRequest::class, $ga->addCart([]));
+    }
+
+    public function testRemoveCart(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceCartRemoveRequest::class, $ga->removeCart([]));
+    }
+
+    public function testPurchase(): void
+    {
+        $ga = new GoogleAnalytics();
+        $m = new Money(100, new Currency("EUR"));
+        self::assertInstanceOf(GAECommercePurchaseRequest::class, $ga->purchase(new Transaction("id", [new Product("p")], $m, $m, $m, $m, $m)));
+    }
+
+    public function testCheckoutStep(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceCheckoutStepRequest::class, $ga->checkoutStep(null, [], 1));
+    }
+
+    public function testProductClick(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceProductClickRequest::class, $ga->productClick("list", new Product("id")));
+    }
+
+    public function testProductPage(): void
+    {
+        $ga = new GoogleAnalytics();
+        self::assertInstanceOf(GAECommerceProductPageRequest::class, $ga->productPage(new Product("id")));
     }
 
     protected function setUp(): void

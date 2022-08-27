@@ -6,8 +6,16 @@ use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartAddRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCartRemoveRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceCheckoutStepRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductClickRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductPageRequest;
+use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePurchaseRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GADownloadRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
@@ -154,5 +162,55 @@ class GoogleAnalytics implements AnalyticsHandler
     public function download(string $fileName, ?int $size = null): ARequest
     {
         return new GADownloadRequest($fileName, $size);
+    }
+
+    // - ECommerce
+
+    /**
+     * @inheritDoc
+     */
+    public function addCart(array $products): ARequest
+    {
+        return new GAECommerceCartAddRequest($products);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeCart(array $products): ARequest
+    {
+        return new GAECommerceCartRemoveRequest($products);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function purchase(Transaction $transaction): ARequest
+    {
+        return new GAECommercePurchaseRequest($transaction);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
+    {
+        return new GAECommerceCheckoutStepRequest($pageData, $products, $step, $option);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest
+    {
+        return new GAECommerceProductClickRequest($listName, $product, $productPosition);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productPage(Product $product, ?PageData $pageData = null): ARequest
+    {
+        return new GAECommerceProductPageRequest($product, $pageData);
     }
 }
