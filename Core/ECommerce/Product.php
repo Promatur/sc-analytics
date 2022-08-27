@@ -1,9 +1,17 @@
 <?php
 
-namespace ScAnalytics\Core;
+namespace ScAnalytics\Core\ECommerce;
 
 use Money\Money;
 
+/**
+ * Class Product. Represents a product to be sold.
+ *
+ * @author Jan-Nicklas Adler
+ * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
+ * @copyright All Rights Reserved.
+ */
 class Product
 {
 

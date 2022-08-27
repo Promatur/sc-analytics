@@ -1,6 +1,6 @@
 <?php
 
-namespace ScAnalytics\Core;
+namespace ScAnalytics\Core\ECommerce;
 
 /**
  * Class Promotion. Represents a promotional element.

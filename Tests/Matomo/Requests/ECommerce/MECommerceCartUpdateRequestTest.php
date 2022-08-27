@@ -4,14 +4,14 @@ namespace Matomo\Requests\ECommerce;
 
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
-use ScAnalytics\Core\Product;
+use ScAnalytics\Core\ECommerce\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceCartUpdateRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the MECommerceCartUpdateRequest class.

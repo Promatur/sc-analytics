@@ -2,14 +2,11 @@
 
 namespace GoogleAnalytics\Requests\ECommerce;
 
-use Money\Currency;
-use Money\Money;
+use PHPUnit\Framework\TestCase;
 use ScAnalytics\Analytics;
-use ScAnalytics\Core\Product;
-use ScAnalytics\Core\Promotion;
+use ScAnalytics\Core\ECommerce\Promotion;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePromotionImpressionRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the GAECommercePromotionImpressionRequest class.

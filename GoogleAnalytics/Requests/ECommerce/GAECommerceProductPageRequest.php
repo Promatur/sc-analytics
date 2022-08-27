@@ -5,9 +5,9 @@ namespace ScAnalytics\GoogleAnalytics\Requests\ECommerce;
 
 
 use ScAnalytics\Core\AnalyticsConfig;
+use ScAnalytics\Core\ECommerce\Product;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
-use ScAnalytics\Core\Product;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 

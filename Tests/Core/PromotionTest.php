@@ -2,10 +2,10 @@
 
 namespace Core;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
-use ScAnalytics\Core\Promotion;
-use PHPUnit\Framework\TestCase;
+use ScAnalytics\Core\ECommerce\Promotion;
 
 /**
  * Tests the Promotion class.
@@ -75,7 +75,7 @@ class PromotionTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testGetPosition():void
+    public function testGetPosition(): void
     {
         $promo = new Promotion("id", "name", "creative", "position");
         self::set($promo, "position", "newPosition");

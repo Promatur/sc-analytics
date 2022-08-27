@@ -4,8 +4,8 @@
 namespace ScAnalytics\GoogleAnalytics\Requests\ECommerce;
 
 
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\HelperFunctions;
-use ScAnalytics\Core\Transaction;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 

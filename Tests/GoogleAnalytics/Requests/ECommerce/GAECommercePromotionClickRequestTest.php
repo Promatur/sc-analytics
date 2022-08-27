@@ -2,14 +2,14 @@
 
 namespace GoogleAnalytics\Requests\ECommerce;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
-use ScAnalytics\Core\Promotion;
+use ScAnalytics\Core\ECommerce\Promotion;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommercePromotionClickRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the GAECommercePromotionClickRequest class.

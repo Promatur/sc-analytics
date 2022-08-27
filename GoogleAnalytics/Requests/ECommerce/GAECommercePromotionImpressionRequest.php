@@ -4,8 +4,8 @@
 namespace ScAnalytics\GoogleAnalytics\Requests\ECommerce;
 
 
+use ScAnalytics\Core\ECommerce\Promotion;
 use ScAnalytics\Core\PageData;
-use ScAnalytics\Core\Promotion;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
 

@@ -5,7 +5,7 @@ namespace ScAnalytics\Matomo\Requests\ECommerce;
 
 use Money\Currency;
 use Money\Money;
-use ScAnalytics\Core\Product;
+use ScAnalytics\Core\ECommerce\Product;
 
 /**
  * Class MECommerceCartAddRequest. Sent, when adding one or more products to a shopping cart.

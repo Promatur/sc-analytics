@@ -5,9 +5,9 @@ namespace ScAnalytics\Tests\NoAnalytics;
 use Money\Currency;
 use Money\Money;
 use PHPUnit\Framework\TestCase;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\PageData;
-use ScAnalytics\Core\Product;
-use ScAnalytics\Core\Transaction;
 use ScAnalytics\NoAnalytics\NoAnalytics;
 use ScAnalytics\NoAnalytics\NoRequest;
 

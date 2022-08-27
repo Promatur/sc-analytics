@@ -1,14 +1,16 @@
 <?php
 
-namespace ScAnalytics\Core;
+namespace ScAnalytics\Core\ECommerce;
 
 use Money\Money;
+use ScAnalytics\Core\AnalyticsConfig;
 
 /**
  * Class Transaction. A transaction is the purchase of one or multiple products by a user.
  *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
+ * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  */
 class Transaction

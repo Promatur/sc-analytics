@@ -2,14 +2,14 @@
 
 namespace Matomo\Requests\ECommerce;
 
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
-use ScAnalytics\Core\Product;
+use ScAnalytics\Core\ECommerce\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\ECommerce\MECommerceProductClickRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the MECommerceRequest class.

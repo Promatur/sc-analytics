@@ -4,6 +4,9 @@
 namespace ScAnalytics\Core;
 
 
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
+
 /**
  * Interface AnalyticsHandler. This interface creates a simple interface for all integrated analytics handlers. This interface maps different functions to the specific parameters of the analytics handlers.
  *

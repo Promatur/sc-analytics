@@ -6,9 +6,9 @@ namespace ScAnalytics\NoAnalytics;
 
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\PageData;
-use ScAnalytics\Core\Product;
-use ScAnalytics\Core\Transaction;
 
 /**
  * Class NoAnalytics. This class is a dummy analytics handler, if no other handler is available.

@@ -4,7 +4,7 @@
 namespace ScAnalytics\GoogleAnalytics\Requests\ECommerce;
 
 
-use ScAnalytics\Core\Promotion;
+use ScAnalytics\Core\ECommerce\Promotion;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 

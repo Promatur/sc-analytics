@@ -5,9 +5,9 @@ namespace ScAnalytics\Matomo\Requests\ECommerce;
 
 
 use JsonException;
+use ScAnalytics\Core\ECommerce\Product;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
-use ScAnalytics\Core\Product;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\MPageViewRequest;
 

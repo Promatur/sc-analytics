@@ -4,7 +4,7 @@
 namespace ScAnalytics\Matomo\Requests\ECommerce;
 
 
-use ScAnalytics\Core\Product;
+use ScAnalytics\Core\ECommerce\Product;
 use ScAnalytics\Matomo\MParameter;
 use ScAnalytics\Matomo\Requests\MRequest;
 

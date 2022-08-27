@@ -4,14 +4,14 @@ namespace GoogleAnalytics\Requests\ECommerce;
 
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ScAnalytics\Analytics;
-use ScAnalytics\Core\Product;
+use ScAnalytics\Core\ECommerce\Product;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GAParameter;
 use ScAnalytics\GoogleAnalytics\Requests\ECommerce\GAECommerceProductPageRequest;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Tests the GAECommerceProductPageRequest class.

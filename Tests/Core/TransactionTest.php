@@ -4,11 +4,11 @@ namespace Core;
 
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
-use ScAnalytics\Core\Product;
-use ScAnalytics\Core\Transaction;
-use PHPUnit\Framework\TestCase;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 
 /**
  * Tests the Transaction class.
@@ -217,7 +217,7 @@ class TransactionTest extends TestCase
         $subTotal = new Money(399, new Currency('EUR'));
 
         $p = new Money(1234, new Currency('EUR'));
-        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal,"affiliation", "coupon");
+        $tx = new Transaction("id", $products, $shipping, $taxes, $discounts, $total, $subTotal, "affiliation", "coupon");
         self::set($tx, "taxes", $p);
         $this->assertEquals($p, $tx->getTaxes());
     }

@@ -4,10 +4,10 @@ namespace Core;
 
 use Money\Currency;
 use Money\Money;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
-use ScAnalytics\Core\Product;
-use PHPUnit\Framework\TestCase;
+use ScAnalytics\Core\ECommerce\Product;
 
 /**
  * Tests the Product class.
