@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\ECommerce;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
