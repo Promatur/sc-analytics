@@ -35,6 +35,8 @@ class AnalyticsConfigTest extends TestCase
         self::assertEmpty(AnalyticsConfig::$googleAnalytics4);
         self::assertIsArray(AnalyticsConfig::$googleAnalytics4);
         self::assertEquals("assets", AnalyticsConfig::$assets);
+        self::assertEquals("", AnalyticsConfig::$relativeAssetsPrefix);
+        self::assertEquals("USD", AnalyticsConfig::$currency);
     }
 
 }

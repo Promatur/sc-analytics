@@ -1,6 +1,6 @@
 {
   "name": "promatur/sc-analytics",
-  "version": "v1.0.0",
+  "version": "v1.1.2",
   "type": "library",
   "description": "A combination of clientside and serverside analytics for PHP-based websites.",
   "keywords": [
@@ -32,8 +32,8 @@
   ],
   "support": {
     "email": "adler@promatur.com",
-    "issues": "https://github.com/JE4GLE/complete-analytics/issues",
-    "source": "https://github.com/JE4GLE/complete-analytics"
+    "issues": "https://github.com/Promatur/sc-analytics/issues",
+    "source": "https://github.com/Promatur/sc-analytics"
   },
   "autoload": {
     "psr-4": {
@@ -46,6 +46,7 @@
   "require": {
     "php": "^7.3|^8.0",
     "frontpack/composer-assets-plugin": "^0.11.0",
+    "moneyphp/money": "^3.3",
     "ext-json": "*",
     "ext-curl": "*"
   },
@@ -62,5 +63,10 @@
     "assets-files": "Assets",
     "assets-dir": "libraries",
     "assets-strategy": "copy"
+  },
+  "config": {
+    "allow-plugins": {
+      "frontpack/composer-assets-plugin": true
+    }
   }
 }

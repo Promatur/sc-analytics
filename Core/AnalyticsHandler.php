@@ -4,6 +4,9 @@
 namespace ScAnalytics\Core;
 
 
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
+
 /**
  * Interface AnalyticsHandler. This interface creates a simple interface for all integrated analytics handlers. This interface maps different functions to the specific parameters of the analytics handlers.
  *
@@ -112,5 +115,59 @@ interface AnalyticsHandler
      * @return ARequest The analytics request
      */
     public function download(string $fileName, ?int $size = null): ARequest;
+
+    // - ECommerce
+    /**
+     * Sent, when adding one or more products to a shopping cart.
+     *
+     * @param Product[] $products A list of products, which are added to the cart. Keys are their position starting with <code>0</code>
+     * @return ARequest The analytics request
+     */
+    public function addCart(array $products): ARequest;
+
+    /**
+     * Sent, when removing one or more products from a shopping cart.
+     *
+     * @param Product[] $products A list of products, which are removed from the cart. Keys are their position starting with <code>0</code>
+     * @return ARequest The analytics request
+     */
+    public function removeCart(array $products): ARequest;
+
+    /**
+     * Sent, when a purchase is completed.
+     *
+     * @param Transaction $transaction The completed transaction
+     * @return ARequest The analytics request
+     */
+    public function purchase(Transaction $transaction): ARequest;
+
+    /**
+     * Sent, starting or proceeding in a checkout process. Is sent as the initial page view request.
+     * @param PageData|null $pageData The data of the page
+     * @param Product[] $products A list of products, which are added to the cart. Keys are their position starting with <code>0</code>
+     * @param int $step The step number
+     * @param string|null $option Additional information about a checkout step
+     * @return ARequest The analytics request
+     */
+    public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest;
+
+    /**
+     * Measures a click on a product.
+     *
+     * @param string $listName The list, where the product is displayed
+     * @param Product $product The product, which the user clicked on
+     * @param int $productPosition The position of the product in the list
+     * @return ARequest The analytics request
+     */
+    public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest;
+
+    /**
+     * Measures the view of a product page.
+     *
+     * @param Product $product The product, which is viewed
+     * @param PageData|null $pageData The data of the viewed page
+     * @return ARequest The analytics request
+     */
+    public function productPage(Product $product, ?PageData $pageData = null): ARequest;
 
 }

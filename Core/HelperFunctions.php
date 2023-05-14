@@ -5,6 +5,9 @@ namespace ScAnalytics\Core;
 
 
 use Exception;
+use Money\Currencies\ISOCurrencies;
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Money;
 use RuntimeException;
 
 /**
@@ -17,6 +20,21 @@ use RuntimeException;
  */
 class HelperFunctions
 {
+
+    /**
+     * Formats a money object with a decimal point.
+     * Returns <code>null</code> if the money object is <code>null</code>.
+     *
+     * @param Money|null $money A money object to format
+     * @return string|null A formatted string
+     */
+    public static function functional(?Money $money): ?string
+    {
+        if (is_null($money)) {
+            return null;
+        }
+        return (new DecimalMoneyFormatter(new ISOCurrencies()))->format($money);
+    }
 
     /**
      * Locates the directory storing the assets. Also works with unit tests.

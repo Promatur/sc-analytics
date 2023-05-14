@@ -2,7 +2,11 @@
 
 namespace ScAnalytics\Tests\NoAnalytics;
 
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\TestCase;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\NoAnalytics\NoAnalytics;
 use ScAnalytics\NoAnalytics\NoRequest;
@@ -85,5 +89,42 @@ class NoAnalyticsTest extends TestCase
     {
         $ga = new NoAnalytics();
         self::assertInstanceOf(NoRequest::class, $ga->download("image.jpg"));
+    }
+
+    public function testAddCart(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->addCart([]));
+    }
+
+    public function testRemoveCart(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->removeCart([]));
+    }
+
+    public function testPurchase(): void
+    {
+        $ga = new NoAnalytics();
+        $m = new Money(0, new Currency("EUR"));
+        self::assertInstanceOf(NoRequest::class, $ga->purchase(new Transaction("id", [], $m, $m, $m, $m, $m)));
+    }
+
+    public function testCheckoutStep(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->checkoutStep(null, [], 1));
+    }
+
+    public function testProductClick(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->productClick("list", new Product("id")));
+    }
+
+    public function testProductPage(): void
+    {
+        $ga = new NoAnalytics();
+        self::assertInstanceOf(NoRequest::class, $ga->productPage(new Product("id")));
     }
 }

@@ -35,6 +35,21 @@ class AnalyticsConfig
     public static $assets = "assets";
 
     /**
+     * A prefix for the path to the assets. Useful for websites in subdirectories or when composer is not located in the root directory.
+     * Include a trailing slash.
+     *
+     * @var string A prefix for the path to the assets
+     */
+    public static $relativeAssetsPrefix = "";
+
+    /**
+     * The default currency for all ECommerce events.
+     *
+     * @var string EUR, USD, GBP, ...
+     */
+    public static $currency = "USD";
+
+    /**
      * Your preferred analytics handler. Possible options: 'auto', 'matomo', 'google analytics' (universal), 'google analytics 4'.
      *
      * @var string Preferred analytics handler

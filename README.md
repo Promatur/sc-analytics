@@ -1,7 +1,7 @@
 Server-Client-Analytics
 ==============
 
-[![Latest Stable Version](https://poser.pugx.org/promatur/sc-analytics/v/stable)](https://packagist.org/packages/promatur/sc-analytics)
+[![Latest Stable Version](https://poser.pugx.org/promatur/sc-analytics/v/stable)](https://github.com/Promatur/sc-analytics/releases/latest)
 [![Latest Unstable Version](https://poser.pugx.org/promatur/sc-analytics/v/unstable)](https://packagist.org/packages/promatur/sc-analytics)
 [![Total Downloads](https://poser.pugx.org/promatur/sc-analytics/downloads)](https://packagist.org/packages/promatur/sc-analytics)
 [![License](https://poser.pugx.org/promatur/sc-analytics/license)](https://packagist.org/packages/promatur/sc-analytics)
@@ -15,14 +15,23 @@ Server-Client-Analytics
 
 ## Description
 
+
+<img align="left" height="200" src="https://user-images.githubusercontent.com/56178675/167543506-ba3b3f1e-789c-4d9e-81ab-4158233c2e05.png" alt="SC-Analytics Logo">
+
 A combination of clientside and serverside analytics for PHP-based websites. This repository builds upon existing
 analytics solutions and offers integrations for [Matomo](https://matomo.org)
 and [Google Analytics](https://analytics.google.com).
 Tested using PHP `7.3`, `7.4` and `8.1`.
 
+<span style="display:block">⠀</span>
+
+<span style="display:block">⠀</span>
+
+<span style="display:block">⠀</span>
+
 ## Usage
 
-It is recommended to use SCAnalytics with composer, which is the easiest way to use it. Just add `promatur/sc-analytics`
+It is recommended to use SC-Analytics with composer, which is the easiest way to use it. Just add `promatur/sc-analytics`
 to your projects requirements.
 
 ```shell
@@ -55,7 +64,7 @@ Learn more in the [Wiki](https://github.com/Promatur/sc-analytics/wiki).
 
 ### Assets
 
-SCAnalytics also provides JavaScript assets. If you want the combination of server-side and client-side analytics,
+SC-Analytics also provides JavaScript assets. If you want the combination of server-side and client-side analytics,
 configure the location of the assets in your `composer.json`:
 
 ```json

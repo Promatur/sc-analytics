@@ -6,6 +6,8 @@ namespace ScAnalytics\NoAnalytics;
 
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\PageData;
 
 /**
@@ -105,6 +107,54 @@ class NoAnalytics implements AnalyticsHandler
      * @inheritDoc
      */
     public function download(string $fileName, ?int $size = null): ARequest
+    {
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addCart(array $products): ARequest
+    {
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeCart(array $products): ARequest
+    {
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function purchase(Transaction $transaction): ARequest
+    {
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
+    {
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest
+    {
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productPage(Product $product, ?PageData $pageData = null): ARequest
     {
         return new NoRequest();
     }
