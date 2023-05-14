@@ -6,6 +6,7 @@ use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\GoogleAnalytics\GoogleAnalytics;
+use ScAnalytics\GoogleAnalytics4\GoogleAnalytics4;
 use ScAnalytics\Matomo\Matomo;
 use ScAnalytics\NoAnalytics\NoAnalytics;
 use ScAnalytics\Tests\AnalyticsTest;
@@ -29,7 +30,7 @@ class Analytics
     /**
      * @var AnalyticsHandler[] List of available analytics handlers.
      */
-    private static $analyticsList = array();
+    private static $analyticsList = [];
 
     /**
      * @var Scope User-specific settings to the analytics APIs, which are used to enrich requests
@@ -44,7 +45,7 @@ class Analytics
     public static function init(?Scope $scope = null): void
     {
         self::$scope = $scope ?? new Scope();
-        self::$analyticsList = array(new Matomo(), new GoogleAnalytics());
+        self::$analyticsList = [new Matomo(), new GoogleAnalytics4(), new GoogleAnalytics(), new NoAnalytics()];
         self::checkStatus();
     }
 
@@ -110,4 +111,11 @@ class Analytics
         return self::$scope;
     }
 
+    /**
+     * @return AnalyticsHandler[] List of all supported analytics handlers.
+     */
+    public static function getAnalyticsList(): array
+    {
+        return self::$analyticsList;
+    }
 }

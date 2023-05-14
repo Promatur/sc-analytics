@@ -10,6 +10,7 @@ use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\Scope;
 use ScAnalytics\NoAnalytics\NoAnalytics;
+use function PHPUnit\Framework\assertInstanceOf;
 
 /**
  * Tests the Analytics class.
@@ -148,6 +149,22 @@ class AnalyticsTest extends TestCase
         $scope = new Scope();
         self::set("scope", $scope);
         self::assertEquals($scope, Analytics::getScope());
+    }
+
+    public function testGetAnalyticsList(): void
+    {
+        Analytics::init();
+        $list = Analytics::getAnalyticsList();
+
+        self::assertNotEmpty($list);
+        foreach ($list as $item) {
+            assertInstanceOf(AnalyticsHandler::class, $item);
+        }
+        // Check for right order of elements
+        self::assertEquals("Matomo", $list[0]->getName());
+        self::assertEquals("Google Analytics 4", $list[1]->getName());
+        self::assertEquals("Google Analytics", $list[2]->getName());
+        self::assertEquals("No", $list[3]->getName());
     }
 
     protected function setUp(): void
