@@ -9,11 +9,14 @@ use ScAnalytics\GoogleAnalytics4\GA4EventParameter;
 /**
  * Class GA4SessionStartEvent.
  * Sent at the start of a session. Currently, sending session starts using measurement api is not supported.
+ * Sessions start automatically, when a new session id is set.
+ *
  * @author Jan-Nicklas Adler
  * @version 1.0.0
  * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  * @link https://support.google.com/analytics/answer/9234069 Documentation
+ * @deprecated Sending session starts using measurement api is not supported.
  */
 class GA4SessionStartEvent extends GA4Event
 {

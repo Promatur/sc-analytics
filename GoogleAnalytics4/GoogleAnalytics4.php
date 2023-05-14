@@ -6,9 +6,12 @@ use ScAnalytics\Analytics;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AnalyticsHandler;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\ECommerce\Product;
+use ScAnalytics\Core\ECommerce\Transaction;
 use ScAnalytics\Core\HelperFunctions;
 use ScAnalytics\Core\PageData;
 use ScAnalytics\GoogleAnalytics4\Requests\GA4PageViewRequest;
+use ScAnalytics\NoAnalytics\NoRequest;
 
 /**
  * Class GoogleAnalytics4. Responsible for managing Google Analytics 4.
@@ -60,7 +63,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
         if (file_exists($assets . '/ga4.min.js')) {
             $cacheBuster = filemtime($assets . '/ga4.min.js');
             $session = self::getSessionData();
-            $result .= '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/ga4.min.js?cb=' . $cacheBuster . '" id="_ga4" data-keys="' . implode(";", array_keys(AnalyticsConfig::$googleAnalytics4)) . '" data-consent="' . (Analytics::getScope()->hasAnalyticsConsent() ? 'true' : 'false') . '" data-clientid="' . self::getClientID() . '" data-sessionid="' . $session['id'] . '" defer></script>';
+            $result .= '<script src="' . AnalyticsConfig::$relativeAssetsPrefix . AnalyticsConfig::$assets . '/promatur/sc-analytics/ga4.min.js?cb=' . $cacheBuster . '" id="_ga4" data-keys="' . implode(";", array_keys(AnalyticsConfig::$googleAnalytics4)) . '" data-consent="' . (Analytics::getScope()->hasAnalyticsConsent() ? 'true' : 'false') . '" data-clientid="' . self::getClientID() . '" data-sessionid="' . $session['id'] . '" defer></script>';
         }
         return $result;
     }
@@ -116,6 +119,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
      * Sets the session information cookie '_ga_session' with a duration of 2 years.
      *
      * @param string $value The value of the cookie to set
+     * @noinspection PhpFullyQualifiedNameUsageInspection
      */
     private static function setSessionCookie(string $value): void
     {
@@ -147,6 +151,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function event(bool $interactive, string $category, string $action, ?string $label = null, ?int $value = null): ARequest
     {
         // TODO: Implement event() method.
+        return new NoRequest();
     }
 
     /**
@@ -155,6 +160,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function exception(?string $description = null, bool $fatal = false): ARequest
     {
         // TODO: Implement exception() method.
+        return new NoRequest();
     }
 
     /**
@@ -171,6 +177,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function social(string $network, string $action, string $target): ARequest
     {
         // TODO: Implement social() method.
+        return new NoRequest();
     }
 
     /**
@@ -179,6 +186,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function timing(string $group, string $name, int $milliseconds, ?string $label = null): ARequest
     {
         // TODO: Implement timing() method.
+        return new NoRequest();
     }
 
     /**
@@ -187,6 +195,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function search(?PageData $pageData, string $keyword, int $results, string $category = "all"): ARequest
     {
         // TODO: Implement search() method.
+        return new NoRequest();
     }
 
     /**
@@ -195,6 +204,7 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function logout(): ARequest
     {
         // TODO: Implement logout() method.
+        return new NoRequest();
     }
 
     /**
@@ -203,5 +213,60 @@ class GoogleAnalytics4 implements AnalyticsHandler
     public function download(string $fileName, ?int $size = null): ARequest
     {
         // TODO: Implement download() method.
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addCart(array $products): ARequest
+    {
+        // TODO: Implement addCart() method.
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeCart(array $products): ARequest
+    {
+        // TODO: Implement removeCart() method.
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function purchase(Transaction $transaction): ARequest
+    {
+        // TODO: Implement purchase() method.
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkoutStep(?PageData $pageData, array $products, int $step, ?string $option = null): ARequest
+    {
+        // TODO: Implement checkoutStep() method.
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productClick(string $listName, Product $product, int $productPosition = 1): ARequest
+    {
+        // TODO: Implement productClick() method.
+        return new NoRequest();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function productPage(Product $product, ?PageData $pageData = null): ARequest
+    {
+        // TODO: Implement productPage() method.
+        return new NoRequest();
     }
 }

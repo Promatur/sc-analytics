@@ -28,11 +28,6 @@ class GA4PageViewRequest extends GA4Request
         parent::__construct();
         $title = is_null($pageData) ? ($_GET['page'] ?? null) : $pageData->getPageTitle();
         $this->addEvent(new GA4PageViewEvent(HelperFunctions::getURL(), $title, $_SERVER['HTTP_REFERER'] ?? ""));
-        if (!isset($_SESSION['ga_session_sent'])) {
-            // TODO Sending session events is not supported from measurement api
-            //$this->addEvent(new GA4SessionStartEvent(HelperFunctions::getURL(), $title, $_SERVER['HTTP_REFERER'] ?? "www.google.de"));
-            $_SESSION['ga_session_sent'] = true;
-        }
         $this->updateGenerationTime();
     }
 

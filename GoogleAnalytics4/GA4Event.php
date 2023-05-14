@@ -42,8 +42,8 @@ class GA4Event implements JsonSerializable
         try {
             $this->setParameter(new GA4EventParameter("language"), Analytics::getScope()->getLanguage());
             $session = GoogleAnalytics4::getSessionData();
-            $this->setParameter(new GA4EventParameter("ga_session_id"), $session['id']);
-            $this->setParameter(new GA4EventParameter("ga_session_number"), $session['number']);
+            $this->setParameter(new GA4EventParameter("session_id"), $session['id']);
+            $this->setParameter(new GA4EventParameter("session_number"), $session['number']);
         } catch (JsonException $ignored) {
         }
     }
