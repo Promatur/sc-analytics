@@ -66,7 +66,7 @@ class GoogleAnalytics implements AnalyticsHandler
         $result = '<script async src="https://www.googletagmanager.com/gtag/js?id=' . AnalyticsConfig::$googleAnalyticsIDs[0] . '"></script>';
         if (file_exists($assets . '/ga.min.js')) {
             $cacheBuster = filemtime($assets . '/ga.min.js');
-            $result .= '<script src="' . AnalyticsConfig::$assets . '/promatur/sc-analytics/ga.min.js?cb=' . $cacheBuster . '" id="_ga" data-keys="' . implode(";", AnalyticsConfig::$googleAnalyticsIDs) . '" data-consent="' . (Analytics::getScope()->hasAnalyticsConsent() ? 'true' : 'false') . '" data-clientid="' . self::getClientID() . '" defer></script>';
+            $result .= '<script src="' . AnalyticsConfig::$relativeAssetsPrefix . AnalyticsConfig::$assets . '/promatur/sc-analytics/ga.min.js?cb=' . $cacheBuster . '" id="_ga" data-keys="' . implode(";", AnalyticsConfig::$googleAnalyticsIDs) . '" data-consent="' . (Analytics::getScope()->hasAnalyticsConsent() ? 'true' : 'false') . '" data-clientid="' . self::getClientID() . '" defer></script>';
         }
         return $result;
     }

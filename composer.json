@@ -32,8 +32,8 @@
   ],
   "support": {
     "email": "adler@promatur.com",
-    "issues": "https://github.com/JE4GLE/complete-analytics/issues",
-    "source": "https://github.com/JE4GLE/complete-analytics"
+    "issues": "https://github.com/Promatur/sc-analytics/issues",
+    "source": "https://github.com/Promatur/sc-analytics"
   },
   "autoload": {
     "psr-4": {

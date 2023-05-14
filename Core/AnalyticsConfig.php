@@ -35,6 +35,11 @@ class AnalyticsConfig
     public static $assets = "assets";
 
     /**
+     * @var string A prefix for the path to the assets. Useful for websites in subdirectories or when composer is not located in the root directory. Include a trailing slash.
+     */
+    public static $relativeAssetsPrefix = "";
+
+    /**
      * The default currency for all ECommerce events.
      *
      * @var string EUR, USD, GBP, ...
