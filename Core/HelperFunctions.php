@@ -44,14 +44,16 @@ class HelperFunctions
     public static function getAssetsDir(): string
     {
         $root = self::getRoot();
-        if (file_exists($root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics")) {
-            return $root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics";
+        $paths = [
+            $root . "/" . AnalyticsConfig::$assets . "/promatur/sc-analytics",
+            $root . "/public/" . AnalyticsConfig::$assets . "/promatur/sc-analytics",
+            $root . "/Assets"
+        ];
+        foreach ($paths as $path) {
+            if (file_exists($path)) {
+                return $path;
+            }
         }
-
-        if (file_exists($root . "/Assets")) {
-            return $root . "/Assets";
-        }
-
         throw new RuntimeException("Could not get asset directory");
     }
 
