@@ -74,11 +74,13 @@ class MParameter extends AParameter
      */
     public static $FIRSTTIMESTAMP;
     /**
-     * @var MParameter The Campaign name
+     * @var MParameter The Campaign name (<i>Note: this will only be used to attribute goal conversions, not visits</i>)
+     * @see MParameter::$URL Set tracking parameters in the url
      */
     public static $CAMPAIGNNAME;
     /**
-     * @var MParameter The Campaign keyword
+     * @var MParameter The Campaign name (<i>Note: this will only be used to attribute goal conversions, not visits</i>)
+     * @see MParameter::$URL Set tracking parameters in the url
      */
     public static $CAMPAIGNKEYWORD;
     /**
@@ -141,6 +143,10 @@ class MParameter extends AParameter
      * @var MParameter User-Agent HTTP header field
      */
     public static $USERAGENT;
+    /**
+     * @var MParameter JSON encoded <b>Client Hints</b> collected by javascript. This will be used to enrich the detected user agent data. (requires Matomo 4.12.0)
+     */
+    public static $USERAGENTHINTS;
     /**
      * @var MParameter Accept-Language HTTP header field
      */
@@ -435,6 +441,36 @@ class MParameter extends AParameter
      * @see https://github.com/johsin18/DevicePixelRatioMatomoPlugin GitHub plugin page
      */
     public static $DEVICEPIXELRATIO;
+    // Crashes
+    /**
+     * @var MParameter The error message (required).
+     */
+    public static $ERRORMESSAGE;
+    /**
+     * @var MParameter Optional stack trace of the error.
+     */
+    public static $ERRORSTACKTRACE;
+    /**
+     * @var MParameter Optional category of the error.
+     */
+    public static $ERRORCATEGORY;
+    /**
+     * @var MParameter Optional error type.
+     */
+    public static $ERRORTYPE;
+    /**
+     * @var MParameter Optional error file.
+     */
+    public static $ERRORFILE;
+    /**
+     * @var MParameter Optional error line.
+     */
+    public static $ERRORLINE;
+    /**
+     * @var MParameter Optional error column.
+     */
+    public static $ERRORCOLUMN;
+
 
     /**
      * Initializes all supported parameters.
@@ -450,12 +486,6 @@ class MParameter extends AParameter
         self::$APIVERSION = new MParameter("apiv");
 
         self::$REFERRER = new MParameter("urlref");
-        self::$CUSTOMVARIABLES = new MParameter("_cvar");
-        self::$VISITCOUNT = new MParameter("_idvc");
-        self::$LASTTIMESTAMP = new MParameter("_viewts");
-        self::$FIRSTTIMESTAMP = new MParameter("_idts");
-        self::$CAMPAIGNNAME = new MParameter("_rcn");
-        self::$CAMPAIGNKEYWORD = new MParameter("_rck");
         self::$RESOLUTION = new MParameter("res");
         // Current Time
         self::$HOUR = new MParameter("h");
@@ -471,14 +501,25 @@ class MParameter extends AParameter
         self::$WINDOWSMEDIA = new MParameter("wma");
         self::$GEARS = new MParameter("gears");
         self::$SILVERLIGHT = new MParameter("ag");
-
+        // User data
         self::$COOKIES = new MParameter("cookie");
         self::$USERAGENT = new MParameter("ua");
+        self::$USERAGENTHINTS = new MParameter("uadata");
         self::$LANGUAGE = new MParameter("lang");
         self::$USERID = new MParameter("uid");
         self::$CLIENTID = new MParameter("cid");
         self::$NEWVISIT = new MParameter("new_visit");
+        // Custom data
         self::$CUSTOMDIMENSION = new MParameter("dimension%p1%");
+        self::$CUSTOMVARIABLES = new MParameter("_cvar");
+        // Campaign info
+        self::$CAMPAIGNNAME = new MParameter("_rcn");
+        self::$CAMPAIGNKEYWORD = new MParameter("_rck");
+        // Undocumented variables
+        self::$VISITCOUNT = new MParameter("_idvc");
+        self::$LASTTIMESTAMP = new MParameter("_viewts");
+        self::$FIRSTTIMESTAMP = new MParameter("_idts");
+        self::$GENERATIONTIME = new MParameter("gt_ms");
         // Action info
         self::$PAGEVARIABLES = new MParameter("cvar");
         self::$OUTGOINLINK = new MParameter("link");
@@ -489,7 +530,6 @@ class MParameter extends AParameter
         self::$PAGEVIEWID = new MParameter("pv_id");
         self::$CONVERSIONGOAL = new MParameter("idgoal");
         // Conversion revenue uses the same parameter as revenue
-        self::$GENERATIONTIME = new MParameter("gt_ms");
         self::$CHARSET = new MParameter("cs");
         self::$CUSTOMACTION = new MParameter("ca");
         // Page performance info
@@ -517,7 +557,7 @@ class MParameter extends AParameter
         self::$TAX = new MParameter("ec_tx");
         self::$SHIPPING = new MParameter("ec_sh");
         self::$DISCOUNT = new MParameter("ec_dt");
-        self::$LASTORDERTIMESTAMP = new MParameter("_ects");
+        self::$LASTORDERTIMESTAMP = new MParameter("_ects"); // Undocumented
         // Requiring token authorization
         self::$AUTHTOKEN = new MParameter("token_auth");
         self::$IP = new MParameter("cip");
@@ -541,6 +581,14 @@ class MParameter extends AParameter
         self::$MEDIAHEIGHT = new MParameter("ma_h");
         self::$MEDIAFULLSCREEN = new MParameter("ma_fs");
         self::$MEDIAPOSITIONS = new MParameter("ma_se");
+        // Crashes
+        self::$ERRORMESSAGE = new MParameter("cra");
+        self::$ERRORSTACKTRACE = new MParameter("cra_st");
+        self::$ERRORCATEGORY = new MParameter("cra_ct");
+        self::$ERRORTYPE = new MParameter("cra_tp");
+        self::$ERRORFILE = new MParameter("cra_ru");
+        self::$ERRORLINE = new MParameter("cra_rl");
+        self::$ERRORCOLUMN = new MParameter("cra_rc");
         // Queued tracking
         self::$QUEUEDTRACKING = new MParameter("queuedtracking");
         // Other parameters
@@ -548,9 +596,8 @@ class MParameter extends AParameter
         self::$PING = new MParameter("ping");
         // Tracking bots
         self::$BOTS = new MParameter("bots");
-        // Bandwidth plugin
+        // Plugins
         self::$BANDWIDTH = new MParameter("bw_bytes");
-        // Device Pixel Ratio plugin
         self::$DEVICEPIXELRATIO = new MParameter("devicePixelRatio");
     }
 

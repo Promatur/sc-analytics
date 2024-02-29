@@ -35,6 +35,7 @@ class MEventRequest extends MRequest
             $this->setParameter(MParameter::$EVENTACTION, $action);
             $this->setParameter(MParameter::$EVENTLABEL, $label);
             $this->setParameter(MParameter::$EVENTVALUE, $value);
+            $this->setParameter(MParameter::$CUSTOMACTION, true);
         } catch (JsonException $ignored) {
         }
     }

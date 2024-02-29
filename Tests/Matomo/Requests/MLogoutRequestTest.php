@@ -30,6 +30,7 @@ class MLogoutRequestTest extends TestCase
         self::assertEquals("logout", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
         self::assertEquals("1", $req->getParameters()[MParameter::$NEWVISIT->getName()]);
         self::assertEquals("", $req->getParameters()[MParameter::$USERID->getName()]);
+        self::assertTrue((bool)$req->getParameters()[MParameter::$CUSTOMACTION->getName()]);
     }
 
     /**

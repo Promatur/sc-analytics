@@ -4,6 +4,9 @@
 namespace ScAnalytics\Matomo\Requests;
 
 
+use JsonException;
+use ScAnalytics\Matomo\MParameter;
+
 /**
  * Class MExceptionRequest. Exception tracking allows you to measure the number and type of crashes or errors that occur on your property. Uses events to track exceptions.
  *
@@ -12,9 +15,8 @@ namespace ScAnalytics\Matomo\Requests;
  * @license http://www.gnu.org/licenses/lgpl.html LGPL v3 or later
  * @copyright All Rights Reserved.
  */
-class MExceptionRequest extends MEventRequest
+class MExceptionRequest extends MRequest
 {
-
     /**
      * MExceptionRequest constructor.
      * @param string|null $description A description of the exception
@@ -22,7 +24,13 @@ class MExceptionRequest extends MEventRequest
      */
     public function __construct(?string $description = null, bool $fatal = false)
     {
-        parent::__construct("Exception", ($fatal ? "Fatal" : "Non-Fatal"), $description);
+        parent::__construct();
+        try {
+            $this->setParameter(MParameter::$CUSTOMACTION, true);
+            $this->setParameter(MParameter::$ERRORMESSAGE, $description ?? "An unknown error occurred");
+            $this->setParameter(MParameter::$ERRORTYPE, $fatal ? "Fatal" : "Non-fatal");
+        } catch (JsonException $ignored) {
+        }
     }
 
 }

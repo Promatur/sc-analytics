@@ -26,19 +26,19 @@ class MExceptionRequestTest extends TestCase
         Analytics::init();
 
         $req = new MExceptionRequest("Error 5013", true);
-        self::assertEquals("Exception", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("Fatal", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("Error 5013", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertTrue((bool)$req->getParameters()[MParameter::$CUSTOMACTION->getName()]);
+        self::assertEquals("Error 5013", $req->getParameters()[MParameter::$ERRORMESSAGE->getName()]);
+        self::assertEquals("Fatal", $req->getParameters()[MParameter::$ERRORTYPE->getName()]);
 
         $req = new MExceptionRequest("Error 5014", false);
-        self::assertEquals("Exception", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("Non-Fatal", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("Error 5014", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertTrue((bool)$req->getParameters()[MParameter::$CUSTOMACTION->getName()]);
+        self::assertEquals("Error 5014", $req->getParameters()[MParameter::$ERRORMESSAGE->getName()]);
+        self::assertEquals("Non-fatal", $req->getParameters()[MParameter::$ERRORTYPE->getName()]);
 
         $req = new MExceptionRequest("Error 5015");
-        self::assertEquals("Exception", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
-        self::assertEquals("Non-Fatal", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
-        self::assertEquals("Error 5015", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertTrue((bool)$req->getParameters()[MParameter::$CUSTOMACTION->getName()]);
+        self::assertEquals("Error 5015", $req->getParameters()[MParameter::$ERRORMESSAGE->getName()]);
+        self::assertEquals("Non-fatal", $req->getParameters()[MParameter::$ERRORTYPE->getName()]);
     }
 
     /**

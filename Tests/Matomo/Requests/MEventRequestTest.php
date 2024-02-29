@@ -31,6 +31,7 @@ class MEventRequestTest extends TestCase
         self::assertEquals("action", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
         self::assertEquals("label", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
         self::assertEquals(2, $req->getParameters()[MParameter::$EVENTVALUE->getName()]);
+        self::assertTrue((bool)$req->getParameters()[MParameter::$CUSTOMACTION->getName()]);
     }
 
     /**

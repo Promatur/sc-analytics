@@ -29,6 +29,7 @@ class MSocialRequestTest extends TestCase
         self::assertEquals("Social Media", $req->getParameters()[MParameter::$EVENTCATEGORY->getName()]);
         self::assertEquals("Twitter (tweet)", $req->getParameters()[MParameter::$EVENTACTION->getName()]);
         self::assertEquals("https://promatur.com", $req->getParameters()[MParameter::$EVENTLABEL->getName()]);
+        self::assertTrue((bool)$req->getParameters()[MParameter::$CUSTOMACTION->getName()]);
     }
 
     /**
