@@ -9,6 +9,7 @@ use ReflectionException;
 use ScAnalytics\Core\AnalyticsConfig;
 use ScAnalytics\Core\AParameter;
 use ScAnalytics\Core\ARequest;
+use ScAnalytics\Core\HelperFunctions;
 
 class ARequestTest extends TestCase
 {
@@ -136,8 +137,30 @@ class ARequestTest extends TestCase
         self::assertEquals(["a" => "b", "c" => "d"], $stub->getParameters());
     }
 
+    public function testGetUrl(): void
+    {
+        $stub = $this->getMockForAbstractClass(ARequest::class);
+
+        $_SERVER['HTTPS'] = "on";
+        $_SERVER['SERVER_NAME'] = "promatur.com";
+        $_SERVER['REQUEST_URI'] = "/abc";
+        self::assertEquals("https://promatur.com/abc", $stub->getPageUrl());
+
+        $_SERVER['HTTPS'] = "on";
+        $_SERVER['SERVER_NAME'] = "promatur.com";
+        $_SERVER['REQUEST_URI'] = "/abcd/";
+        self::assertEquals("https://promatur.com/abcd", $stub->getPageUrl());
+
+        $_SERVER['HTTPS'] = "on";
+        $_SERVER['SERVER_NAME'] = "promatur.com";
+        $_SERVER['REQUEST_URI'] = "/abcd/";
+        $GLOBALS['sca_override_url'] = "https://promatur.com/override";
+        self::assertEquals("https://promatur.com/override", $stub->getPageUrl());
+    }
+
     protected function tearDown(): void
     {
         AnalyticsConfig::$debug = false;
+        unset($GLOBALS['sca_override_url']);
     }
 }

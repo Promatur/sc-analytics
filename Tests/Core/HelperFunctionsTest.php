@@ -78,8 +78,6 @@ class HelperFunctionsTest extends TestCase
         self::assertEquals("http://promatur.com", HelperFunctions::getDomain());
     }
 
-    /** @noinspection HttpUrlsUsage */
-
     public function testGetURL(): void
     {
         self::assertEquals("http://UNKNOWN", HelperFunctions::getURL());

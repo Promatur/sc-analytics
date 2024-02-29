@@ -50,7 +50,7 @@ class MRequest extends ARequest
         try {
             $this->setParameter(MParameter::$SITEID, AnalyticsConfig::$matomoID);
             $this->setParameter(MParameter::$REC, true);
-            $this->setParameter(MParameter::$URL, rtrim(HelperFunctions::getURL(), '/'));
+            $this->setParameter(MParameter::$URL, $this->getPageUrl());
             $this->setParameter(MParameter::$RAND, mt_rand());
             $this->setParameter(MParameter::$APIVERSION, self::VERSION);
             $this->setParameter(MParameter::$VISITORID, Matomo::getVisitorId());

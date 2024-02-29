@@ -123,4 +123,20 @@ abstract class ARequest
      */
     abstract public function send(): bool;
 
+    /**
+     * Gets the URL of the current page and trims trailing slashes.
+     * If an override URL is set in a global url, it will be used instead.
+     *
+     * @return string The URL of the current page
+     */
+    public function getPageUrl(): string
+    {
+        if (!empty($GLOBALS['sca_override_url'])) {
+            $url = $GLOBALS['sca_override_url'];
+        } else {
+            $url = HelperFunctions::getURL();
+        }
+        return rtrim($url, '/');
+    }
+
 }

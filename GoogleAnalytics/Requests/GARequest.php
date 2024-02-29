@@ -59,7 +59,7 @@ class GARequest extends ARequest
             $this->setParameter(GAParameter::$REFERRER, $_SERVER['HTTP_REFERER'] ?? null);
             $this->setParameter(GAParameter::$DATASOURCE, "web");
             $this->setParameter(GAParameter::$CACHEBUSTER, mt_rand());
-            $this->setParameter(GAParameter::$DOCUMENTLOCATION, HelperFunctions::getURL());
+            $this->setParameter(GAParameter::$DOCUMENTLOCATION, $this->getPageUrl());
             $this->setParameter(GAParameter::$DOCUMENTPATH, $_SERVER['REQUEST_URI'] ?? null);
             $this->setParameter(GAParameter::$DOCUMENTHOST, $_SERVER['SERVER_NAME'] ?? null);
             $this->setParameter(GAParameter::$CAMPAIGNNAME, $_GET['utm_campaign'] ?? null);
