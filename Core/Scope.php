@@ -37,6 +37,10 @@ class Scope
      * @var string|null A unique ID for a logged-in user. Can be an auto-incremented id
      */
     private $userId;
+    /**
+     * @var string|null The email of the user. Currently used to show anonymized Gravatar profile pictures
+     */
+    private $userMail;
 
     /**
      * @var int|null The timestamp of the last ecommerce order of the user
@@ -170,6 +174,22 @@ class Scope
     public function setUserId(?string $userId): void
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return string|null The email of the user. Currently used to show anonymized Gravatar profile pictures
+     */
+    public function getUserMail(): ?string
+    {
+        return $this->userMail;
+    }
+
+    /**
+     * @param string|null $userMail The email of the user. Currently used to show anonymized Gravatar profile pictures
+     */
+    public function setUserMail(?string $userMail): void
+    {
+        $this->userMail = $userMail;
     }
 
     /**

@@ -30,6 +30,7 @@ class ScopeTest extends TestCase
         self::assertFalse(self::get($scope, "analyticsConsent"));
         self::assertNull(self::get($scope, "clientId"));
         self::assertNull(self::get($scope, "userId"));
+        self::assertNull(self::get($scope, "userMail"));
         self::assertNull(self::get($scope, "lastOrder"));
     }
 
@@ -86,6 +87,16 @@ class ScopeTest extends TestCase
         $scope = new Scope();
         $scope->setUserId("482");
         self::assertEquals("482", self::get($scope, "userId"));
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testSetUserMail(): void
+    {
+        $scope = new Scope();
+        $scope->setUserMail("user@mail.de");
+        self::assertEquals("user@mail.de", self::get($scope, "userMail"));
     }
 
     /**
@@ -181,6 +192,16 @@ class ScopeTest extends TestCase
         $scope = new Scope();
         self::set($scope, "userId", "482");
         self::assertEquals("482", $scope->getUserId());
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function testGetUserMail(): void
+    {
+        $scope = new Scope();
+        self::set($scope, "userMail", "user@mail.de");
+        self::assertEquals("user@mail.de", $scope->getUserMail());
     }
 
     /**

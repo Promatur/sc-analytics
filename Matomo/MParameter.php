@@ -432,15 +432,20 @@ class MParameter extends AParameter
 
     // - Custom plugin parameters
     /**
-     * @var MParameter Measures the bandwidth in bytes that was used by each page view or download. Requires the <b>Bandwidth</b> plugin
-     * @see https://github.com/matomo-org/plugin-Bandwidth GitHub plugin page
+     * @var MParameter Measures the bandwidth in bytes that was used by each page view or download. Requires the <b>Bandwidth</b> plugin.
+     * @see https://plugins.matomo.org/Bandwidth Plugin page
      */
     public static $BANDWIDTH;
     /**
-     * @var MParameter Measures the device pixel ratio of the visitor's devices. Requires the <b>Device Pixel Ratio</b> plugin
-     * @see https://github.com/johsin18/DevicePixelRatioMatomoPlugin GitHub plugin page
+     * @var MParameter Measures the device pixel ratio of the visitor's devices. Requires the <b>Device Pixel Ratio</b> plugin.
+     * @see https://plugins.matomo.org/DevicePixelRatio Plugin page
      */
     public static $DEVICEPIXELRATIO;
+    /**
+     * @var MParameter The hash of the user's email address. Used to display the user's Gravatar image in Matomo visitor reports. Requires the <b>ProfileGravatar</b> plugin. Use <code><?php echo hash('sha256', 'user.name@mail.com'); ?></code>
+     * @see https://plugins.matomo.org/ProfileGravatar Plugin page
+     */
+    public static $GRAVATARHASH;
     // Crashes
     /**
      * @var MParameter The error message (required).
@@ -599,6 +604,7 @@ class MParameter extends AParameter
         // Plugins
         self::$BANDWIDTH = new MParameter("bw_bytes");
         self::$DEVICEPIXELRATIO = new MParameter("devicePixelRatio");
+        self::$GRAVATARHASH = new MParameter("gravatar_hash");
     }
 
 }

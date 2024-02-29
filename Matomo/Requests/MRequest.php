@@ -72,6 +72,9 @@ class MRequest extends ARequest
             if ($scope->hasAnalyticsConsent() && !empty($scope->getUserId())) {
                 $this->setUserIdentifier($scope->getUserId());
             }
+            if ($scope->hasAnalyticsConsent() && !empty($scope->getUserMail())) {
+                $this->setParameter(MParameter::$GRAVATARHASH, hash('sha256', $scope->getUserMail()));
+            }
             if (session_status() === PHP_SESSION_ACTIVE) {
                 $this->setParameter(MParameter::$CLIENTID, substr(str_replace("-", "", $scope->getClientId() ?? ""), 0, Matomo::LENGTH_VISITOR_ID));
             }
