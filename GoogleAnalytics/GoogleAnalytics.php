@@ -21,6 +21,7 @@ use ScAnalytics\GoogleAnalytics\Requests\GAEventRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAExceptionRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GALogoutRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GAPageViewRequest;
+use ScAnalytics\GoogleAnalytics\Requests\GARequest;
 use ScAnalytics\GoogleAnalytics\Requests\GASearchRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GASocialRequest;
 use ScAnalytics\GoogleAnalytics\Requests\GATimingRequest;
@@ -47,6 +48,7 @@ class GoogleAnalytics implements AnalyticsHandler
 
     /**
      * @inheritDoc
+     * @throws \JsonException
      */
     public function loadJS(PageData $pageData, ?ARequest $pageViewRequest = null): string
     {
@@ -54,9 +56,12 @@ class GoogleAnalytics implements AnalyticsHandler
             return "";
         }
         if (is_null($pageViewRequest)) {
-            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof ARequest) {
+            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof GAPageViewRequest) {
                 /** @noinspection CallableParameterUseCaseInTypeContextInspection */
                 $pageViewRequest = $GLOBALS['sc_pageView'];
+                if (is_null($pageViewRequest->getParameter(GAParameter::$DOCUMENTTITLE))) {
+                    $pageViewRequest->setParameter(GAParameter::$DOCUMENTTITLE, $pageData->getPageTitle());
+                }
             } else {
                 $pageViewRequest = new GAPageViewRequest($pageData);
             }

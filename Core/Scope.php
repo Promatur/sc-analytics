@@ -55,7 +55,7 @@ class Scope
      * @param string|null $userId A unique ID for a logged-in user. Can be an auto-incremented id
      * @param int|null $lastOrder The timestamp of the last ecommerce order of the user
      */
-    public function __construct(?string $language = null, array $customDimensions = [], bool $analyticsConsent = false, ?string $clientId = null, ?string $userId = null, ?int $lastOrder = null)
+    public function __construct(?string $language = null, array $customDimensions = [], bool $analyticsConsent = false, ?string $clientId = null, ?string $userId = null, ?int $lastOrder = null, ?string $userMail = null)
     {
         $this->language = $language;
         $this->customDimensions = $customDimensions;
@@ -63,6 +63,7 @@ class Scope
         $this->clientId = $clientId;
         $this->userId = $userId;
         $this->lastOrder = $lastOrder;
+        $this->userMail = $userMail;
     }
 
     /**

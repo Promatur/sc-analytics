@@ -21,6 +21,7 @@ use ScAnalytics\Matomo\Requests\MEventRequest;
 use ScAnalytics\Matomo\Requests\MExceptionRequest;
 use ScAnalytics\Matomo\Requests\MLogoutRequest;
 use ScAnalytics\Matomo\Requests\MPageViewRequest;
+use ScAnalytics\Matomo\Requests\MRequest;
 use ScAnalytics\Matomo\Requests\MSearchRequest;
 use ScAnalytics\Matomo\Requests\MSocialRequest;
 use ScAnalytics\Matomo\Requests\MTimingRequest;
@@ -314,9 +315,12 @@ class Matomo implements AnalyticsHandler
             return "";
         }
         if (is_null($pageViewRequest)) {
-            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof ARequest) {
+            if (isset($GLOBALS['sc_pageView']) && $GLOBALS['sc_pageView'] instanceof MPageViewRequest) {
                 /** @noinspection CallableParameterUseCaseInTypeContextInspection */
                 $pageViewRequest = $GLOBALS['sc_pageView'];
+                if (!is_null($pageViewRequest->getParameter(MParameter::$ACTION))) {
+                    $pageViewRequest->setPageTitle($pageData->getPageTitle(), $pageData->getParents() ?? []);
+                }
             } else {
                 $pageViewRequest = new MPageViewRequest($pageData);
             }

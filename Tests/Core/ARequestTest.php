@@ -130,6 +130,30 @@ class ARequestTest extends TestCase
     /**
      * @throws ReflectionException
      */
+    public function testGetParameter(): void {
+        $paramA = new class extends AParameter {
+            public function __construct()
+            {
+                parent::__construct("test");
+            }
+        };
+        $paramB = new class extends AParameter {
+            public function __construct()
+            {
+                parent::__construct("test2");
+            }
+        };
+
+        $stub = $this->getMockForAbstractClass(ARequest::class);
+        self::set($stub, "parameters", [$paramA->getName() => "b"]);
+
+        self::assertEquals("b", $stub->getParameter($paramA));
+        self::assertNull($stub->getParameter($paramB));
+    }
+
+    /**
+     * @throws ReflectionException
+     */
     public function testGetParameters(): void
     {
         $stub = $this->getMockForAbstractClass(ARequest::class);

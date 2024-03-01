@@ -107,6 +107,9 @@ class Analytics
      */
     public static function getScope(): Scope
     {
+        if (is_null(self::$scope)) {
+            self::init();
+        }
         return self::$scope;
     }
 

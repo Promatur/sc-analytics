@@ -108,6 +108,17 @@ abstract class ARequest
     }
 
     /**
+     * Returns the value of a parameter.
+     *
+     * @param AParameter $key Key of the parameter
+     * @return string|null The value of the parameter or <code>null</code> if it does not exist
+     */
+    public function getParameter(AParameter $key): ?string
+    {
+        return $this->parameters[$key->getName()] ?? null;
+    }
+
+    /**
      * @return String[] A key-value-map of all parameters
      */
     public function getParameters(): array
