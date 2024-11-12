@@ -66,7 +66,8 @@
   },
   "config": {
     "allow-plugins": {
-      "frontpack/composer-assets-plugin": true
+      "frontpack/composer-assets-plugin": true,
+      "php-http/discovery": true
     }
   }
 }
