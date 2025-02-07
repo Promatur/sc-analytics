@@ -30,20 +30,16 @@ class MECommerceProductPageRequest extends MPageViewRequest
     public function __construct(Product $product, ?PageData $pageData = null)
     {
         parent::__construct($pageData);
-        $variables = array();
-        if (!is_null($product->getCategory())) {
-            $variables[5] = array("_pkc", $product->getCategory());
-        }
-        $variables[2] = array("_pkp", HelperFunctions::functional($product->getPrice()));
-        $variables[3] = array("_pks", $product->getKey());
-        $variables[4] = array("_pkn", $product->getName());
         try {
-            $this->setParameter(MParameter::$PAGEVARIABLES, $variables);
+            $this->setParameter(MParameter::$PRODUCT_CATEGORY, $product->getCategory());
+            $this->setParameter(MParameter::$PRODUCT_PRICE, HelperFunctions::functional($product->getPrice()));
+            $this->setParameter(MParameter::$PRODUCT_SKU, $product->getKey());
+            $this->setParameter(MParameter::$PRODUCT_NAME, $product->getName());
         } catch (JsonException $e) {
             if (function_exists('\Sentry\configureScope')) {
-                \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($variables): void {
+                \Sentry\configureScope(function (\Sentry\State\Scope $scope) use ($product): void {
                     $scope->setLevel(\Sentry\Severity::error());
-                    $scope->setExtra('Array', print_r($variables, true));
+                    $scope->setExtra('Product', $product);
                     \Sentry\captureMessage("Error adding variable to an ECommerceProductPageRequest.");
                 });
             }

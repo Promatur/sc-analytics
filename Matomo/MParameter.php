@@ -287,6 +287,24 @@ class MParameter extends AParameter
      */
     public static $LASTORDERTIMESTAMP;
 
+    // - Ecommerce Product view
+    /**
+     * @var MParameter The category of the product being viewed.
+     */
+    public static $PRODUCT_CATEGORY;
+    /**
+     * @var MParameter The price of the product being viewed.
+     */
+    public static $PRODUCT_PRICE;
+    /**
+     * @var MParameter The SKU (stock keeping unit) of the product being viewed.
+     */
+    public static $PRODUCT_SKU;
+    /**
+     * @var MParameter The name of the product being viewed.
+     */
+    public static $PRODUCT_NAME;
+
     // - Performance Parameters
     /**
      * @var MParameter Network time in ms (connectEnd – fetchStart)
@@ -563,6 +581,11 @@ class MParameter extends AParameter
         self::$SHIPPING = new MParameter("ec_sh");
         self::$DISCOUNT = new MParameter("ec_dt");
         self::$LASTORDERTIMESTAMP = new MParameter("_ects"); // Undocumented
+        // Ecommerce Product view
+        self::$PRODUCT_CATEGORY = new MParameter("_pkc");
+        self::$PRODUCT_PRICE = new MParameter("_pkp");
+        self::$PRODUCT_SKU = new MParameter("_pks");
+        self::$PRODUCT_NAME = new MParameter("_pkn");
         // Requiring token authorization
         self::$AUTHTOKEN = new MParameter("token_auth");
         self::$IP = new MParameter("cip");
